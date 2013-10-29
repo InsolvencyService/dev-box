@@ -1,12 +1,12 @@
+{% extends "base.html" %}
 {% from "partials/_form_field.html" import form_field %}
-<html>
-    <head>
-        <title>Claimant Contact Details</title>
-    </head>
-    <body>
-        <article>
-            <section>
-                <h1>test string</h1>
+{% block title %}Claimant Contact Details{% endblock %}
+{% block header %} 
+    <h1>Claim Redundency Payment</h1>
+    <h2 class="subtitle">Please enter your personal details</h2>
+{% endblock %}
+{% block content %}
+    <h1>Your personal details</h1>
                 <form method="post" action="/claimant-contact-details">
                     <fieldset>
                         <legend>Claimant</legend>
@@ -16,7 +16,4 @@
                     </fieldset>
                     <input type="submit" value="Submit" />
                 </form>
-            </section>
-        </article>
-    </body>
-</html>
+{% endblock %}

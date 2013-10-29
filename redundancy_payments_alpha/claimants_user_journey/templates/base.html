@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}{% endblock %}Title</title>
+
+    <!-- Stylesheets from static -->
+
+    <!--[if gt IE 8]><!-->
+    <link href="/static/header-footer-only.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="/static/main.css" media="screen" rel="stylesheet" type="text/css" />
+    <!--<![endif]-->
+    <!--[if IE 6]>
+      <link href="/static/header-footer-only.css" media="screen" rel="stylesheet" type="text/css" />
+      <link href="/static/main-ie6.css?cache=1382691591" media="screen" rel="stylesheet" type="text/css" />
+      <![endif]-->
+    <!--[if IE 7]>
+      <link href="/static/header-footer-only.css" media="screen" rel="stylesheet" type="text/css" />
+      <link href="/static/main-ie7.css?cache=1382691591" media="screen" rel="stylesheet" type="text/css" />
+      <![endif]-->
+    <!--[if IE 8]>
+      <link href="/static/header-footer-only.css" media="screen" rel="stylesheet" type="text/css" />
+      <link href="/static/main-ie8.css?cache=1382691591" media="screen" rel="stylesheet" type="text/css" />
+      <![endif]-->
+
+      <link href="/static/print.css" media="print" rel="stylesheet" type="text/css" />
+
+{#
+    <!--[if IE 8]>
+    <script type="text/javascript">
+      (function(){if(window.opera){return;}
+      setTimeout(function(){var a=document,g,b={families:(g=
+      ["nta"]),urls:["https://assets.digital.cabinet-office.gov.uk/static/fonts-ie8-beb10cbc00c9b7dcdbdee824962bc5f6.css"]},
+      c="https://assets.digital.cabinet-office.gov.uk/static/libs/goog/webfont-debug-96870cf9f159ed811fd43c39bdf4656b.js",d="script",
+      e=a.createElement(d),f=a.getElementsByTagName(d)[0],h=g.length;WebFontConfig
+      ={custom:b},e.src=c,f.parentNode.insertBefore(e,f);for(;h=h-1;a.documentElement
+      .className+=' wf-'+g[h].replace(/\s/g,'').toLowerCase()+'-n4-loading');},0)
+      })()
+    </script>
+    <![endif]-->
+    #}
+
+    <!--[if gte IE 9]><!--><link href="/static/fonts.css" media="all" rel="stylesheet" type="text/css" /><!--<![endif]-->
+    <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon" />
+
+    <!-- For third-generation iPad with high-resolution Retina display: -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/static/apple-touch-icon-144x144.png">
+    <!-- For iPhone with high-resolution Retina display: -->
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/static/apple-touch-icon-114x114.png">
+    <!-- For first- and second-generation iPad: -->
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/static/apple-touch-icon-72x72.png">
+    <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+    <link rel="apple-touch-icon-precomposed" href="/static/apple-touch-icon-57x57.png">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block scripthead %}{% endblock %}
+
+</head>
+<body class="full-width">
+    <header role="banner" id="global-header" class="with-proposition">
+        <div class="header-wrapper">
+            <div class="header-global">
+                <div class="header-logo">
+                    <a href="/" title="Go to the GOV.UK homepage" id="logo" class="content">
+                        <img src="/static/gov.uk_logotype-2x.png" alt="GOV.UK">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+<!--end header-->
+
+    <div id="wrapper">
+        <main id="content" role="main" class="group detailed-guidance">
+            <article role="article" class="group">
+                <header class="page-header group">
+                    <div class="hgroup">
+                      {% block header %}{% endblock %}
+                    </div>
+                </header>
+
+                <div class="article-container group">
+                    <div class="contents">
+                        <nav>
+                            <h2>Contents</h2>
+                        </nav>
+                    </div>
+                    <section class="inner">
+                      {% block content %}{%endblock%}
+                    </section>
+                </div>
+            </article>
+        </main>
+    </div>
+</body>
+</html>
