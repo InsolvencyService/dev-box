@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% from "macros/_form_field.html" import form_field %}
+{% from "macros/_form_nav.html" import form_nav %}
+
+{% block title %}Unpaid Wages{% endblock %}
+{% block header %}
+    <h1>Claim Redundancy Payment</h1>
+    <h2 class="subtitle">Please enter details of any unpaid wages</h2>
+{% endblock %}
+{% block nav %}
+    {{ form_nav(nav_links) }}
+{% endblock %}
+{% block content %}
+    <h1>Unpaid Wages</h1>
+        <form method="post" action="/claim-redundancy-payment/unpaid-wages-details/" class="form-example-1">
+            <div>
+                {{ form.hidden_tag() }}
+                {{ form_field(form.owed) }}
+                {{ form_field(form.wage_owed_from) }}
+                {{ form_field(form.wage_owed_to) }}
+                {{ form_field(form.number_of_days_owed) }}
+                {{ form_field(form.gross_amount_owed) }}
+            </div>
+            <input type="submit" value="Submit" />
+        </form>
+{% endblock %}

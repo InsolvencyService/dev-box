@@ -3,6 +3,7 @@ from flask import Flask, render_template, url_for, session
 from werkzeug.utils import redirect
 from forms.claimant_contact_details import ClaimantContactDetails
 from forms.employment_details import EmploymentDetails
+from forms.wages_owed import WagesOwed
 from forms.claimant_wage_details import ClaimantWageDetails
 
 
@@ -16,9 +17,9 @@ def nav_links():
         ('Start', url_for('start')),
         ('Personal Details', url_for('personal_details')),
         ('Employment Details', url_for('employment_details')),
+        ('Unpaid Wages', url_for('wages_owed')),
         ('Wage Details', url_for('wage_details')),
         ('Summary', url_for('summary')),
-        ('Wage Details', url_for('wage_details')),
     ]
     return links
 
@@ -69,6 +70,23 @@ def employment_details():
 
     return render_template('employment_details.html', form=form, nav_links=nav_links())
 
+
+@app.route('/claim-redundancy-payment/unpaid-wages-details/', methods=['GET', 'POST'])
+def wages_owed():
+    existing_form = session.get('wages_owed')
+
+    if existing_form:
+        form = WagesOwed(**existing_form)
+    else:
+        form = WagesOwed()
+
+    if form.validate_on_submit():
+        session['wages_owed'] = form.data
+        return redirect(url_for('summary'))
+
+    return render_template('wages_owed.html', form=form, nav_links=nav_links())
+
+
 @app.route('/claim-redundancy-payment/wage-details/', methods=['GET', 'POST'])
 def wage_details():
     existing_form = session.get('wage_details')
@@ -88,7 +106,8 @@ def wage_details():
 def summary():
     summary = {
         'claimant_details': session.get('user_details'),
-        'employment_details': session.get('employment_details')
+        'employment_details': session.get('employment_details'),
+        'wages_owed': session.get('wages_owed')
     }
     summary_json = json.dumps(summary, indent=4)
     return render_template('summary.html', summary=summary_json, nav_links=nav_links())

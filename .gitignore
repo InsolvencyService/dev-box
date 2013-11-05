@@ -1,6 +1,7 @@
 .vagrant
 *.swp
 *.pyc
+redundancy_payments_alpha/.idea/*
 .idea/workspace.xml
 bin/
 include/
@@ -12,4 +13,3 @@ dist/
 wheelhouse/
 *.egg-info/
 *~
-build/
