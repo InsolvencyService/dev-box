@@ -4,6 +4,7 @@ from werkzeug.utils import redirect
 from forms.claimant_contact_details import ClaimantContactDetails
 from forms.employment_details import EmploymentDetails
 from forms.claimant_wage_details import ClaimantWageDetails
+from forms.holiday_pay import HolidayPay
 
 
 app = Flask(__name__)
@@ -18,7 +19,7 @@ def nav_links():
         ('Employment Details', url_for('employment_details')),
         ('Wage Details', url_for('wage_details')),
         ('Summary', url_for('summary')),
-        ('Wage Details', url_for('wage_details')),
+        ('Holiday Pay', url_for('holiday_pay')),
     ]
     return links
 
@@ -80,8 +81,22 @@ def wage_details():
 
     if form.validate_on_submit():
         session['wage_details'] = form.data
-        return redirect(url_for('done'))
+        return redirect(url_for('summary'))
     return render_template('wage_details.html', form=form, nav_links=nav_links())
+
+@app.route('/claim-redundancy-payment/holiday-pay/', methods=['GET', 'POST'])
+def holiday_pay():
+    existing_form = session.get('holiday_pay')
+
+    if existing_form:
+        form = HolidayPay(**existing_form)
+    else:
+        form = HolidayPay()
+
+    if form.validate_on_submit():
+        session['holiday_pay'] = form.data
+        return redirect(url_for('summary'))
+    return render_template('holiday_pay.html', form=form, nav_links=nav_links())
 
 
 @app.route('/claim-redundancy-payment/summary/', methods=['GET'])

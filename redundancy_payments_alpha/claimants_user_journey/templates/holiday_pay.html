@@ -1,0 +1,34 @@
+{% from "macros/_form_nav.html" import form_nav %}
+{% from "macros/_form_field.html" import form_field %}
+{% extends "base.html" %}
+{% block title %}Holiday pay{% endblock %}
+{% block header %}
+<h1 xmlns="http://www.w3.org/1999/html">Claim Redundancy Payment</h1>
+    <h2 class="subtitle">Please enter your holiday details</h2>
+{% endblock %}
+{% block nav %}
+    {{ form_nav(nav_links) }}
+{% endblock %}
+{% block content %}
+    <h1>Your holiday details</h1>
+        <form method="post" action="/claim-redundancy-payment/holiday-pay/" class="form-example-1">
+            <div>
+                <h2>Holiday Pay</h2>
+                <div>
+                    <fieldset>
+                    {{ form.hidden_tag() }}
+                    {{ form_field(form.holiday_owed) }}
+                    {{ form_field(form.holiday_start_date) }}
+                    {{ form_field(form.number_of_holiday_days_entitled) }}
+                    {{ form_field(form.days_carried_over) }}
+                    {{ form_field(form.days_taken) }}
+                    {{ form_field(form.days_owed) }}
+                    {{ form_field(form.holiday_taken_from) }}
+                    {{ form_field(form.holiday_taken_to) }}
+                    {{ form_field(form.number_of_days_pay_owed) }}
+                    </fieldset>
+                 </div>
+            </div>
+            <input type="submit" value="Submit" />
+        </form>
+{% endblock %}
