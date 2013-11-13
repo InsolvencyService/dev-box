@@ -41,9 +41,12 @@ def step(context):
             nino=context.nino,
             date_of_birth='01/01/1900',
             csrf_token=parse_csrf_token(get_the_page)
-        )
+        ),
+        follow_redirects=True
     )
-    assert_that(response.status_code, is_(302))
+    assert_that(response.status_code, is_(200))
+    page = BeautifulSoup(response.data)
+    assert_that(page.find('h1').text, is_('Your Employee Record'))
 
 @when('the claimant enters the valid wage details')
 def step(context):
@@ -56,6 +59,24 @@ def step(context):
         '/claim-redundancy-payment/wage-details/',
         data=wages_details
     )
-    print response.data
     assert_that(response.status_code, is_(302))
+    assert_that(response.headers, has_entry(
+        'Location',
+        contains_string('/claim-redundancy-payment/wage-details/discrepancies')
+    ))
+    followup_response = context.app.get(
+       '/claim-redundancy-payment/wage-details/discrepancies/' 
+       )
+    assert_that(followup_response.status_code, is_(200))
+    context.followup_response = followup_response
+
+@then('the claimant should see a discrepancy on gross rate of pay')
+def step(context):
+    discrepancy_html = context.followup_response.data
+    page = BeautifulSoup(discrepancy_html)
+    question_element = page.find(id="gross_rate_of_pay_question")
+    assert_that(question_element['class'], contains_string('discrepancy'))
+
+    
+    
 

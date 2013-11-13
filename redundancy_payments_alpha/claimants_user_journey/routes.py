@@ -110,9 +110,22 @@ def wage_details():
 
     if form.validate_on_submit():
         session['wage_details'] = form.data
-        return redirect(url_for('holiday_pay'))
+        return redirect(url_for('wage_details_discrepancies'))
 
     return render_template('wage_details.html', form=form, nav_links=nav_links())
+
+
+@app.route('/claim-redundancy-payment/wage-details/discrepancies/')
+def wage_details_discrepancies():
+    existing_form = session.get('wage_details')
+
+    if existing_form:
+        form = ClaimantWageDetails(**existing_form)
+    else:
+        form = ClaimantWageDetails()
+
+    return render_template('wage_details.html', form=form, nav_links=nav_links())
+
 
 @app.route('/claim-redundancy-payment/holiday-pay/', methods=['GET', 'POST'])
 def holiday_pay():

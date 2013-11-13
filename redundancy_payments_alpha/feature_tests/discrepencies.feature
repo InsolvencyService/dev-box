@@ -27,5 +27,5 @@ Feature: displaying discrepencies to the claimant
             | bonus_or_commission      | No     |
             | overtime                 | Yes    |
             | normal_days_of_work      | 5      |
-        Then the claimant should see the text "something something discrepency..."
+        Then the claimant should see a discrepancy on gross rate of pay
 
