@@ -10,3 +10,5 @@ pyhamcrest==1.8.0
 setuptools-git==1.0
 setuptools==1.3
 wheel==0.22.0
+py-dom-xpath==0.1
+mock==1.0.1
