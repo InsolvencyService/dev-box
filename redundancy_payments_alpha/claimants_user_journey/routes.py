@@ -58,6 +58,21 @@ def personal_details():
         return redirect(url_for('employee_records', nino=form.nino.data))
     return render_template('user_details.html', form=form, nav_links=nav_links())
 
+
+def _find_employee_record(nino):
+    employee_record = None
+    if nino and nino.upper() == 'AB111111C':
+        employee_record = json.dumps(
+            {
+                'forenames': 'John',
+                'nino': 'AB111111C',
+                'gross_rate_of_pay': 25000,
+                'normal_days_of_work': 5
+            }
+        )
+    return employee_record
+
+
 @app.route('/claim-redundancy-payment/employee-records/', methods=['GET'])
 def employee_records():
     try:
@@ -152,3 +167,4 @@ def summary():
     }
     summary_json = json.dumps(summary, indent=4)
     return render_template('summary.html', summary=summary_json, nav_links=nav_links())
+

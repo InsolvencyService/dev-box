@@ -28,4 +28,5 @@ Feature: displaying discrepencies to the claimant
             | overtime                 | Yes    |
             | normal_days_of_work      | 5      |
         Then the claimant should see a discrepancy on gross rate of pay
+         And not see a discrepancy on normal days of work
 
