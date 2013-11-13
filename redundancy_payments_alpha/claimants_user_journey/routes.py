@@ -1,12 +1,13 @@
 import json
-from flask import Flask, render_template, url_for, session, request
-from werkzeug.utils import redirect
-from forms.claimant_contact_details import ClaimantContactDetails
-from forms.employment_details import EmploymentDetails
-from forms.wages_owed import WagesOwed
-from forms.claimant_wage_details import ClaimantWageDetails
-from forms.holiday_pay import HolidayPay
 
+from flask import Flask, render_template, url_for, session, request, abort
+from werkzeug.utils import redirect
+
+from forms.claimant_contact_details import ClaimantContactDetails
+from forms.claimant_wage_details import ClaimantWageDetails
+from forms.employment_details import EmploymentDetails
+from forms.holiday_pay import HolidayPay
+from forms.wages_owed import WagesOwed
 
 app = Flask(__name__)
 app.secret_key = 'something_secure_and_secret'
@@ -45,7 +46,7 @@ def start():
 @app.route('/claim-redundancy-payment/personal-details/', methods=['GET', 'POST'])
 def personal_details():
     existing_form = session.get('user_details')
-    
+
     if existing_form:
         form = ClaimantContactDetails(**existing_form)
     else:
@@ -58,16 +59,18 @@ def personal_details():
 
 
 def _find_employee_record(nino):
-    employee_record = None
     if nino and nino.upper() == 'AB111111C':
         employee_record = json.dumps({'Forenames': 'John'})
-    return employee_record
+        return employee_record
 
 
 @app.route('/claim-redundancy-payment/employee-records/', methods=['GET'])
 def employee_records():
-    employee_record = _find_employee_record(request.args.get('nino'))
-    return render_template('employee_record.html', employee_record=employee_record)
+    try:
+        employee_record = _find_employee_record(request.args['nino'])
+        return render_template('employee_record.html', employee_record=employee_record)
+    except KeyError:
+        return render_template('employee_record.html')
 
 
 @app.route('/claim-redundancy-payment/employment-details/', methods=['GET', 'POST'])
@@ -142,4 +145,3 @@ def summary():
     }
     summary_json = json.dumps(summary, indent=4)
     return render_template('summary.html', summary=summary_json, nav_links=nav_links())
-

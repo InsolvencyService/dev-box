@@ -44,6 +44,8 @@ jenkins::plugin_hash:
         version: "1.3.3"
     notification:
         version: "1.5"
+    ws-cleanup:
+        version: "0.19"
 
 ssl::params::ssl_path: '/etc/ssl'
 ssl::params::ssl_cert_file: 'certs/ssl-cert-snakeoil.pem'
