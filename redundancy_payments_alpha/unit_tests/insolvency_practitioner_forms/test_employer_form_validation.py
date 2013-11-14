@@ -97,7 +97,7 @@ class TestFormValidation(form_test.FormTest):
             postcode='a'*9,
             country='a'*31,
             email_address='a'*61,
-            telephone_number='a'*15
+            telephone_number='a'*41
         )
 
         # when

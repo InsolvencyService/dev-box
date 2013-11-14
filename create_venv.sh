@@ -12,7 +12,6 @@ if [ -z "$VIRTUAL_ENV" -a -n "$WORKON_HOME" ]; then
 
    source "$venvdir/bin/activate"
 
-   # meh - see https://github.com/pypa/pip/issues/56
    pip install -r redundancy_payments_alpha/requirements.dev.txt
 
    cd redundancy_payments_alpha/

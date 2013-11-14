@@ -1,10 +1,11 @@
 {% from 'macros/_form_field.html' import form_field  %}
 <html>
     <head>
-        <title>Add employee details to insolvency case</title>
+        <title>Employee Information from Insolvency Practitioner</title>
     </head>
     <body>
         <form method="post" action="/create-employee-record/employee-details/">
+            <h1>Employee Information from Insolvency Practitioner</h1>
             <fieldset>
                 <legend>About the employer</legend>
                 {{ form_field(form.employer_name) }}
@@ -15,8 +16,8 @@
                 {{ form_field(form.employee_title_other) }}
                 {{ form_field(form.employee_forenames) }}
                 {{ form_field(form.employee_surname) }}
-                {{ form_field(form.employee_national_insurance_class) }}
                 {{ form_field(form.employee_national_insurance_number) }}
+                {{ form_field(form.employee_national_insurance_class) }}
                 {{ form_field(form.employee_date_of_birth) }}
             </fieldset>
             <fieldset>
@@ -28,16 +29,19 @@
                 {{ form_field(form.employee_weekly_pay_day) }}
             </fieldset>
             <fieldset>
-                <legend>Wages owed to the employee</legend>
+                <legend>Periods of arrears for which pay is owed to this employee</legend>
                 {{ form_field(form.employee_owed_wages_from) }}
                 {{ form_field(form.employee_owed_wages_to) }}
                 {{ form_field(form.employee_owed_wages_in_arrears) }}
                 {{ form_field(form.employee_owed_wages_in_arrears_type) }}
             </fieldset>
             <fieldset>
-                <legend>Holiday owed to the employee</legend>
+                <legend>Holiday pay owed to the employee</legend>
                 {{ form_field(form.employee_holiday_year_start_date) }}
                 {{ form_field(form.employee_holiday_owed) }}
+            </fieldset>
+            <fieldset>
+                <legend>Holiday taken and not paid</legend>
                 {{ form_field(form.employee_unpaid_holiday_from) }}
                 {{ form_field(form.employee_unpaid_holiday_to) }}
                 {{ form.hidden_tag() }}

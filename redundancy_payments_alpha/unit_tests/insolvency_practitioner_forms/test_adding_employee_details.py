@@ -1,10 +1,14 @@
 from hamcrest import *
+from mock import patch
 
 from insolvency_practitioner_forms import routes
 import form_test
 
+def return_object():
+    return object()
 
 class TestAddingEmployeeDetails(form_test.FormTest):
+
     def setUp(self):
         self.app = routes.app.test_client()
 
@@ -17,7 +21,7 @@ class TestAddingEmployeeDetails(form_test.FormTest):
             'employee_surname': 'Smith',
             'employee_national_insurance_class': 'z',
             'employee_national_insurance_number': 'ab123456',
-            'employee_date_of_birth': '01/01/1940',
+            'employee_date_of_birth': '20/06/1980',
             'employee_start_date': '01/01/1980',
             'employee_date_of_notice': '01/01/1990',
             'employee_end_date': '05/01/1990',
@@ -35,7 +39,8 @@ class TestAddingEmployeeDetails(form_test.FormTest):
         employee_data.update(kwargs)
         return employee_data
 
-    def test_posting_complete_employee_details_redirects_to_employee_added_page(self):
+    @patch('insolvency_practitioner_forms.routes.get_storage_service')
+    def test_posting_complete_employee_details_redirects_to_employee_added_page(self, mocked_storage_factory):
         response = self.submit_form(
             self.app,
             '/create-employee-record/employee-details/',

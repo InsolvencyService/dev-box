@@ -1,7 +1,8 @@
 Feature: Matching a claimant's personal details to an employee record
 
     Scenario: Claimant provides details which are matched to an employee record
-        Given a claimant with the personal details
+        Given an employee with the nino AB111111C
+        And a claimant with the personal details
             | DETAILS           | VALUE             |
             | forenames         | Donald            |
             | surname           | Duck              |

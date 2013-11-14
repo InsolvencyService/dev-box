@@ -1,10 +1,10 @@
 from behave import *
 from hamcrest import *
-from ..claimants_user_journey import routes
+import claimants_user_journey.routes
 
 @given('the app is running')
 def step(context):
-    context.client = routes.app.test_client()
+    context.client = claimants_user_journey.routes.app.test_client()
 
 @when('we visit {url}')
 def step(context, url):

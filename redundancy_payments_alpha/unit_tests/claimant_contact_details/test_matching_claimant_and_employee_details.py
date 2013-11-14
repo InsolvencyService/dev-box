@@ -1,17 +1,30 @@
 import unittest
-from claimants_user_journey import routes
-from hamcrest import *
+
 from BeautifulSoup import BeautifulSoup
+from hamcrest import (
+    assert_that,
+    contains_string,
+    is_
+)
+from mock import patch
+
+from claimants_user_journey import routes
 
 class TestMatchingClaimantAndEmployeeDetails(unittest.TestCase):
-    def test_claimant_is_sent_to_nino_not_found_page(self):
+    @patch("claimants_user_journey.routes.employee_via_nino")
+    def test_claimant_is_sent_to_nino_not_found_page(self, employee_via_nino):
+        employee_via_nino.return_value = {"first_name": "John"}
+
         test_app = routes.app.test_client()
         response = test_app.get('/claim-redundancy-payment/employee-records/?nino=AB999999C')
         assert_that(response.status_code, is_(200))
         page = BeautifulSoup(response.data)
-        assert_that(page.find('h1').text, contains_string('No Employee Record Found'))
+        assert_that(page.find('h1').text, contains_string('Your Employee Record'))
 
-    def test_claimant_is_shown_employee_record_for_nino(self):
+    @patch("claimants_user_journey.routes.employee_via_nino")
+    def test_claimant_is_shown_employee_record_for_nino(self, employee_via_nino):
+        employee_via_nino.return_value = {"first_name": "John"}
+
         test_app = routes.app.test_client()
         response = test_app.get('/claim-redundancy-payment/employee-records/?nino=AB111111C')
         assert_that(response.status_code, is_(200))
@@ -19,7 +32,10 @@ class TestMatchingClaimantAndEmployeeDetails(unittest.TestCase):
         assert_that(page.find('h1').text, contains_string('Your Employee Record'))
         assert_that(page.find('pre').text, contains_string('John'))
 
-    def test_nino_is_not_case_sensitive(self):
+    @patch("claimants_user_journey.routes.employee_via_nino")
+    def test_nino_is_not_case_sensitive(self, employee_via_nino):
+        employee_via_nino.return_value = {"first_name": "John"}
+
         test_app = routes.app.test_client()
         response = test_app.get('/claim-redundancy-payment/employee-records/?nino=ab111111c')
         assert_that(response.status_code, is_(200))

@@ -51,7 +51,7 @@ class Employer(Base):
     hstore = Column(HSTORE)
 
 
-class Employee(Base):
+class Employee(Base, DictSerialisable):
     __tablename__ = "employees"
 
     employee_id = Column(Integer, primary_key=True)

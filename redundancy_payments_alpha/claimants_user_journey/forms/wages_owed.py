@@ -24,7 +24,7 @@ class WagesOwed(Form):
 
     gross_amount_owed = TextField('Gross amount of pay owed',
                            validators=[RequiredIfFieldHasValue(other_field_name='owed', other_field_value='Yes'),
-                                       Regexp(regex=re.compile('^[0-9]+(\.[0-9][0-9]?)$'),
+                                       Regexp(regex=re.compile('^\d{0,8}(\.\d{0,2})?$'),
                                          message='Gross amount owed must be numeric.')])
 
     failed_payment_from = TextField('From',
@@ -37,5 +37,5 @@ class WagesOwed(Form):
 
 
     net_amount = TextField('Net Amount of bounced cheque or failed payment',
-                           validators=[Regexp(regex=re.compile('^([0-9]+(\.[0-9][0-9]?))?$'),
+                           validators=[Regexp(regex=re.compile('^(\d{0,8}(\.\d{0,2})?$)?$'),
                                          message='Net amount must be numeric.')])

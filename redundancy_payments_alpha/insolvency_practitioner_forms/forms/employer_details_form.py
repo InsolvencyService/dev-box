@@ -5,8 +5,8 @@ from wtforms.validators import DataRequired, ValidationError, Length, AnyOf
 from validators.validators import parses_to_date
 
 class EmployerDetailsForm(Form):
-    company_name  = TextField('Company Name', validators=[DataRequired(), Length(max=60)])
-    company_number  = TextField('Company Number', validators=[Length(max=10)])
+    company_name  = TextField('Name of Employer', validators=[DataRequired(), Length(max=60)])
+    company_number  = TextField('Company Registration Number (if known)', validators=[Length(max=10)])
     nature_of_business  = TextField('Nature of Business', validators=[DataRequired(), Length(max=60)])
     date_of_insolvency  = TextField('Date of Insolvency', validators=[DataRequired(), parses_to_date])
     type_of_insolvency  = SelectField(
@@ -54,7 +54,7 @@ class EmployerDetailsForm(Form):
     postcode  = TextField('Postcode', validators=[DataRequired(), Length(max=8)])
     country  = TextField('Country', validators=[DataRequired(), Length(max=30)])
     email_address  = TextField('Email Address', validators=[DataRequired(), Length(max=60)])
-    telephone_number  = TextField('Telephone Number', validators=[DataRequired(), Length(max=14)])
+    telephone_number  = TextField('Telephone Number', validators=[DataRequired(), Length(max=40)])
 
     def validate_company_number(self, field):
         if field.data:

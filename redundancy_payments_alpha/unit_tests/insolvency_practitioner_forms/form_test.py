@@ -1,5 +1,9 @@
 import unittest
 from BeautifulSoup import BeautifulSoup
+from mock import patch
+
+def get_mock_storage():
+    return object()
 
 class FormTest(unittest.TestCase):
     def _parse_csrf_token(self, response):
@@ -11,6 +15,7 @@ class FormTest(unittest.TestCase):
 
     def submit_form(self, test_client, url, data):
         response = test_client.get(url)
+        print response
         data.update({'csrf_token': self._parse_csrf_token(response)})
         return test_client.post(url, data=data)
 

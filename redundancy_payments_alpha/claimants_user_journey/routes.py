@@ -3,6 +3,7 @@ import json
 from flask import Flask, render_template, url_for, session, request, abort
 from werkzeug.utils import redirect
 
+from birmingham_cabinet.api import employee_via_nino
 from forms.claimant_contact_details import ClaimantContactDetails
 from forms.claimant_wage_details import ClaimantWageDetails
 from forms.employment_details import EmploymentDetails
@@ -57,17 +58,10 @@ def personal_details():
         return redirect(url_for('employee_records', nino=form.nino.data))
     return render_template('user_details.html', form=form, nav_links=nav_links())
 
-
-def _find_employee_record(nino):
-    if nino and nino.upper() == 'AB111111C':
-        employee_record = json.dumps({'Forenames': 'John'})
-        return employee_record
-
-
 @app.route('/claim-redundancy-payment/employee-records/', methods=['GET'])
 def employee_records():
     try:
-        employee_record = _find_employee_record(request.args['nino'])
+        employee_record = employee_via_nino(request.args['nino'])
         return render_template('employee_record.html', employee_record=employee_record)
     except KeyError:
         return render_template('employee_record.html')

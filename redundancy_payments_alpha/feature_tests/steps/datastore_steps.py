@@ -77,13 +77,13 @@ def step(context):
 @when("we add a dictionary containing sample rp14a details")
 def step(context):
     context.form = {
-        "ip_number": "9314",
-        "telephone_number": "0121 123 4567",
-        'forenames': 'Donald',
-        'surname': 'Duck',
-        'title': 'Mr',
-        'date_of_birth': '01/01/1900',
-        'nino': 'AA112233B',
+        #"ip_number": "9314",  TODO: see api.py
+        "employee_telephone_number": "0121 123 4567",
+        'employee_forenames': 'Donald',
+        'employee_surname': 'Duck',
+        'employee_title': 'Mr',
+        'employee_date_of_birth': '01/01/1900',
+        'employee_national_insurance_number': 'AA112233B',
         "employer_name": "Mickey Mouse Enterprises",
     }
     add_rp14a_form(context.form)
@@ -93,7 +93,7 @@ def step(context):
     session = make_session()
     try:
         employee = session.query(Employee).all() [0]
-        assert_that(employee.ip_number, is_(context.form["ip_number"]))
+        assert_that(employee.nino, is_(context.form["employee_national_insurance_number"]))
         decode_hstore = {key: json.loads(value)
                          for key, value in employee.hstore.items()}
         assert_that(decode_hstore, is_(context.form))
