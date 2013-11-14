@@ -7,8 +7,9 @@ packages:
   - ack-grep
   - aptitude
   - cron
+  - curl
   - dstat
-  - git-core
+  - git
   - htop
   - iotop
   - mailutils
@@ -17,8 +18,8 @@ packages:
   - manpages
   - screen
   - sysstat
+  - tmux
   - traceroute
   - tree
   - vim-nox
   - zip
-  - tmux
