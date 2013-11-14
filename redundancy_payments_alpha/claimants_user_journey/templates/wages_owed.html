@@ -15,15 +15,23 @@
         <form method="post" action="/claim-redundancy-payment/wages-owed-details/" class="form-example-1">
             <div>
                 {{ form.hidden_tag() }}
-                {{ form_field(form.owed) }}
+                <fieldset>
+                <p class="inline option group">
+                    {% for x in form.owed %}
+                        {{ x.label }}
+                        {{ x }}
+                    {% endfor %}
+                </p>
                 {{ form_field(form.wage_owed_from, hint="Use the dd/mm/yyyy format, for example 01/01/1975") }}
                 {{ form_field(form.wage_owed_to, hint="Use the dd/mm/yyyy format, for example 01/01/1975") }}
                 {{ form_field(form.number_of_days_owed) }}
                 {{ form_field(form.gross_amount_owed) }}
-                <h4 class="subtitle">Failed Payment - If your employer attempted to pay your wages and that payment failed (e.g cheque bounced) please provide details below:</h4>
+                <h2 class="subtitle">Failed Payment</h2>
+                <p>If your employer attempted to pay your wages and that payment failed (e.g cheque bounced) please provide details below:</p>
                 {{ form_field(form.failed_payment_from, hint="Use the dd/mm/yyyy format, for example 01/01/1975") }}
                 {{ form_field(form.failed_payment_to, hint="Use the dd/mm/yyyy format, for example 01/01/1975") }}
                 {{ form_field(form.net_amount) }}
+                </fieldset>
              </div>
             <input type="submit" value="Submit" />
         </form>

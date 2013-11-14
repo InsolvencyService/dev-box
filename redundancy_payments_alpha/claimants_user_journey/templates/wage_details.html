@@ -21,18 +21,20 @@
                             <legend>How much do you get paid</legend>
                             {{ form_field(form.gross_rate_of_pay) }}
                             {{ form_field(form.frequency_of_payment) }}
+                            {{ form_field(form.day_of_payment) }}
                         </fieldset>
                         <fieldset>
                             <legend>How much do you work</legend>
                             {{ form_field(form.number_of_hours_worked) }}
-                            {{ form_field(form.frequency_of_work) }}
                         </fieldset>
                     {{ form_field(form.bonus_or_commission) }}
                     {{ form_field(form.overtime) }}
+                    {{ form_field(form.hours_of_overtime) }}
+                    {{ form_field(form.frequency_of_overtime) }}
                     {{ form_field(form.normal_days_of_work) }}
                     </fieldset>
                  </div>
             </div>
-            <input type="submit" value="Submit" />
+            <input class="button" type="submit" value="Save and Continue" />
         </form>
 {% endblock %}

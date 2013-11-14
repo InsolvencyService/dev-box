@@ -7,8 +7,8 @@ from claimants_user_journey.forms.validators import DateOfBirthValidator
 
 
 class ClaimantContactDetails(Form):
-    forenames = TextField('First name(s)', validators=[DataRequired(), Length(max=60)])
-    surname = TextField('Last name', validators=[DataRequired(), Length(max=60)])
+    forenames = TextField('First name(s)', validators=[DataRequired('Please enter your first name'), Length(max=60)])
+    surname = TextField('Last name', validators=[DataRequired('Please enter your last name'), Length(max=60)])
     title = SelectField('Title',
                         choices=[
                             ('Mr', 'Mr'),
@@ -27,7 +27,8 @@ class ClaimantContactDetails(Form):
                             'Ms',
                             'Dr',
                             'Other'
-                        ])])
+                        ],
+                        message='Please choose a title.')])
     other = TextField('Other', validators=[Length(max=15)])
 
     def validate_other(form, field):
@@ -35,18 +36,19 @@ class ClaimantContactDetails(Form):
         if claimants_title.data == 'Other' and not field.data:
             raise ValidationError("Field is required if 'Other' is selected.")
 
-    building_number = StringField('Building Number', validators=[DataRequired(), Length(max=30)])
-    street = TextField('Street', validators=[DataRequired(), Length(max=30)])
-    district = TextField('District', validators=[DataRequired(), Length(max=30)])
-    town_or_city = TextField('Town or City', validators=[DataRequired(), Length(max=30)])
-    county = TextField('County', validators=[DataRequired(), Length(max=30)])
-    postcode = TextField('Post Code', validators=[DataRequired(), Length(max=10)])
-    email = EmailField('Email Address', validators=[DataRequired(), Length(max=320), Email()])
-    telephone_number = TelField('Telephone Number', validators=[DataRequired()])
+    building_number = StringField('Building Number', validators=[DataRequired('Please enter your Building Number'), Length(max=30)])
+    street = TextField('Street', validators=[DataRequired('Please enter your Street'), Length(max=30)])
+    district = TextField('District', validators=[DataRequired('Please enter your District'), Length(max=30)])
+    town_or_city = TextField('Town or City', validators=[DataRequired('Please enter your Town or City'), Length(max=30)])
+    county = TextField('County', validators=[DataRequired('Please enter your County'), Length(max=30)])
+    postcode = TextField('Post Code', validators=[DataRequired('Please enter your Post Code'), Length(max=10)])
+    email = EmailField('Email Address', validators=[DataRequired('Please enter your Email Address'), Length(max=320), Email()])
+    telephone_number = TelField('Telephone Number', validators=[DataRequired('Please enter your Telephone Number')])
     nino = TextField('National Insurance Number',
-                     validators=[DataRequired(),
+                     validators=[DataRequired('Please enter your National Insurance Number'),
                                  Regexp(regex=re.compile('^[A-Z]{2}[0-9]{6}[A-Z]{1}$'),
                                         message="National Insurance Number must be two letters followed by six digits and a further letter (e.g. 'AB123456C').")])
     date_of_birth = TextField('Date Of Birth',
-                              validators=[DataRequired(), DateOfBirthValidator(format_message="Date Of Birth must be in the format dd/mm/yyyy.")])
+                              validators=[DataRequired('Please enter your Date of Birth'),
+                                          DateOfBirthValidator(format_message="Date Of Birth must be in the format dd/mm/yyyy.")])
 
