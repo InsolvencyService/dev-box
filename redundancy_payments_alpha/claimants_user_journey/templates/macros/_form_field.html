@@ -9,5 +9,8 @@
             {% endfor %}
         {% endif %}
         {% if hint %}<span class="hint">{{ hint }}</span>{% endif %}
+        {% if field.id in discrepancies.keys() %}
+            <span class="hint">{{ discrepancies[field.id]|discrepancy_message(field.id) }}</span>
+        {% endif %}
     </p>
 {% endmacro %}

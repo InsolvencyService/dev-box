@@ -9,6 +9,10 @@ class _Claim(object):
     @property
     def discrepancies(self):
         result = {}
+        # FIXME: this should live in an entity object somewhere else
+        if 'gross_rate_of_pay' in self.claimant_information.keys():
+            self.employee_record.update({'gross_rate_of_pay': self.employee_record['employee_basic_weekly_pay']})
+
         # only compare values which are present in both the claimant and employee details
         for key in set(self.claimant_information.keys()).intersection(self.employee_record.keys()):
             claimant_value = self.claimant_information[key]

@@ -15,6 +15,14 @@ app.secret_key = 'something_secure_and_secret'
 app.debug = True
 
 
+def discrepancy_message(discrepancy, name):
+    messages = {
+        'gross_rate_of_pay': 'The value you provided was %s but the insolvency practitioner handling this case suggested %s.' % (discrepancy[0], discrepancy[1])
+    }
+    return messages.get(name)
+
+app.jinja_env.filters['discrepancy_message'] = discrepancy_message 
+
 def nav_links():
     links = [
         ('Start', url_for('start')),

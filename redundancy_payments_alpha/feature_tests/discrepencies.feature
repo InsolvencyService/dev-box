@@ -10,18 +10,12 @@ Feature: displaying discrepencies to the claimant
             | employee_surname                   | Smith      |
             | ip_number                          | 0000       |
             | employer_name                      | Widgets Co |
-            | frequency_of_payment               | Month      | 
-            | gross_rate_of_pay                  | 25000      |
-            | frequency_of_work                  | Day        |
-            | number_of_hours_worked             | 12         |
-            | bonus_or_commission                | 0          |
-            | overtime                           | 0          |
-            | normal_days_of_work                | 5          |
+            | employee_basic_weekly_pay          | 550        |
           And the claimant is matched to the employee details
          When the claimant enters the valid wage details
             | NAME                     | VALUE  |
-            | frequency_of_payment     | Month  | 
-            | gross_rate_of_pay        | 26000  |
+            | frequency_of_payment     | Week   | 
+            | gross_rate_of_pay        | 600    |
             | frequency_of_work        | Day    |
             | number_of_hours_worked   | 12     |
             | bonus_or_commission      | No     |
