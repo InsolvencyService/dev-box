@@ -24,6 +24,11 @@ def step(context, expected_subtitle):
     assert_that(context.response.data,
                 contains_string('<h4 class="subtitle">%s</h4>' % expected_subtitle))
 
+@then('the page should have section titled "{expected_section_title}"')
+def step(context, expected_section_title):
+    assert_that(context.response.data,
+                contains_string('<legend>%s</legend>' % expected_section_title))
+
 @then('the page should have an input field called "{input_name}" labeled "{label_name}"')
 def step(context, input_name, label_name):
     #TODO: better testing for HTML elements
