@@ -46,7 +46,7 @@ sudo dpkg -i vagrant.deb
   - `workon rps`
   - `cd redundancy_payments_alpha/`
 - You should now be able to run `./run_tests.sh` to run the tests or
-  `./redundancy_payment_service` to run the server
+  `./redundancy_payments_service` to run the server
 - Once the server is running, you can access the webpage on http://localhost:8000/
 
 ### More info
