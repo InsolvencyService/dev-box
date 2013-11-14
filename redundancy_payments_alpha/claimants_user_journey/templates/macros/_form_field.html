@@ -1,5 +1,5 @@
-{% macro form_field(field, hint=None, optional=False) %}
-    <p class="group {% if field.errors %}validation{% endif %} discrepancy" id="{{ field.id }}_question">
+{% macro form_field(field, discrepancies={}, hint=None, optional=False) %}
+    <p class="group {% if field.errors %}validation{% endif %} {% if field.id in discrepancies.keys() %} discrepancy {% endif %}" id="{{ field.id }}_question">
         {{ field.label }}
         {{ field }}
         {% if optional %}<span>&nbsp;(optional)</span>{% endif %}

@@ -1,4 +1,4 @@
-
+from birmingham_cabinet.api import employee_via_nino
 
 class _Claim(object):
     
@@ -19,8 +19,9 @@ class _Claim(object):
         return result
 
 def create_claim(personal_details):
-    if personal_details['nino'] =='AB333333D':
-        return _Claim(None, None)
- 
+    employee_details = employee_via_nino(personal_details["nino"])
+    if employee_details == None:
+        return None
     else:
-        return None 
+        return _Claim(personal_details, employee_details)
+ 

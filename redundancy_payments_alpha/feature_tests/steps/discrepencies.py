@@ -46,7 +46,7 @@ def step(context):
     )
     assert_that(response.status_code, is_(200))
     page = BeautifulSoup(response.data)
-    assert_that(page.find('h1').text, is_('Your Employee Record'))
+    assert_that(page.find('h1').text, is_('Claim Redundancy Payment'))
 
 @when('the claimant enters the valid wage details')
 def step(context):
@@ -79,10 +79,10 @@ def step(context):
     assert_that(question_element['class'], contains_string('discrepancy'))
 
 
-@then('not see a discrepancy on normal days of work')
+@then('not see a discrepancy on frequency of work')
 def step(context):
     discrepancy_html = context.followup_response.data
     page = BeautifulSoup(discrepancy_html)
-    question_element = page.find(id="gross_rate_of_pay_question")
+    question_element = page.find(id="frequency_of_work_question")
     assert_that(question_element['class'], is_not(contains_string('discrepancy')))
 

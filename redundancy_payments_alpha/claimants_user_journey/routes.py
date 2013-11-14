@@ -3,7 +3,7 @@ import json
 from flask import Flask, render_template, url_for, session, request, abort
 from werkzeug.utils import redirect
 
-from birmingham_cabinet.api import employee_via_nino
+from claim_service.api import create_claim
 from forms.claimant_contact_details import ClaimantContactDetails
 from forms.claimant_wage_details import ClaimantWageDetails
 from forms.employment_details import EmploymentDetails
@@ -55,31 +55,17 @@ def personal_details():
 
     if form.validate_on_submit():
         session['user_details'] = form.data
-        return redirect(url_for('employee_records', nino=form.nino.data))
+        claim = create_claim(session['user_details'])
+        if claim:
+            return redirect(url_for('employment_details'))
+        else:
+            return redirect(url_for('call_your_ip'))
     return render_template('user_details.html', form=form, nav_links=nav_links())
 
 
-def _find_employee_record(nino):
-    employee_record = None
-    if nino and nino.upper() == 'AB111111C':
-        employee_record = json.dumps(
-            {
-                'forenames': 'John',
-                'nino': 'AB111111C',
-                'gross_rate_of_pay': 25000,
-                'normal_days_of_work': 5
-            }
-        )
-    return employee_record
-
-
-@app.route('/claim-redundancy-payment/employee-records/', methods=['GET'])
-def employee_records():
-    try:
-        employee_record = employee_via_nino(request.args['nino'])
-        return render_template('employee_record.html', employee_record=employee_record)
-    except KeyError:
-        return render_template('employee_record.html')
+@app.route('/claim-redundancy-payment/call-your-ip/', methods=['GET'])
+def call_your_ip():
+    return render_template('employee_record.html')
 
 
 @app.route('/claim-redundancy-payment/employment-details/', methods=['GET', 'POST'])
@@ -127,19 +113,25 @@ def wage_details():
         session['wage_details'] = form.data
         return redirect(url_for('wage_details_discrepancies'))
 
-    return render_template('wage_details.html', form=form, nav_links=nav_links())
+    return render_template('wage_details.html', form=form, nav_links=nav_links(),
+            discrepancies={})
 
 
 @app.route('/claim-redundancy-payment/wage-details/discrepancies/')
 def wage_details_discrepancies():
     existing_form = session.get('wage_details')
+    user_details  = session['user_details']
+    user_details.update(existing_form)
+
+    claim = create_claim(user_details)
 
     if existing_form:
         form = ClaimantWageDetails(**existing_form)
     else:
         form = ClaimantWageDetails()
 
-    return render_template('wage_details.html', form=form, nav_links=nav_links())
+    return render_template('wage_details.html', form=form, nav_links=nav_links(),
+        discrepancies=claim.discrepancies)
 
 
 @app.route('/claim-redundancy-payment/holiday-pay/', methods=['GET', 'POST'])
