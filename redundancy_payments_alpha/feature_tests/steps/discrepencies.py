@@ -10,7 +10,7 @@ def step(context):
     for key, value in context.table:
         employee_details[key] = value
     api.add_rp14a_form(employee_details)
-    context.nino = employee_details['nino']
+    context.nino = employee_details['employee_national_insurance_number']
 
 def parse_csrf_token(response):
     # in order to post form data back to the app
