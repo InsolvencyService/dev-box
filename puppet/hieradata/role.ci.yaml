@@ -4,6 +4,7 @@ classes:
  - rps_jenkins
  - rps_postgres
 packages:
+  - virtualenvwrapper
   - ruby1.9.1
   - ruby1.9.1-dev
   - build-essential
