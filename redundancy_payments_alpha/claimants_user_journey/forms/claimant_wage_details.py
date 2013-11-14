@@ -11,21 +11,11 @@ class ClaimantWageDetails(Form):
 
     frequency_of_payment = SelectField('How often do you get paid?',
                     choices=[
-                        ('Hour', 'Hour'),
-                        ('Day', 'Day'),
-                        ('Week', 'Week'),
-                        ('Month', 'Month'),
-                        ('Year', 'Year'),
-                        ('', '')
+                        ('Week', 'Week')
                     ],
                     default='',
                     validators=[AnyOf(values=[
-                        'Hour',
-                        'Day',
-                        'Week',
-                        'Month',
-                        'Year',
-                        ''
+                        'Week'
                     ])])
 
     number_of_hours_worked = TextField('Number of hours you normally work', validators=[DataRequired(), Regexp(regex=re.compile('^\d{0,2}(\.\d{0,2})?$'),
