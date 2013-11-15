@@ -13,22 +13,10 @@ class ClaimantWageDetails(Form):
 
     frequency_of_payment = SelectField('every',
                     choices=[
-                        ('Hour', 'Hour'),
-                        ('Day', 'Day'),
-                        ('Week', 'Week'),
-                        ('Month', 'Month'),
-                        ('Year', 'Year'),
-                        ('', '')
+                        ('Week', 'Week')
                     ],
                     default='',
-                    validators=[AnyOf(values=[
-                        'Hour',
-                        'Day',
-                        'Week',
-                        'Month',
-                        'Year',
-                        ''
-                    ],
+                    validators=[AnyOf(values=['Week'],
                     message='Please enter how often you get paid your gross rate of pay')])
 
     day_of_payment = SelectField('What day of the week do you get paid?',
@@ -99,12 +87,13 @@ class ClaimantWageDetails(Form):
                     ],
                     default='',
                     validators=[AnyOf(values=[
-                        '1'
-                        '2'
-                        '3'
-                        '4'
-                        '5'
-                        '6'
-                        '7'
-                    ])])
+                                            '1',
+                                            '2',
+                                            '3',
+                                            '4',
+                                            '5',
+                                            '6',
+                                            '7'
+                                        ],
+                                      message='Please choose how many days you normally work each week')])
 

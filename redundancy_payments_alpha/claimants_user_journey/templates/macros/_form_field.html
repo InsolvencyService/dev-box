@@ -1,5 +1,5 @@
-{% macro form_field(field, hint=None, optional=False, inline=False) %}
-    <p class="group {% if field.errors %}validation{% endif %}">
+{% macro form_field(field, discrepancies={}, hint=None, optional=False, inline=False) %}
+    <p class="group {% if field.errors %}validation{% endif %} {% if field.id in discrepancies.keys() %} discrepancy {% endif %}" id="{{ field.id }}_question">
         {{ field.label }}
         {% if inline %}<div class="inline-choice">{% endif %}
         {{ field }}
@@ -11,5 +11,8 @@
             {% endfor %}
         {% endif %}
         {% if hint %}<span class="hint">{{ hint }}</span>{% endif %}
+        {% if field.id in discrepancies.keys() %}
+            <span class="hint">{{ discrepancies[field.id]|discrepancy_message }}</span>
+        {% endif %}
     </p>
 {% endmacro %}

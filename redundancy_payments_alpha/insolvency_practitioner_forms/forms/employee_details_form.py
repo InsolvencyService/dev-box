@@ -30,25 +30,26 @@ class EmployeeDetailsForm(Form):
 
     employee_forenames = TextField('Forenames', validators=[Length(max=40), DataRequired()])
     employee_surname = TextField('Surname', validators=[Length(max=60), DataRequired()])
-    employee_national_insurance_class = TextField('National insurance class')
 
-    def validate_employee_national_insurance_class(self, field):
-        if field.data and not re.match("^[A-Za-z]{1}$", field.data):
-            raise ValidationError('National insurance class must be a single letter.')
-
-    employee_national_insurance_number = TextField('National insurance number', validators=[DataRequired()])
+    employee_national_insurance_number = TextField('National Insurance Number', validators=[DataRequired()])
 
     def validate_employee_national_insurance_number(self, field):
         if field.data and not re.match('^[A-Za-z]{2}[0-9]{6}[A-Za-z]{0,1}$', field.data):
             raise ValidationError('National insurance number should be two letters followed by six numbers and an optional letter')
 
-    employee_date_of_birth = DateField('Date of birth', format='%d/%m/%Y', validators=[InputRequired()])
-    employee_start_date = DateField('Start date', format='%d/%m/%Y', validators=[InputRequired()])
-    employee_date_of_notice = DateField('Date notice was given', format='%d/%m/%Y', validators=[InputRequired()])
-    employee_end_date = DateField('End date', format='%d/%m/%Y', validators=[InputRequired()])
-    employee_basic_weekly_pay = DecimalField('Basic weekly pay', validators=[DataRequired()])
+    employee_national_insurance_class = TextField('NI Class')
+
+    def validate_employee_national_insurance_class(self, field):
+        if field.data and not re.match("^[A-Za-z]{1}$", field.data):
+            raise ValidationError('National insurance class must be a single letter.')
+
+    employee_date_of_birth = DateField('Date of Birth', format='%d/%m/%Y', validators=[InputRequired()])
+    employee_start_date = DateField('Employment Start Date', format='%d/%m/%Y', validators=[InputRequired()])
+    employee_date_of_notice = DateField('Date Notice Given', format='%d/%m/%Y', validators=[InputRequired()])
+    employee_end_date = DateField('Employment End Date', format='%d/%m/%Y', validators=[InputRequired()])
+    employee_basic_weekly_pay = DecimalField('Basic Weekly Pay', validators=[DataRequired()])
     employee_weekly_pay_day = SelectField(
-        'If paid weekly on which day of week?',
+        'If paid weekly, on what day of the week?',
         default='',
         choices = [
             ('', ''),
@@ -61,9 +62,9 @@ class EmployeeDetailsForm(Form):
             ('saturday', 'Saturday')
         ]
     )
-    employee_owed_wages_from = DateField('Employee owed wages from', format='%d/%m/%Y', validators=[InputRequired()])
-    employee_owed_wages_to = DateField('Employee owed wages to', format='%d/%m/%Y', validators=[InputRequired()])
-    employee_owed_wages_in_arrears = TextField('Owed wages in arrears', validators=[DataRequired()])
+    employee_owed_wages_from = DateField('Period 1 From', format='%d/%m/%Y', validators=[InputRequired()])
+    employee_owed_wages_to = DateField('Period 1 To', format='%d/%m/%Y', validators=[InputRequired()])
+    employee_owed_wages_in_arrears = TextField('Arrears of pay amount', validators=[DataRequired()])
     employee_owed_wages_in_arrears_type = SelectField(
         'Arrears of pay type',
         default = '',
@@ -76,7 +77,7 @@ class EmployeeDetailsForm(Form):
             ('commission','commission')
         ]
     )
-    employee_holiday_year_start_date = DateField('Holiday year start date', format='%d/%m/%Y', validators=[InputRequired()])
-    employee_holiday_owed = DecimalField('Number of days holiday owed', validators=[DataRequired()])
-    employee_unpaid_holiday_from = DateField('Unpaid holiday from', format='%d/%m/%Y', validators=[InputRequired()])
-    employee_unpaid_holiday_to = DateField('Unpaid holiday to', format='%d/%m/%Y', validators=[InputRequired()])
+    employee_holiday_year_start_date = DateField('Holiday Year Start Date', format='%d/%m/%Y', validators=[InputRequired()])
+    employee_holiday_owed = DecimalField('Total number of days holiday owed', validators=[DataRequired()])
+    employee_unpaid_holiday_from = DateField('Unpaid holiday From', format='%d/%m/%Y', validators=[InputRequired()])
+    employee_unpaid_holiday_to = DateField('Unpaid holiday To', format='%d/%m/%Y', validators=[InputRequired()])

@@ -15,6 +15,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                     path: "vagrant-bootstrap.sh",
                     args: "localdev localdev"
       development.ssh.forward_agent = true
+      if Vagrant.has_plugin?('vagrant-cachier')
+        config.cache.auto_detect = true
+      end
     end
 
 #    config.vm.define "jenkins" do |jenkins|
