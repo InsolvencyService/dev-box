@@ -75,7 +75,6 @@ def step(context):
 def step(context):
     discrepancy_html = context.followup_response.data
     page = BeautifulSoup(discrepancy_html)
-    print page
     question_element = page.find(id="gross_rate_of_pay_question")
     assert_that(question_element['class'], contains_string('discrepancy'))
 
@@ -84,6 +83,6 @@ def step(context):
 def step(context):
     discrepancy_html = context.followup_response.data
     page = BeautifulSoup(discrepancy_html)
-    question_element = page.find(id="frequency_of_work_question")
+    question_element = page.find(id="normal_days_of_work_question")
     assert_that(question_element['class'], is_not(contains_string('discrepancy')))
 
