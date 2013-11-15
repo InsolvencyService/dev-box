@@ -1,26 +1,22 @@
 import json
 
-from flask import Flask, render_template, url_for, session, request, abort
+from flask import Flask, render_template, url_for, session
 from werkzeug.utils import redirect
 
 from claim_service.api import create_claim
+from claimants_user_journey.view_filters.filters import setup_filters
 from forms.claimant_contact_details import ClaimantContactDetails
 from forms.claimant_wage_details import ClaimantWageDetails
 from forms.employment_details import EmploymentDetails
 from forms.holiday_pay import HolidayPay
 from forms.wages_owed import WagesOwed
 
+
 app = Flask(__name__)
 app.secret_key = 'something_secure_and_secret'
 app.debug = True
+setup_filters(app)
 
-
-def discrepancy_message(discrepancy):
-    return 'The value you provided was %s but the insolvency ' \
-           'practitioner handling this case ' \
-           'suggested %s.' % (discrepancy[0], discrepancy[1])
-
-app.jinja_env.filters['discrepancy_message'] = discrepancy_message 
 
 def nav_links():
     links = [
@@ -166,4 +162,3 @@ def summary():
     }
     summary_json = json.dumps(summary, indent=4)
     return render_template('summary.html', summary=summary_json, nav_links=nav_links())
-
