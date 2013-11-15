@@ -117,7 +117,7 @@ def wage_details():
 
     if form.validate_on_submit():
         session['wage_details'] = form.data
-        details = dict(session['wage_details'].items()
+        details = dict(form.data.items()
             + session['user_details'].items())
         
         if len(_get_discrepancies(details)):
