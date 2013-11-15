@@ -1,7 +1,9 @@
-{% macro form_field(field, hint=None, optional=False) %}
+{% macro form_field(field, hint=None, optional=False, inline=False) %}
     <p class="group {% if field.errors %}validation{% endif %}">
         {{ field.label }}
+        {% if inline %}<div class="inline-choice">{% endif %}
         {{ field }}
+        {% if inline %}</div>{% endif %}
         {% if optional %}<span>&nbsp;(optional)</span>{% endif %}
         {% if field.errors %}
             {% for error in field.errors %}

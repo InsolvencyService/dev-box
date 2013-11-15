@@ -27,8 +27,8 @@
                             <legend>How much do you work</legend>
                             {{ form_field(form.number_of_hours_worked) }}
                         </fieldset>
-                    {{ form_field(form.bonus_or_commission) }}
-                    {{ form_field(form.overtime) }}
+                    {{ form_field(form.bonus_or_commission, inline=True) }}
+                    {{ form_field(form.overtime, inline=True) }}
                     {{ form_field(form.hours_of_overtime) }}
                     {{ form_field(form.frequency_of_overtime) }}
                     {{ form_field(form.normal_days_of_work) }}

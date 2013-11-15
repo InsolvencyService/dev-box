@@ -15,7 +15,7 @@
             <fieldset>
                 <legend>Holiday Pay</legend>
                 {{ form.hidden_tag() }}
-                {{ form_field(form.holiday_owed) }}
+                {{ form_field(form.holiday_owed, inline=True) }}
                 {{ form_field(form.holiday_start_date, hint="Use the dd/mm/yyyy format, for example 01/01/1975") }}
                 {{ form_field(form.number_of_holiday_days_entitled) }}
                 {{ form_field(form.days_carried_over) }}
@@ -28,6 +28,6 @@
                 {{ form_field(form.holiday_taken_to, hint="Use the dd/mm/yyyy format, for example 01/01/1975") }}
                 {{ form_field(form.number_of_days_pay_owed) }}
             </fieldset>
-            <input type="submit" value="Submit" />
+            <input class="button" type="submit" value="Save and Continue" />
         </form>
 {% endblock %}

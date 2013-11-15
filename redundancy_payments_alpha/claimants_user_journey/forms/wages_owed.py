@@ -1,18 +1,17 @@
 import re
 from flask_wtf import Form
 from wtforms import TextField, RadioField
-from wtforms.validators import Regexp
+from wtforms.validators import Regexp, DataRequired, AnyOf
 from validators import RequiredIfFieldHasValue
 
 
 class WagesOwed(Form):
 
-    owed = RadioField('Are you owed any wages?', choices=[('No','No'),('Yes','Yes')])
-                    #,
-                      #validators=[DataRequired('Please choose an option'), AnyOf(values=[
-                      #                   'Yes',
-                      #                   'No'
-                      #               ]]))
+    owed = RadioField('Are you owed any wages?', choices=[('Yes','Yes'),('No','No')],
+                      validators=[DataRequired('Please choose an option'), AnyOf(values=[
+                                         'Yes',
+                                         'No'
+                                     ], message='Please choose an option')])
 
     wage_owed_from = TextField('From',
                            validators=[RequiredIfFieldHasValue(other_field_name='owed', other_field_value='Yes', message='Please enter a from date'),

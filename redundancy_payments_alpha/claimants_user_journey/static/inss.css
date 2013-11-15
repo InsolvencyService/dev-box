@@ -77,3 +77,19 @@
     font-size: 14px;
     line-height: 1.14286;
 }
+}
+
+
+.inline-choice label {
+    display: inline-block !important;
+    line-height: 10px !important;
+    padding-right: 8px !important;
+}
+
+.inline-choice input {
+    display: inline-block !important;
+}
+
+.inline-choice ul {
+    list-style-type: none;
+}
