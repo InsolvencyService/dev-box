@@ -57,24 +57,18 @@ def step(context):
     wages_details.update({'csrf_token': parse_csrf_token(get_the_page)})
     response = context.app.post(
         '/claim-redundancy-payment/wage-details/',
-        data=wages_details
+        data=wages_details,
+        follow_redirects=True
     )
-    assert_that(response.status_code, is_(302))
-    assert_that(response.headers, has_entry(
-        'Location',
-        contains_string('/claim-redundancy-payment/wage-details/discrepancies')
-    ))
-    followup_response = context.app.get(
-       '/claim-redundancy-payment/wage-details/discrepancies/' 
-       )
-    assert_that(followup_response.status_code, is_(200))
-    context.followup_response = followup_response
+    assert_that(response.status_code, is_(200))
+    context.followup_response = response
 
 
 @then('the claimant should see a discrepancy on gross rate of pay')
 def step(context):
     discrepancy_html = context.followup_response.data
     page = BeautifulSoup(discrepancy_html)
+    assert_that(page.find('h2').text, is_('Please enter your wage details'))
     question_element = page.find(id="gross_rate_of_pay_question")
     assert_that(question_element['class'], contains_string('discrepancy'))
 
@@ -85,4 +79,10 @@ def step(context):
     page = BeautifulSoup(discrepancy_html)
     question_element = page.find(id="normal_days_of_work_question")
     assert_that(question_element['class'], is_not(contains_string('discrepancy')))
+
+
+@then('the claimant should see the next page of the form')
+def step(context):
+    page = BeautifulSoup(context.followup_response.data)
+    assert_that(page.find('h2').text, contains_string('Please enter your holiday details'))
 
