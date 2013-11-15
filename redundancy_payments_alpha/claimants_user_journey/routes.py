@@ -20,7 +20,6 @@ setup_filters(app)
 
 def nav_links():
     links = [
-        ('Start', url_for('start')),
         ('Personal Details', url_for('personal_details')),
         ('Employment Details', url_for('employment_details')),
         ('Wage Details', url_for('wage_details')),
@@ -44,7 +43,7 @@ def claim_redundancy_payment():
 
 @app.route('/claim-redundancy-payment/start/')
 def start():
-    return render_template('start.html', nav_links=nav_links())
+    return render_template('start.html')
 
 
 @app.route('/claim-redundancy-payment/personal-details/', methods=['GET', 'POST'])
@@ -63,7 +62,7 @@ def personal_details():
             return redirect(url_for('employment_details'))
         else:
             return redirect(url_for('call_your_ip'))
-    return render_template('user_details.html', form=form, nav_links=nav_links())
+    return render_template('user_details.html', form=form)
 
 
 @app.route('/claim-redundancy-payment/call-your-ip/', methods=['GET'])
