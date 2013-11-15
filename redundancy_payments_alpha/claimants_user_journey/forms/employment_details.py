@@ -5,7 +5,7 @@ from claimants_user_journey.forms.validators import FutureDateValidator
 
 
 class EmploymentDetails(Form):
-    job_title = TextField('Job Title', validators=[DataRequired(), Length(max=30)])
+    job_title = TextField('Job Title', validators=[Length(max=30)])
     category_of_worker = SelectField('Category of Worker',
                                      choices=[
                                          ('Employed', 'Employed'),
@@ -28,12 +28,13 @@ class EmploymentDetails(Form):
                                          'Freelance worker',
                                          'Casual worker',
                                          'Home worker',
-                                     ])])
+                                     ],
+                                     message='Please choose a Category of Worker')])
     start_date = TextField('When did you start working for this employer?',
-                           validators=[DataRequired(),
+                           validators=[DataRequired('Please enter the date you started working for this employer'),
                                        FutureDateValidator(format_message="Start date must be in the format dd/mm/yyyy.",
                                                            future_message='Start date cannot be in the future.')])
     end_date = TextField('When did your employment end?',
-                           validators=[DataRequired(),
+                           validators=[DataRequired('Please enter the date you stopped working for this employer'),
                                        FutureDateValidator(format_message="End date must be in the format dd/mm/yyyy.",
                                                            future_message='End date cannot be in the future.')])

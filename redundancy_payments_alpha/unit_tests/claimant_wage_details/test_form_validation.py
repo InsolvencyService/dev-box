@@ -15,11 +15,10 @@ def complete_form_data():
     form = {
         'frequency_of_payment': 'Month',
         'gross_rate_of_pay': '18000.00',
-        'frequency_of_work': 'Year',
         'number_of_hours_worked': '40',
         'bonus_or_commission': 'No',
         'overtime': 'Yes',
-        'normal_days_of_work': 5
+        'normal_days_of_work': '5'
     }
     return form
 
@@ -84,7 +83,7 @@ class TestGrossRateOfPay(unittest.TestCase):
         form = complete_form(entered_data)
         form.validate()
         # then
-        assert_that(form.gross_rate_of_pay.errors, has_item('This field is required.'))
+        assert_that(form.gross_rate_of_pay.errors, has_item('Please enter your gross rate of pay'))
 
     def test_gross_rate_of_pay_accepts_number_without_decimals(self):
         #given
@@ -137,37 +136,6 @@ class TestGrossRateOfPay(unittest.TestCase):
         assert_that(form.gross_rate_of_pay.errors, has_item('Gross rate of pay must be a number e.g 100.25.'))
 
 
-class TestFrequencyOfWorkField(unittest.TestCase):
-    def test_frequency_of_work_cannot_be_empty(self):
-        #given
-        entered_data = complete_form_data()
-        entered_data['frequency_of_work'] = ''
-        # when
-        form = complete_form(entered_data)
-        form.validate()
-        # then
-        assert_that(form.frequency_of_work.errors, has_item('This field is required.'))
-
-    def test_frequency_of_work_allows_valid_data(self):
-        #given
-        entered_data = complete_form_data()
-        entered_data['frequency_of_work'] = 'Year'
-        # when
-        form = complete_form(entered_data)
-        form.validate()
-        # then
-        assert_that(form.frequency_of_work.errors, has_length(0))
-
-    def test_frequency_of_work_does_not_allow_invalid_data(self):
-        #given
-        entered_data = complete_form_data()
-        entered_data['frequency_of_work'] = 'Not Valid'
-        # when
-        form = complete_form(entered_data)
-        form.validate()
-        # then
-        assert_that(form.frequency_of_work.errors, has_item('Invalid value, must be one of: Hour, Day, Week, Month, Year.'))
-
 class TestNumberOfHoursWorked(unittest.TestCase):
     def test_number_of_hours_worked_accepts_valid_data(self):
         #given
@@ -186,7 +154,7 @@ class TestNumberOfHoursWorked(unittest.TestCase):
         form = complete_form(entered_data)
         form.validate()
         # then
-        assert_that(form.number_of_hours_worked.errors, has_item('This field is required.'))
+        assert_that(form.number_of_hours_worked.errors, has_item('Please enter the number of hours you normally work'))
 
     def test_number_of_hours_worked_accepts_number_without_decimals(self):
         #given
@@ -279,14 +247,14 @@ class TestOvertime(unittest.TestCase):
         assert_that(form.overtime.errors, has_item("Invalid value, must be one of: Yes, No."))
 
 class TestNormalDaysOfWork(unittest.TestCase):
-    def test_normal_days_of_work_accepts_an_integer(self):
-        # given
-        entered_data = complete_form_data()
-        # when
-        form = complete_form(entered_data)
-        form.validate()
-        # then
-        assert_that(form.normal_days_of_work.errors, has_length(0))
+    #def test_normal_days_of_work_accepts_an_integer(self):
+    #    # given
+    #    entered_data = complete_form_data()
+    #    # when
+    #    form = complete_form(entered_data)
+    #    form.validate()
+    #    # then
+    #    assert_that(form.normal_days_of_work.errors, has_length(0))
 
     def test_normal_days_of_work_will_not_accept_alpha_character(self):
         # given
@@ -296,7 +264,7 @@ class TestNormalDaysOfWork(unittest.TestCase):
         form = complete_form(entered_data)
         form.validate()
         # then
-        assert_that(form.normal_days_of_work.errors, has_item('Number must be between 0 and 7.'))
+        assert_that(form.normal_days_of_work.errors, has_item('Please choose how many days you normally work each week'))
 
     def test_normal_days_of_work_will_not_accept_more_than_one_digit(self):
         # given
@@ -306,7 +274,7 @@ class TestNormalDaysOfWork(unittest.TestCase):
         form = complete_form(entered_data)
         form.validate()
         # then
-        assert_that(form.normal_days_of_work.errors, has_item('Number must be between 0 and 7.'))
+        assert_that(form.normal_days_of_work.errors, has_item('Please choose how many days you normally work each week'))
 
     #issues with the DataRequired validator as zero is falsy
 #    def test_normal_days_of_work_will_accept_zero(self):

@@ -1,8 +1,8 @@
-from behave import *
+from hamcrest import *
 from birmingham_cabinet import api
 from claimants_user_journey.routes import app
-from hamcrest import *
 from BeautifulSoup import BeautifulSoup
+
 
 @given('the IP has provided the employee details')
 def step(context):
@@ -77,7 +77,7 @@ def step(context):
 def step(context):
     discrepancy_html = context.followup_response.data
     page = BeautifulSoup(discrepancy_html)
-    question_element = page.find(id="frequency_of_work_question")
+    question_element = page.find(id="normal_days_of_work_question")
     assert_that(question_element['class'], is_not(contains_string('discrepancy')))
 
 

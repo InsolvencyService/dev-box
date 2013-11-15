@@ -72,7 +72,7 @@ class TestCategoryOfWorker(unittest.TestCase):
         form = complete_form(entered_data)
         form.validate()
         # then
-        assert_that(form.category_of_worker.errors, has_item('Invalid value, must be one of: Employed, Labour-only Sub-contractor, Agency Worker, Fixed-term contracts work, Director or Shareholder, Freelance worker, Casual worker, Home worker.'))
+        assert_that(form.category_of_worker.errors, has_item('Please choose a Category of Worker'))
 
 class TestStartDate(unittest.TestCase):
     def test_start_date_field_allows_a_valid_date(self):
