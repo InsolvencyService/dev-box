@@ -102,6 +102,10 @@ def wages_owed():
     return render_template('wages_owed.html', form=form, nav_links=nav_links())
 
 
+def _get_discrepancies(claimant_info):
+    return create_claim(claimant_info).discrepancies
+
+
 @app.route('/claim-redundancy-payment/wage-details/', methods=['GET', 'POST'])
 def wage_details():
     existing_form = session.get('wage_details')
@@ -113,7 +117,13 @@ def wage_details():
 
     if form.validate_on_submit():
         session['wage_details'] = form.data
-        return redirect(url_for('wage_details_discrepancies'))
+        details = dict(session['wage_details'].items()
+            + session['user_details'].items())
+        
+        if len(_get_discrepancies(details)):
+            return redirect(url_for('wage_details_discrepancies'))
+        else:
+            return redirect(url_for('holiday_pay'))
 
     return render_template('wage_details.html', form=form, nav_links=nav_links(),
             discrepancies={})
@@ -161,3 +171,4 @@ def summary():
     }
     summary_json = json.dumps(summary, indent=4)
     return render_template('summary.html', summary=summary_json, nav_links=nav_links())
+
