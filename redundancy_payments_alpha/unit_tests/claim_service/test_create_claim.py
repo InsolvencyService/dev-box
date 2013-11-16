@@ -2,7 +2,7 @@ from decimal import Decimal
 import unittest
 from hamcrest import *
 from mock import patch
-from claim_service.api import create_claim, _Claim, create_claim_2
+from claim_service.api import create_claim, _Claim, add_details_to_claim, create_claim_2
 
 class TestCreateClaim(unittest.TestCase):
     @patch('claim_service.api.employee_via_nino')
@@ -48,6 +48,20 @@ class TestCreateClaim2(unittest.TestCase):
         }
         claim_id = create_claim_2(personal_details)
         assert_that(claim_id, is_(None))
+
+
+class TestAddDetailsToClaim(unittest.TestCase):
+    @patch('claim_service.api.update_claim')
+    def test_add_details_to_claim(self, mock_update_claim):
+        mock_update_claim.return_value = ({'a': '_'},{'b': '_'})
+        claim_id = 12
+        claimant_details = {'a': 'b'}
+        claim = add_details_to_claim(claim_id, claimant_details)
+        mock_update_claim.assert_called_with(
+            claim_id,
+            claimant_information=claimant_details
+        )
+
 
 class TestClaim(unittest.TestCase):
     def test_discrepacies_are_detected(self):
