@@ -1,5 +1,5 @@
-from birmingham_cabinet.api import employee_via_nino
-
+from birmingham_cabinet.api import employee_via_nino, get_claim
+from discrepancies import comparable_values
 
 class _Claim(object):
     _mappings = {
@@ -41,3 +41,13 @@ def create_claim(personal_details):
         return None
     else:
         return _Claim(personal_details, employee_details)
+
+
+def find_discrepancies(claim_id):
+    claim = get_claim(claim_id)
+    discrepancies = {entry: values for entry, values in comparable_values(claim).iteritems() if values[0] != values[1]} 
+    return discrepancies
+
+
+def make_claim():
+    pass
