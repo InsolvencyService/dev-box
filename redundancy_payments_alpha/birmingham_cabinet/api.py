@@ -76,25 +76,28 @@ def add_rp14a_form(dictionary):
         session.commit()
 
 
-def add_claim(dictionary):
+def add_claim(claimant_information, employee_record):
     with contextlib.closing(make_session()) as session:
         claim = Claim()
-        claim.claim_id = dictionary.pop('claim_id')
-        claim.hstore = dictionary
+        claim.claimant_information = claimant_information
+        claim.employee_record = employee_record
         session.add(claim)
         session.commit()
+        return claim.claim_id
 
 
 def get_claim(claim_id):
     with contextlib.closing(make_session()) as session:
         claim = session.query(Claim).filter(Claim.claim_id==claim_id).one()
-        return claim.hstore
+        return (claim.claimant_information, claim.employee_record)
 
 
-def update_claim(dictionary):
+def update_claim(claim_id, claimant_information=None, employee_record=None):
     with contextlib.closing(make_session()) as session:
-        claim_id = dictionary.pop('claim_id')
         claim = session.query(Claim).filter(Claim.claim_id==claim_id).one()
-        claim.hstore = dictionary
+        if claimant_information:
+            claim.claimant_information = claimant_information
+        if employee_record:
+            claim.employee_record = employee_record
         session.commit()
 

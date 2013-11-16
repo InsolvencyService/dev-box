@@ -67,6 +67,7 @@ class Employee(Base, DictSerialisable):
 
 class Claim(Base):
     __tablename__ = "claims"
-    claim_id = Column(Integer, primary_key=True)
-    hstore = Column(HSTORE)
+    claim_id = Column('gid', Integer, primary_key=True, autoincrement=True)
+    claimant_information = Column(HSTORE)
+    employee_record = Column(HSTORE)
 
