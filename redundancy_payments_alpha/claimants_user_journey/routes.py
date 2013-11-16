@@ -3,7 +3,6 @@ import json
 from flask import Flask, render_template, url_for, session, request
 from werkzeug.utils import redirect
 
-from claim_service.api import create_claim
 import claim_service.api as claim_service
 from claimants_user_journey.view_filters.filters import setup_filters
 from forms.claimant_contact_details import ClaimantContactDetails
