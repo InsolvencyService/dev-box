@@ -1,13 +1,7 @@
 def comparable_values(claim):
-    values = {}
+    claimant_values, employee_record_values = claim
     mappings = {
         'gross_rate_of_pay': 'employee_basic_weekly_pay'
     }
-
-    for claimant_key, employee_key in mappings.items():
-        values.update(
-            {claimant_key: (claim[0][claimant_key],claim[1][employee_key])}
-        )
-
-    return values
+    return {k: (claimant_values[k],employee_record_values[v]) for k, v in mappings.iteritems()}
 
