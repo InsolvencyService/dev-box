@@ -1,7 +1,10 @@
 from decimal import Decimal
 import unittest
+from datetime import date
+
 from hamcrest import *
 from mock import patch
+
 from claim_service.api import create_claim, _Claim, add_details_to_claim, create_claim_2
 
 class TestCreateClaim(unittest.TestCase):
@@ -32,13 +35,30 @@ class TestCreateClaim2(unittest.TestCase):
     @patch('claim_service.api.add_claim')
     @patch('claim_service.api.employee_via_nino')
     def test_claims_get_created_with_matching_records(self, mock_employee, mock_add_claim):
-        mock_employee.return_value = 'foo'
+        mock_employee.return_value = {'foo':'bar'}
         mock_add_claim.return_value = 1
         personal_details = {
             'nino': 'AB012345Z'
         }
         claim_id = create_claim_2(personal_details)
-        mock_add_claim.assert_called_with(personal_details, 'foo')
+        mock_add_claim.assert_called_with(personal_details, {'foo':'bar'})
+
+    @patch('claim_service.api.add_claim')
+    @patch('claim_service.api.employee_via_nino')
+    def test_all_details_are_violently_to_stringed(self, mock_employee, mock_add_claim):
+        mock_employee.return_value = {
+            'employee_start_date': date(1990,1,1)
+        }
+        mock_add_claim.return_value = 1
+        personal_details = {
+            'some_other_date': date(1990,2,2), 
+            'nino': 'AB012345Z'
+        }
+        claim_id = create_claim_2(personal_details)
+        mock_add_claim.assert_called_with(
+            {'some_other_date': '1990-02-02', 'nino':'AB012345Z'},
+            {'employee_start_date': '1990-01-01'}
+        )
 
     @patch('claim_service.api.employee_via_nino')
     def test_claims_dont_get_created_if_no_record_is_found(self, mock_employee):

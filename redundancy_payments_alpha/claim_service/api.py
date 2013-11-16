@@ -49,12 +49,19 @@ def find_discrepancies(claim_id):
     return discrepancies
 
 
+def _stringify(dictionary):
+    return {k: str(v) for k, v in dictionary.iteritems() }
+
+
 def create_claim_2(personal_details):
     claim_id = None
     nino = personal_details['nino']
     employee_record = employee_via_nino(nino)
     if employee_record:
-        claim_id = add_claim(personal_details, employee_record)
+        claim_id = add_claim(
+            _stringify(personal_details),
+            _stringify(employee_record)
+        )
     return claim_id
 
 
