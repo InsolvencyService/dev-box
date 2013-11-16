@@ -10,7 +10,7 @@ def find_discrepancies(claim_id):
 
 def _stringify(dictionary):
     # This is evil and should obviously be fixed once
-    # the doman model has solidfied a bit more
+    # the domain model has solidified a bit more
     def _force_string(thing):
         try:
             return str(thing)
