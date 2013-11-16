@@ -143,7 +143,7 @@ def wage_details_discrepancies():
         return redirect(url_for('holiday_pay'))
     elif request.method == 'POST' and not form.validate():
         session['wage_detals'] = form.data
-        return redirect(url_for('wage_details'))
+        return redirect(url_for('wage_details', data=form.data), code=307)
 
     discrepancies = {}
     if claim_id:
