@@ -30,3 +30,4 @@ class TestEmployee(unittest.TestCase):
         add_rp14a_form(employee_dict)
         employee = employee_via_nino(nino)
         assert_that(employee, is_(employee_dict))
+

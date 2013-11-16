@@ -19,3 +19,4 @@ def make_session():
         Session = sessionmaker()
         Session.configure(bind=local_unix_socket_engine)
         return Session()
+

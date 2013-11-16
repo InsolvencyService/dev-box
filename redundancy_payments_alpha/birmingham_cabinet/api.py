@@ -4,7 +4,7 @@ from datetime import date, datetime
 
 from sqlalchemy.orm.exc import NoResultFound
 
-from models import Claimant, Employer, Employee
+from models import Claim, Claimant, Employer, Employee
 from base import make_session, Base, local_unix_socket_engine
 from customized_json import encode_special_types, decode_special_types
 
@@ -74,3 +74,17 @@ def add_rp14a_form(dictionary):
                            for key, value in dictionary.items()}
         session.add(employee)
         session.commit()
+
+def add_claim(dictionary):
+    with contextlib.closing(make_session()) as session:
+        claim = Claim()
+        claim.claim_id = dictionary.pop('claim_id')
+        claim.hstore = dictionary
+        session.add(claim)
+        session.commit()
+
+def get_claim(claim_id):
+    with contextlib.closing(make_session()) as session:
+        claim = session.query(Claim).filter(Claim.claim_id==claim_id).one()
+        return claim.hstore
+

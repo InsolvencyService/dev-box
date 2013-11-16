@@ -63,3 +63,10 @@ class Employee(Base, DictSerialisable):
     date_of_birth = Column(Date, nullable=False)
     ip_number = Column(Text, nullable=False)
     hstore = Column(HSTORE)
+
+
+class Claim(Base):
+    __tablename__ = "claims"
+    claim_id = Column(Integer, primary_key=True)
+    hstore = Column(HSTORE)
+
