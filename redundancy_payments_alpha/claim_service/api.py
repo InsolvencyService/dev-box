@@ -9,7 +9,14 @@ def find_discrepancies(claim_id):
 
 
 def _stringify(dictionary):
-    return {k: str(v) for k, v in dictionary.iteritems() }
+    # This is evil and should obviously be fixed once
+    # the doman model has solidfied a bit more
+    def _force_string(thing):
+        try:
+            return str(thing)
+        except Exception:
+            return ':('
+    return {k: _force_string(v) for k, v in dictionary.iteritems() }
 
 
 def create_claim_2(personal_details):
@@ -26,6 +33,7 @@ def create_claim_2(personal_details):
 
 def add_details_to_claim(claim_id, claimant_details):
     claim = get_claim(claim_id)
-    claimant_details.update(claim[0])
-    update_claim(claim_id, claimant_information=claimant_details)
+    details = _stringify(claimant_details)
+    details.update(claim[0])
+    update_claim(claim_id, claimant_information=details)
 
