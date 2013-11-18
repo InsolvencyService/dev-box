@@ -1,3 +1,4 @@
+from contextlib import contextmanager
 from os import environ
 
 from fabric.api import (
@@ -86,14 +87,26 @@ def run_puppet(role, deploy_env):
         run('sudo rm -rf puppet puppet.tgz puppet-secrets.tgz')
 
 
+@contextmanager
+def virtualenv(virtualenv_name):
+    def ensure_virtualenv_exists(venv_name):
+        virtualenvs = run("lsvirtualenv").split("\n")
+        if venv_name not in virtualenvs:
+            run("mkvirtualenv {venv_name}".format(**locals()))
+            with prefix("workon {venv_name}".format(**locals())):
+                run("pip install --upgrade pip==1.4.1")
+                run("pip install --upgrade setuptools==1.3.2")
+
+    with prefix("source /etc/bash_completion.d/virtualenvwrapper"):
+        ensure_virtualenv_exists(virtualenv_name)
+        with prefix("workon {virtualenv_name}".format(**locals())):
+            yield
+
+
 @task
 def deploy_app_from_master():
-    sudo("mkdir -p /srv/rps-alpha/")
-    sudo("chown -Rv ubuntu /srv/rps-alpha")
-    with prefix("source /etc/bash_completion.d/virtualenvwrapper"):
-        ensure_virtualenv_exists("rps")
-        with prefix("workon rps"):
-            run("pip install -e git+https://git@github.com/InsolvencyService/rps-alpha.git#egg=redundancy_payments_alpha")
+    with virtualenv("rps"):
+        run("pip install --upgrade -e git+https://git@github.com/InsolvencyService/rps-alpha.git#egg=redundancy_payments_alpha")
     ensure_upstart()
     ensure_nginx()
 
@@ -111,12 +124,3 @@ def ensure_nginx():
     sudo("rm /etc/nginx/conf.d/*")
     put("redundancy-payments-service.nginx", "/etc/nginx/conf.d/redundancy-payments-service.conf", use_sudo=True)
     sudo("/etc/init.d/nginx restart")
-
-
-def ensure_virtualenv_exists(venv_name):
-    virtualenvs = run("lsvirtualenv").split("\n")
-    if venv_name not in virtualenvs:
-        run("mkvirtualenv {venv_name}".format(**locals()))
-        with prefix("workon {venv_name}".format(**locals())):
-            run("pip install --upgrade pip==1.4.1")
-            run("pip install --upgrade setuptools==1.3.2")
