@@ -1,0 +1,16 @@
+description "Redundancy Payments Service"
+
+start on runlevel [2345]
+stop on runlevel [06]
+
+respawn
+respawn limit 1 100
+
+script
+    /bin/bash <<EOT
+sudo su ubuntu
+source /etc/bash_completion.d/virtualenvwrapper
+workon rps
+insolvency_practitioner_app
+EOT
+end script
