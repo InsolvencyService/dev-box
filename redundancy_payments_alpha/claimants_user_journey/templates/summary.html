@@ -13,6 +13,7 @@
     <h1>Review your claim</h1>
     <form method="post" action="/claim-redundancy-payment/summary/" class="form-example-1">
         <div>
+            {% if session['user_details'] is defined %}
             <table>
                 <caption>Personal details</caption>
                 <tr><th>Title</th><td>
@@ -35,12 +36,15 @@
                 <tr><th>Contact number</th><td>{{ session['user_details'].telephone_number }}</td></tr>
                 <tr><th>Email address</th><td>{{ session['user_details'].email }}</td></tr>
             </table>
+            {% endif %}
+            {% if session['employment_details'] is defined %}
             <table>
                 <caption>Employer details</caption>
                 <tr><th>Job title</th><td>Mr</td></tr>
                 <tr><th>Category of worker</th><td>Employed</td></tr>
                 <tr><th>Dates of employment</th><td>01/01/2012 to 02/02/2012</td></tr>
             </table>
+            {% endif %}
             {% if session['wage_details'] is defined %}
             <table>
                 <caption>Wage Details</caption>

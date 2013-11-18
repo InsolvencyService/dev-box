@@ -169,6 +169,8 @@ def holiday_pay():
 
 @app.route('/claim-redundancy-payment/summary/', methods=['GET'])
 def summary():
+    discrepancies = {}
+
     claim_id = session.get('claim_id')
     if claim_id:
         discrepancies = claim_service.find_discrepancies(claim_id)
