@@ -86,10 +86,12 @@
                 <div class="article-container group">
                     <div class="contents">
                         <nav>
+                            {% if not hide_nav %}
                             <h2>Contents</h2>
                             <div class='link-list'>
                                 {% block nav %}{% endblock %}
                             </div>
+                            {% endif %}
                         </nav>
                     </div>
                     <section>

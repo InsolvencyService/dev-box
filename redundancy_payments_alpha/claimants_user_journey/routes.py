@@ -41,7 +41,7 @@ def claim_redundancy_payment():
 
 @app.route('/claim-redundancy-payment/start/')
 def start():
-    return render_template('start.html')
+    return render_template('start.html', hide_nav=True)
 
 
 @app.route('/claim-redundancy-payment/personal-details/', methods=['GET', 'POST'])
@@ -61,7 +61,7 @@ def personal_details():
             return redirect(url_for('employment_details'))
         else:
             return redirect(url_for('call_your_ip'))
-    return render_template('user_details.html', form=form)
+    return render_template('user_details.html', form=form, hide_nav=True)
 
 
 @app.route('/claim-redundancy-payment/call-your-ip/', methods=['GET'])
@@ -135,12 +135,12 @@ def wage_details_discrepancies():
     claim_id = session.get('claim_id')
 
     if form.validate_on_submit():
-        session['wage_detals'] = form.data
+        session['wage_details'] = form.data
         if claim_id:
             claim_service.add_details_to_claim(claim_id, form.data)
         return redirect(url_for('holiday_pay'))
     elif request.method == 'POST' and not form.validate():
-        session['wage_detals'] = form.data
+        session['wage_details'] = form.data
         return redirect(url_for('wage_details', data=form.data), code=307)
 
     discrepancies = {}
