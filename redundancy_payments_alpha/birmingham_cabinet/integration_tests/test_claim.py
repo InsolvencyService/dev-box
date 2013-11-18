@@ -52,10 +52,16 @@ class TestClaim(unittest.TestCase):
         }
 
         claim_id = add_claim(claimant_data, employee_record)
+        
+        claim = get_claim(claim_id)
+
+        assert_that(claim[0]['foo'], is_('bar'))
+        assert_that(claim[1]['foo'], is_('baz'))
+        
         update_claim(claim_id, claimant_information=updated_claimant_data)
 
-        claim = get_claim(claim_id)
-        assert_that(claim[0]['zap'], is_('pow'))
-        assert_that(claim[0]['foo'], is_('mongoose'))
-        assert_that(claim[1]['foo'], is_('baz'))
+        updated_claim = get_claim(claim_id)
+        assert_that(updated_claim[0]['zap'], is_('pow'))
+        assert_that(updated_claim[0]['foo'], is_('mongoose'))
+        assert_that(updated_claim[1]['foo'], is_('baz'))
 
