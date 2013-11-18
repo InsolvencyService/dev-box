@@ -1,16 +1,15 @@
 import json
 
-from flask import Flask, render_template, url_for, session
+from flask import Flask, render_template, url_for, session, request
 from werkzeug.utils import redirect
 
-from claim_service.api import create_claim
+import claim_service.api as claim_service
 from claimants_user_journey.view_filters.filters import setup_filters
 from forms.claimant_contact_details import ClaimantContactDetails
 from forms.claimant_wage_details import ClaimantWageDetails
 from forms.employment_details import EmploymentDetails
 from forms.holiday_pay import HolidayPay
 from forms.wages_owed import WagesOwed
-
 
 app = Flask(__name__)
 app.secret_key = 'something_secure_and_secret'
@@ -57,8 +56,9 @@ def personal_details():
 
     if form.validate_on_submit():
         session['user_details'] = form.data
-        claim = create_claim(session['user_details'])
-        if claim:
+        claim_id = claim_service.create_claim_2(form.data)
+        if claim_id:
+            session['claim_id'] = claim_id
             return redirect(url_for('employment_details'))
         else:
             return redirect(url_for('call_your_ip'))
@@ -102,10 +102,6 @@ def wages_owed():
     return render_template('wages_owed.html', form=form, nav_links=nav_links())
 
 
-def _get_discrepancies(claimant_info):
-    return create_claim(claimant_info).discrepancies
-
-
 @app.route('/claim-redundancy-payment/wage-details/', methods=['GET', 'POST'])
 def wage_details():
     existing_form = session.get('wage_details')
@@ -117,33 +113,42 @@ def wage_details():
 
     if form.validate_on_submit():
         session['wage_details'] = form.data
-        details = dict(form.data.items()
-            + session['user_details'].items())
-        
-        if len(_get_discrepancies(details)):
-            return redirect(url_for('wage_details_discrepancies'))
-        else:
-            return redirect(url_for('holiday_pay'))
+        claim_id = session.get('claim_id')
+        if claim_id:
+            claim_service.add_details_to_claim(claim_id, form.data)
+            discrepancies = claim_service.find_discrepancies(claim_id)
+            if len(discrepancies):
+                return redirect(url_for('wage_details_discrepancies'))
+        return redirect(url_for('holiday_pay'))
 
     return render_template('wage_details.html', form=form, nav_links=nav_links(),
             discrepancies={})
 
 
-@app.route('/claim-redundancy-payment/wage-details/discrepancies/')
+@app.route('/claim-redundancy-payment/wage-details/discrepancies/', methods=['GET','POST'])
 def wage_details_discrepancies():
     existing_form = session.get('wage_details')
-    user_details  = session['user_details']
-    user_details.update(existing_form)
-
-    claim = create_claim(user_details)
-
     if existing_form:
         form = ClaimantWageDetails(**existing_form)
     else:
         form = ClaimantWageDetails()
 
+    claim_id = session.get('claim_id')
+    
+    if form.validate_on_submit():
+        session['wage_detals'] = form.data
+        if claim_id:
+            claim_service.add_details_to_claim(claim_id, form.data)
+        return redirect(url_for('holiday_pay'))
+    elif request.method == 'POST' and not form.validate():
+        session['wage_detals'] = form.data
+        return redirect(url_for('wage_details', data=form.data), code=307)
+
+    discrepancies = {}
+    if claim_id:
+        discrepancies = claim_service.find_discrepancies(claim_id)
     return render_template('wage_details.html', form=form, nav_links=nav_links(),
-        discrepancies=claim.discrepancies)
+        discrepancies=discrepancies)
 
 
 @app.route('/claim-redundancy-payment/holiday-pay/', methods=['GET', 'POST'])
