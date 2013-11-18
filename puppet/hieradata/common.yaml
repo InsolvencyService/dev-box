@@ -5,6 +5,7 @@ classes:
   - rps_python
   - harden
   - firewall
+  - fail2ban
 packages:
   - ack-grep
   - aptitude
