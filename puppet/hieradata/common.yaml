@@ -3,6 +3,7 @@ classes:
   - base
   - shell
   - rps_python
+  - fail2ban
 packages:
   - ack-grep
   - aptitude
