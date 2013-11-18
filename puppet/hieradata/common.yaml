@@ -6,12 +6,14 @@ classes:
   - harden
   - firewall
   - fail2ban
+
 packages:
   - ack-grep
   - aptitude
   - cron
   - curl
   - dstat
+  - fail2ban
   - git
   - htop
   - iotop
