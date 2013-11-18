@@ -93,3 +93,9 @@
 .inline-choice ul {
     list-style-type: none;
 }
+
+.form-example-1 .discrepancy_field{
+    background-color:#d5e8f3 !important;
+    border-color:#2b8cc4;
+    color:#2b8cc4;
+}

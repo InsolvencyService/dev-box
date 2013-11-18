@@ -1,0 +1,11 @@
+{% macro summary_row(label, field_name, field, discrepancies={}) %}
+    <tr>
+        <th>{{ label }}</th>
+        <td>{{ field }}</td>
+        {% if discrepancies[field_name] is defined %}
+            <td class="discrepancy_field">Your Insolvency Practitioner has suggested <strong>{{ discrepancies[field_name][1] }}</strong></td>
+        {% else %}
+            <td></td>
+        {% endif %}
+    </tr>
+{% endmacro %}
