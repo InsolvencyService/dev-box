@@ -2,8 +2,25 @@ server {
     listen 80 default_server;
     server_name _;
 
+    # FIXME: Required for static content for the claimant journey
     location / {
         proxy_pass http://localhost:8000;
+        proxy_set_header Host $host;
+    }
+
+    location /claim-redundancy-payment {
+        proxy_pass http://localhost:8000;
+        proxy_set_header Host $host;
+    }
+
+    # FIXME: A common url prefix would be nice
+    location /create-insolvency-case {
+        proxy_pass http://localhost:8001;
+        proxy_set_header Host $host;
+    }
+
+    location /create-employee-record {
+        proxy_pass http://localhost:8001;
         proxy_set_header Host $host;
     }
 }

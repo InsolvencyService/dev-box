@@ -105,7 +105,7 @@ def virtualenv(virtualenv_name):
 @task
 def deploy_app_from_master():
     with virtualenv("rps"):
-        run("pip install --upgrade -e git+https://git@github.com/InsolvencyService/rps-alpha.git#egg=redundancy_payments_alpha")
+        run("pip install -e git+https://git@github.com/InsolvencyService/rps-alpha.git#egg=redundancy_payments_alpha")
     ensure_upstart()
     ensure_nginx()
 
