@@ -169,11 +169,11 @@ def holiday_pay():
 
 @app.route('/claim-redundancy-payment/summary/', methods=['GET'])
 def summary():
-    summary = {
-        'claimant_details': session.get('user_details'),
-        'employment_details': session.get('employment_details'),
-        'wages_owed': session.get('wages_owed')
-    }
-    summary_json = json.dumps(summary, indent=4)
-    return render_template('summary.html', summary=summary_json, nav_links=nav_links())
+    discrepancies = {}
+
+    claim_id = session.get('claim_id')
+    if claim_id:
+        discrepancies = claim_service.find_discrepancies(claim_id)
+
+    return render_template('summary.html', discrepancies=discrepancies, nav_links=nav_links())
 

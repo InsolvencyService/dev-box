@@ -34,6 +34,6 @@ def create_claim_2(personal_details):
 def add_details_to_claim(claim_id, claimant_details):
     claim = get_claim(claim_id)
     details = _stringify(claimant_details)
-    details.update(claim[0])
+    claim[0].update(details)
     update_claim(claim_id, claimant_information=details)
 

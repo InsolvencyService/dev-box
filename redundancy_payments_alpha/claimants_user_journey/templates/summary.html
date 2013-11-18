@@ -1,4 +1,5 @@
 {% from "macros/_form_nav.html" import form_nav %}
+{% from "macros/_summary_row.html" import summary_row %}
 {% extends 'base.html' %}
 {% block title %}Done{% endblock %}
 {% block header %}
@@ -9,5 +10,63 @@
     {{ form_nav(nav_links) }}
 {% endblock %}
 {% block content %}
-<pre>{{ summary }}</pre>
+    <h1>Review your claim</h1>
+    <form method="post" action="/claim-redundancy-payment/summary/" class="form-example-1">
+        <div>
+            {% if session['user_details'] is defined %}
+            <table>
+                <caption>Personal details</caption>
+                <tr><th>Title</th><td>
+                    {% if session['user_details'].other_title is defined %}
+                    {{ session['user_details'].other_title }}
+                    {% else %}
+                    {{ session['user_details'].title }}
+                    {% endif %}
+                </td></tr>
+                <tr><th>Name</th><td>{{ session['user_details'].forenames + ' ' + session['user_details'].surname }}</td></tr>
+                <tr><th>National Insurance Number</th><td>{{ session['user_details'].nino }}</td></tr>
+                <tr><th>Date of birth</th><td>{{ session['user_details'].date_of_birth }}</td></tr>
+                <tr><th>Address</th><td>
+                    {% if session['user_details'].building_number is defined %}{{ session['user_details'].building_number }}<br/>{% endif %}
+                    {% if session['user_details'].street is defined %}{{ session['user_details'].street }}<br/>{% endif %}
+                    {% if session['user_details'].district is defined %}{{ session['user_details'].district }}<br/>{% endif %}
+                    {% if session['user_details'].town_or_city is defined %}{{ session['user_details'].town_or_city }}<br/>{% endif %}
+                    {% if session['user_details'].county is defined %}{{ session['user_details'].county }}<br/>{% endif %}
+                    {% if session['user_details'].postcode is defined %}{{ session['user_details'].postcode }}<br/>{% endif %}
+                <tr><th>Contact number</th><td>{{ session['user_details'].telephone_number }}</td></tr>
+                <tr><th>Email address</th><td>{{ session['user_details'].email }}</td></tr>
+            </table>
+            {% endif %}
+            {% if session['employment_details'] is defined %}
+            <table>
+                <caption>Employer details</caption>
+                <tr><th>Job title</th><td>Mr</td></tr>
+                <tr><th>Category of worker</th><td>Employed</td></tr>
+                <tr><th>Dates of employment</th><td>01/01/2012 to 02/02/2012</td></tr>
+            </table>
+            {% endif %}
+            {% if session['wage_details'] is defined %}
+            <table>
+                <caption>Wage Details</caption>
+                {{ summary_row('Gross pay', 'gross_rate_of_pay', session['wage_details'].gross_rate_of_pay, discrepancies) }}
+                {{ summary_row('Day of the week paid on', 'day_of_payment', session['wage_details'].day_of_payment, discrepancies) }}
+                {{ summary_row('Number of hours normally worked', 'number_of_hours_worked', session['wage_details'].number_of_hours_worked, discrepancies) }}
+                {{ summary_row('Bonus or commission included', 'bonus_or_commission', session['wage_details'].bonus_or_commission, discrepancies) }}
+                {{ summary_row('Work overtime', 'hours_of_overtime', session['wage_details'].hours_of_overtime, discrepancies) }}
+            </table>
+            {% endif %}
+            {% if session['wages_owed'] is defined %}
+            <table>
+                <caption>Wages Owed</caption>
+                <tr><th>Period owed</th><td>{{ session['wages_owed'].wage_owed_from }} to {{ session['wages_owed'].wage_owed_to }}</td></tr>
+                <tr><th>Number of days owed</th><td>{{ session['wages_owed'].number_of_days_owed }}</td></tr>
+                <tr><th>Gross amount owed</th><td>{{ session['wages_owed'].gross_amount_owed }}</td></tr>
+            </table>
+            {% endif %}
+              <div class="ip-information-summary">
+                    <p>Message about contacting your IP before proceeding goes here e.g. <strong>0800 100 300</strong></p>
+                  </div>
+         </div>
+        <input class="button" type="submit" value="Process claim">
+    </form>
 {% endblock %}
