@@ -106,6 +106,7 @@ def virtualenv(virtualenv_name):
 def deploy_app_from_master():
     with virtualenv("rps"):
         run("pip install -e git+https://git@github.com/InsolvencyService/rps-alpha.git#egg=redundancy_payments_alpha")
+        run("ensure_clean_tables")
     ensure_upstart()
     ensure_nginx()
 
