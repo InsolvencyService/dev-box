@@ -87,13 +87,13 @@ def run_puppet(role, deploy_env):
 
 
 @task
-def deploy_local_app(version="lastSuccessfulBuild"):
+def deploy_app_from_master():
     sudo("mkdir -p /srv/rps-alpha/")
     sudo("chown -Rv ubuntu /srv/rps-alpha")
     with prefix("source /etc/bash_completion.d/virtualenvwrapper"):
         ensure_virtualenv_exists("rps")
         with prefix("workon rps"):
-            run("echo install app here")
+            run("pip install -e git+https://git@github.com/InsolvencyService/rps-alpha.git#egg=redundancy_payments_alpha")
     ensure_upstart()
     ensure_nginx()
 
