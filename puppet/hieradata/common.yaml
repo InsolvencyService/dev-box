@@ -3,6 +3,7 @@ classes:
   - base
   - shell
   - rps_python
+  - harden
 packages:
   - ack-grep
   - aptitude
