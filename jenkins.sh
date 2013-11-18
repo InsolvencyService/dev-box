@@ -22,8 +22,10 @@ fi
 
 cd redundancy_payments_alpha
 
-nosetests --exe --with-xunit
+# FIXME: Shouldn't have to run ensure_clean_tables before unit tests
 
 ./ensure_clean_tables
+
+nosetests --exe --with-xunit
 
 behave -q --tags=-wip --stop feature_tests/
