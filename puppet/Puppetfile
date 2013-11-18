@@ -8,10 +8,9 @@ mod 'puppetlabs/postgresql', '~> 3.1.0'
 mod 'puppetlabs/razor'
 mod 'puppetlabs/stdlib', '~> 3.0'
 mod 'stankevich/python', '~> 1.1.7'
+mod 'jfryman/nginx', '~> 0.0.6'
 
 mod 'jenkins',      :git => 'https://github.com/alphagov/puppet-jenkins.git',
                     :ref => 'ca40459bea5a9dc91e12e8014c9878fcd2856ee7'
-mod 'nginx',        :git => 'https://github.com/alphagov/puppet-nginx.git',
-                    :ref => '1a87dd9fb29f5f137e3d4ee42ddcf45c9054700e'
 mod 'ssl',          :git => 'https://github.com/alphagov/puppet-ssl.git',
                     :ref => '23bbb5ab57f26269acce3d4b43e643781747a551'

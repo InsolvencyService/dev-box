@@ -7,4 +7,9 @@ class rps_python {
     virtualenv => true,
   }
 
+  package {'virtualenvwrapper':
+    ensure  => 'present',
+    require => Class['python']
+  }
+
 }

@@ -3,6 +3,7 @@
 classes:
   - baseconfig
   - rps_postgres
+  - fabric
 
 packages:
   - virtualenvwrapper
