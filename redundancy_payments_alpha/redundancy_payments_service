@@ -1,6 +1,18 @@
 #!/usr/bin/env python
+import argparse
+
 from claimants_user_journey import routes
 
-if __name__ == '__main__':
+def run(args):
+    if args.debug:
+        routes.app.debug = True
     routes.app.run(host='0.0.0.0', port=8000, threaded=True)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(
+        description="Run the claimant user journey web app")
+    parser.add_argument("--debug", action="store_true")
+    args = parser.parse_args()
+    run(args)
 
