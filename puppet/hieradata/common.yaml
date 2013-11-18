@@ -12,6 +12,7 @@ packages:
   - aptitude
   - cron
   - curl
+  - dnsutils
   - dstat
   - fail2ban
   - git
@@ -21,14 +22,15 @@ packages:
   - make
   - man-db
   - manpages
+  - netcat
   - screen
   - sysstat
   - tmux
   - traceroute
   - tree
+  - unzip
   - vim-nox
-  - zip
-  - tmux
+  - zip  - tmux
 
 # Allow SSH, HTTP, HTTPS from these IPs
 trusted_ips:
