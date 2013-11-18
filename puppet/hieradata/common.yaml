@@ -4,6 +4,7 @@ classes:
   - shell
   - rps_python
   - harden
+  - firewall
 packages:
   - ack-grep
   - aptitude

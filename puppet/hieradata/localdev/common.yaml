@@ -1,2 +1,7 @@
 ---
 shell_prompt_string: localdev
+firewall::allow:
+  "ssh from vagrant":
+    port: 22
+    from: any
+    ip: any

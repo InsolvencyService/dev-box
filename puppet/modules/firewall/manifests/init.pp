@@ -21,7 +21,7 @@ class firewall(
   Ufw::Deny <| |>
   Ufw::Limit <| |>
 
-  include hmrc_firewall::base
+  include firewall::base
 
   # Instantiate additional firewall rules
   validate_hash($allow)
