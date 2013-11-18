@@ -40,7 +40,6 @@ def build_puppet():
     local("../puppet/tools/build")
 
 
-@task
 def ensure_bootstrapping_requirements():
     packages = ["ruby1.9.1", "ruby1.9.1-dev", "curl"]
     missing_packages = []
