@@ -1,0 +1,10 @@
+---
+firewall::allow:
+  "https on frontend":
+    port: 443
+    from: any
+    ip: any
+  "http on frontend":
+    port: 80
+    from: any
+    ip: any
