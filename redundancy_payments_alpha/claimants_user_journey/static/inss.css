@@ -80,22 +80,22 @@
 }
 
 
-.inline-choice label {
-    display: inline-block !important;
-    line-height: 10px !important;
-    padding-right: 8px !important;
+.form-example-1 .inline-choice label {
+    display: inline-block;
+    line-height: 10px;
+    padding-right: 8px;
 }
 
-.inline-choice input {
-    display: inline-block !important;
+.form-example-1 .inline-choice input {
+    display: inline-block;
 }
 
-.inline-choice ul {
+.form-example-1 .inline-choice ul {
     list-style-type: none;
 }
 
 .form-example-1 .discrepancy_field{
-    background-color:#d5e8f3 !important;
+    background-color:#d5e8f3;
     border-color:#2b8cc4;
     color:#2b8cc4;
 }

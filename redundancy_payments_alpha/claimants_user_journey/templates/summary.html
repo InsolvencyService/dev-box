@@ -63,10 +63,16 @@
                 <tr><th>Gross amount owed</th><td>{{ session['wages_owed'].gross_amount_owed }}</td></tr>
             </table>
             {% endif %}
-              <div class="ip-information-summary">
-                    <p>Message about contacting your IP before proceeding goes here e.g. <strong>0800 100 300</strong></p>
-                  </div>
+            <div class="discrepancy-summary">
+                <p>If you do not agree with the figures your Insolvency Practitioner has suggested, you may call them to discuss this before submitting your claim.</p>
+
+                <p>You may also submit the claim with both yours and the Insolvency Practitioners suggested values.  It will be treated as a dispute and you will receive an initial minimum payment.  Once the dispute is settled, you may receive an additional payment.</p>
+
+                <p>Alternatively, you can choose to submit your claim with the Insolvency Practitioner's values and your payment will be calculated based on these values.</p>
+            </div>
          </div>
-        <input class="button" type="submit" value="Process claim">
+        <input class="button" type="submit" value="Contact IP">
+        <input class="button" type="submit" value="Amend">
+        <input class="button" type="submit" value="Submit">
     </form>
 {% endblock %}
