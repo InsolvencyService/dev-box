@@ -83,7 +83,8 @@ def step(context):
 def step(context):
     page = BeautifulSoup(context.arrears_followup_response.data)
     assert_that(page.find('h2').text, is_('Please enter details of any unpaid wages'))
-    question_element = page.find(id="gross_amount_owed")
+    question_element = page.find(id="gross_amount_owed_question")
+    print question_element
     assert_that(question_element['class'], contains_string('discrepancy'))
 
 

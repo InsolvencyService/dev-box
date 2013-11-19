@@ -102,7 +102,7 @@ def wages_owed():
             discrepancies = claim_service.find_discrepancies(claim_id)
             if len(discrepancies):
                 return redirect(url_for('arrears_pay_discrepancies'))
-            return redirect(url_for('arrears_pay_discrepancies'))
+        return redirect(url_for('summary'))
 
     return render_template('wages_owed.html', form=form, nav_links=nav_links(),
             discrepancies={})
