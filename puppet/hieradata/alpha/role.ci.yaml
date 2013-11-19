@@ -1,0 +1,6 @@
+---
+firewall::allow:
+  "http on jenkins":
+    port: 80
+    from: any
+    ip: any
