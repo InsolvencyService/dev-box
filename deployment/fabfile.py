@@ -111,6 +111,7 @@ def deploy_app_from_git(tag=None):
     with virtualenv("rps"):
         run("pip install -e {git_url}".format(**locals()))
         run("ensure_clean_tables")
+        run("load_user_testing_data")
     ensure_upstart()
     ensure_nginx()
 

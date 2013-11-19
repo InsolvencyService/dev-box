@@ -1,0 +1,16 @@
+#!/usr/bin/env python
+
+from birmingham_cabinet.api import add_rp14a_form
+from json import loads
+
+
+def store_data(path_to_file):
+    with open(path_to_file) as f:
+        records = loads(f.read())
+        for form in records:
+            add_rp14a_form(form)
+
+
+if __name__ == "__main__":
+    store_data('customer_research_data.json')
+
