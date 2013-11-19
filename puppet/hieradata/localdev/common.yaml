@@ -1,7 +1,11 @@
 ---
 shell_prompt_string: localdev
 firewall::allow:
-  "ssh from vagrant":
-    port: 22
+  "8000 from anywhere":
+    port: 8000
+    from: any
+    ip: any
+  "8001 from anywhere":
+    port: 8001
     from: any
     ip: any

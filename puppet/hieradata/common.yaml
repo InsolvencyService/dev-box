@@ -38,3 +38,9 @@ trusted_ips:
   - 80.194.77.100
   # Cannon House
   - 86.164.232.105
+
+firewall::allow:
+  "ssh from anywhere":
+    port: 22
+    from: any
+    ip: any
