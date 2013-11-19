@@ -17,7 +17,10 @@ Feature: displaying discrepencies to the claimant
             | ip_number                          | 0000       |
             | employer_name                      | Widgets Co |
             | employee_basic_weekly_pay          | 550        |
-    
+            | employee_owed_wages_from           | 01/01/2010 |
+            | employee_owed_wages_to             | 01/01/2013 |
+            | employee_owed_wages_in_arrears     | 5000       |
+
     @nuke_db
     Scenario: the claimant provides wages details that are discrepent
         Given the claimant is matched to the employee details
