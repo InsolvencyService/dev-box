@@ -2,6 +2,7 @@
 
 from birmingham_cabinet.api import add_rp14a_form
 from json import loads
+import os
 
 
 def store_data(path_to_file):
@@ -12,5 +13,6 @@ def store_data(path_to_file):
 
 
 if __name__ == "__main__":
-    store_data('customer_research_data.json')
+    path_to_file = os.path.join(os.path.dirname(__file__), 'user_research_data.json')
+    store_data(path_to_file)
 
