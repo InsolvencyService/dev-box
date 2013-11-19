@@ -3,6 +3,7 @@ from flask_wtf import Form
 from wtforms import TextField, RadioField
 from wtforms.validators import Regexp, DataRequired, AnyOf
 from validators import RequiredIfFieldHasValue
+from custom_field_types import CurrencyField
 
 
 class WagesOwed(Form):
@@ -26,7 +27,7 @@ class WagesOwed(Form):
                            validators=[RequiredIfFieldHasValue(other_field_name='owed', other_field_value='Yes', message='Please enter number of days for which pay is owed'),
                                        Regexp(regex=re.compile('^[0-9]?[0-9]$'), message='Number of days owed must be numeric.')])
 
-    gross_amount_owed = TextField('Gross amount of pay owed',
+    gross_amount_owed = CurrencyField('Gross amount of pay owed',
                            validators=[RequiredIfFieldHasValue(other_field_name='owed', other_field_value='Yes', message='Please enter the Gross amount of pay owed'),
                                        Regexp(regex=re.compile('^\d{0,8}(\.\d{0,2})?$'),
                                          message='Gross amount owed must be numeric.')])
@@ -40,6 +41,6 @@ class WagesOwed(Form):
                                         message='Date must be in the format dd/mm/yyyy.')])
 
 
-    net_amount = TextField('Net Amount of bounced cheque or failed payment',
+    net_amount = CurrencyField('Net Amount of bounced cheque or failed payment',
                            validators=[Regexp(regex=re.compile('^(\d{0,8}(\.\d{0,2})?$)?$'),
                                          message='Net amount must be numeric.')])

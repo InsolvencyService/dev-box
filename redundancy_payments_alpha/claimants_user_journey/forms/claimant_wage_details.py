@@ -3,10 +3,11 @@ from flask_wtf import Form
 from wtforms import TextField, SelectField, RadioField
 from wtforms.fields.html5 import IntegerField
 from wtforms.validators import DataRequired, AnyOf, Regexp, NumberRange
+from custom_field_types import CurrencyField
 
 
 class ClaimantWageDetails(Form):
-    gross_rate_of_pay = TextField('Gross rate of pay (before Tax and NI, excluding overtime)',
+    gross_rate_of_pay = CurrencyField('Gross rate of pay (before Tax and NI, excluding overtime)',
                                   validators=[DataRequired('Please enter your gross rate of pay'),
                                               Regexp(regex=re.compile('^\d{0,8}(\.\d{0,2})?$'),
                                         message="Gross rate of pay must be a number e.g 100.25.")])
