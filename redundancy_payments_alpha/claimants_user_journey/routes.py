@@ -95,12 +95,13 @@ def wages_owed():
         form = WagesOwed()
 
     if form.validate_on_submit():
+        print "the form validated"
         session['wages_owed'] = form.data
-        return redirect(url_for('summary'))
+        return redirect(url_for('wages_owed_discrepancies'))
 
     return render_template('wages_owed.html', form=form, nav_links=nav_links())
 
-
+ 
 @app.route('/claim-redundancy-payment/wage-details/', methods=['GET', 'POST'])
 def wage_details():
     existing_form = session.get('wage_details')

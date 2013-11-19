@@ -21,11 +21,6 @@
                 {{ form_field(form.wage_owed_to, hint="Use the dd/mm/yyyy format, for example 01/01/1975") }}
                 {{ form_field(form.number_of_days_owed) }}
                 {{ form_field(form.gross_amount_owed) }}
-                <h2 class="subtitle">Failed Payment</h2>
-                <p>If your employer attempted to pay your wages and that payment failed (e.g cheque bounced) please provide details below:</p>
-                {{ form_field(form.failed_payment_from, hint="Use the dd/mm/yyyy format, for example 01/01/1975") }}
-                {{ form_field(form.failed_payment_to, hint="Use the dd/mm/yyyy format, for example 01/01/1975") }}
-                {{ form_field(form.net_amount) }}
                 </fieldset>
              </div>
             <input class="button" type="submit" value="Save and Continue" />

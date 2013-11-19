@@ -63,6 +63,29 @@ def step(context):
     assert_that(response.status_code, is_(200))
     context.followup_response = response
 
+@when('the claimant enters the valid arrears of pay details')
+def step(context):
+    arrears_pay_details = {}
+    for key, value in context.table:
+        arrears_pay_details[key] = value
+    get_the_page = context.app.get('/claim-redundancy-payment/wages-owed-details/')
+    arrears_pay_details.update({'csrf_token': parse_csrf_token(get_the_page)})
+    response = context.app.post(
+        '/claim-redundancy-payment/wages-owed-details/',
+        data=arrears_pay_details,
+        follow_redirects=True
+    )
+    assert_that(response.status_code, is_(200))
+    context.arrears_followup_response = response
+
+
+@then('the claimant should see a discrepancy on wage owed in arrears')
+def step(context):
+    page = BeautifulSoup(context.arrears_followup_response.data)
+    assert_that(page.find('h2').text, is_('Please enter details of any unpaid wages'))
+    question_element = page.find(id="gross_amount_owed")
+    assert_that(question_element['class'], contains_string('discrepancy'))
+
 
 @then('the claimant should see a discrepancy on gross rate of pay')
 def step(context):
