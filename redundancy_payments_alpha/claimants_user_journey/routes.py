@@ -13,7 +13,6 @@ from forms.wages_owed import WagesOwed
 
 app = Flask(__name__)
 app.secret_key = 'something_secure_and_secret'
-app.debug = True
 setup_filters(app)
 
 
@@ -134,7 +133,7 @@ def wage_details_discrepancies():
         form = ClaimantWageDetails()
 
     claim_id = session.get('claim_id')
-    
+
     if form.validate_on_submit():
         session['wage_details'] = form.data
         if claim_id:

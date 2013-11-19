@@ -9,22 +9,26 @@ packages:
   - ack-grep
   - aptitude
   - cron
+  - curl
+  - dnsutils
   - dstat
-  - git-core
+  - fail2ban
+  - git
   - htop
   - iotop
   - mailutils
   - make
   - man-db
   - manpages
+  - netcat
   - screen
   - sysstat
+  - tmux
   - traceroute
   - tree
+  - unzip
   - vim-nox
   - zip
-  - tmux
-
 # Allow SSH, HTTP, HTTPS from these IPs
 trusted_ips:
   # Internal

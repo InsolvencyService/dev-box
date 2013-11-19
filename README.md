@@ -45,8 +45,10 @@ sudo dpkg -i vagrant.deb
   - `./create_venv.sh`
   - `workon rps`
   - `cd redundancy_payments_alpha/`
-- You should now be able to run `./run_tests.sh` to run the tests or
-  `./redundancy_payments_service` to run the server
+- You should now be able to:
+  - run `./run_tests.sh` to run the tests,
+  - run`./redundancy_payments_service --debug` to run the claimant journey
+  - run`./insolvency_practitioner_app --debug` to run the insolvency practitioner's journey
 - Once the server is running, you can access the webpage on http://localhost:8000/
 
 ### More info

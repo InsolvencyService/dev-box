@@ -4,9 +4,6 @@ classes:
  - rps_jenkins
  - rps_postgres
 packages:
-  - htop
-  - virtualenvwrapper
-  - git-core
   - ruby1.9.1
   - ruby1.9.1-dev
   - build-essential

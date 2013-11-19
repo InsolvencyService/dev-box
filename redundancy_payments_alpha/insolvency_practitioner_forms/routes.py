@@ -9,7 +9,6 @@ from birmingham_cabinet.api import add_rp14a_form
 
 app = Flask(__name__)
 app.secret_key = 'i_am_a_secret'
-app.debug = True
 
 def get_storage_service():
     """This is a separate method so it can be mocked
