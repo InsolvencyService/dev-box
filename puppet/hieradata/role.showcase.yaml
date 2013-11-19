@@ -2,7 +2,7 @@
 classes:
   - rps_postgres
   - rps_python
-  - nginx
+  - rps_nginx
 packages:
   - build-essential
 
