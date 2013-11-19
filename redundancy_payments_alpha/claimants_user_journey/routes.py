@@ -95,11 +95,42 @@ def wages_owed():
         form = WagesOwed()
 
     if form.validate_on_submit():
-        print "the form validated"
         session['wages_owed'] = form.data
-        return redirect(url_for('wages_owed_discrepancies'))
+        claim_id = session.get('claim_id')
+        if claim_id:
+            claim_service.add_details_to_claim(claim_id, form.data)
+            discrepancies = claim_service.find_discrepancies(claim_id)
+            if len(discrepancies):
+                return redirect(url_for('arrears_pay_discrepancies'))
+            return redirect(url_for('arrears_pay_discrepancies'))
 
-    return render_template('wages_owed.html', form=form, nav_links=nav_links())
+    return render_template('wages_owed.html', form=form, nav_links=nav_links(),
+            discrepancies={})
+
+@app.route('/claim-redundancy-payment/wages-owed-details/discrepancies/', methods=['GET','POST'])
+def arrears_pay_discrepancies():
+    existing_form = session.get('wages_owed')
+
+    if existing_form:
+        form = WagesOwed(**existing_form)
+    else:
+        raise Exception("This should not be possible")
+    
+    claim_id = session.get('claim_id')
+
+    if form.validate_on_submit():
+        session['wage_owed'] = form.data
+        if claim_id:
+            claim_service.add_details_to_claim(claim_id, form.data)
+        return redirect(url_for('summary'))
+    elif request.method == 'POST' and not form.validate():
+        session['wage_owed'] = form.data
+        return redirect(url_for('wage_owed', data=form.data), code=307)
+
+    discrepancies = {}
+    if claim_id:
+        discrepancies = claim_service.find_discrepancies(claim_id)
+    return render_template('wages_owed.html', form=form, nav_links=nav_links(), discrepancies=discrepancies)
 
  
 @app.route('/claim-redundancy-payment/wage-details/', methods=['GET', 'POST'])
