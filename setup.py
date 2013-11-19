@@ -14,6 +14,7 @@ setup(
         "redundancy_payments_alpha/redundancy_payments_service",
         "redundancy_payments_alpha/insolvency_practitioner_app",
         "redundancy_payments_alpha/ensure_clean_tables",
+        "redundancy_payments_alpha/load_user_testing_data",
     ],
     version=os.environ.get("BUILD_NUMBER", "dev"),
     install_requires=[str(req.req) for req in
