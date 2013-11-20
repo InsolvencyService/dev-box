@@ -50,7 +50,7 @@ class Employee(Base):
 
 class Claim(Base):
     __tablename__ = "claims"
-    claim_id = Column('gid', Integer, primary_key=True, autoincrement=True)
+    claim_id = Column(Integer, primary_key=True)
     claimant_information = Column(HSTORE)
     employee_record = Column(HSTORE)
 
