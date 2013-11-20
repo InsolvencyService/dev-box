@@ -6,7 +6,8 @@ from sqlalchemy.orm.exc import NoResultFound
 
 from models import Claim, Claimant, Employer, Employee
 from base import make_session, Base, local_unix_socket_engine
-from customized_json import encode_special_types, decode_special_types
+from customized_json import encode_dict, decode_dict
+
 
 def truncate_all_tables():
     with contextlib.closing(local_unix_socket_engine.connect()) as conn:
@@ -19,15 +20,14 @@ def employee_via_nino(nino):
     with contextlib.closing(make_session()) as session:
         try:
             employee = session.query(Employee).filter(Employee.nino == nino).one()
-            return {key: json.loads(value, object_hook=decode_special_types)
-                    for key, value in employee.hstore.items()}
+            return decode_dict(employee.hstore)
         except NoResultFound:
             pass
 
 def get_rp1_form():
     with contextlib.closing(make_session()) as session:
-        claimants = session.query(Claimant).all()[0]
-        return json.dumps(claimants._asdict(), default=encode_special_types)
+        claimant = session.query(Claimant).one()
+        return decode_dict(claimant.hstore)
 
 def add_rp1_form(dictionary):
     with contextlib.closing(make_session()) as session:
@@ -37,8 +37,7 @@ def add_rp1_form(dictionary):
         claimant.title = dictionary["title"]
         claimant.forenames = dictionary["forenames"]
         claimant.surname = dictionary["surname"]
-        claimant.hstore = {key: json.dumps(value, default=encode_special_types)
-                           for key, value in dictionary.items()}
+        claimant.hstore = encode_dict(dictionary)
         session.add(claimant)
         session.commit()
 
@@ -50,8 +49,7 @@ def add_rp14_form(dictionary):
         employer.employer_name = dictionary["employer_name"]
         employer.company_number = dictionary["company_number"]
         employer.date_of_insolvency = dictionary["date_of_insolvency"]
-        employer.hstore = {key: json.dumps(value, default=encode_special_types)
-                           for key, value in dictionary.items()}
+        employer.hstore = encode_dict(dictionary)
         session.add(employer)
         session.commit()
 
@@ -70,8 +68,7 @@ def add_rp14a_form(dictionary):
         for decimal_key in ["employee_owed_wages_in_arrears", "employee_holiday_owed", "employee_basic_weekly_pay"]:
             if decimal_key in dictionary:
                 dictionary[decimal_key] = str(dictionary[decimal_key])
-        employee.hstore = {key: json.dumps(value, default=encode_special_types)
-                           for key, value in dictionary.items()}
+        employee.hstore = encode_dict(dictionary)
         session.add(employee)
         session.commit()
 
@@ -79,8 +76,8 @@ def add_rp14a_form(dictionary):
 def add_claim(claimant_information, employee_record):
     with contextlib.closing(make_session()) as session:
         claim = Claim()
-        claim.claimant_information = claimant_information
-        claim.employee_record = employee_record
+        claim.claimant_information = encode_dict(claimant_information)
+        claim.employee_record = encode_dict(employee_record)
         session.add(claim)
         session.commit()
         return claim.claim_id
@@ -89,15 +86,19 @@ def add_claim(claimant_information, employee_record):
 def get_claim(claim_id):
     with contextlib.closing(make_session()) as session:
         claim = session.query(Claim).filter(Claim.claim_id==claim_id).one()
-        return (claim.claimant_information, claim.employee_record)
+        return (decode_dict(claim.claimant_information),
+                decode_dict(claim.employee_record))
 
 
 def update_claim(claim_id, claimant_information=None, employee_record=None):
     with contextlib.closing(make_session()) as session:
         claim = session.query(Claim).filter(Claim.claim_id==claim_id).one()
         if claimant_information:
-            claim.claimant_information = claimant_information
+            claim.claimant_information = encode_dict(claimant_information)
         if employee_record:
-            claim.employee_record = employee_record
+            claim.employee_record = encode_dict(employee_record)
         session.commit()
 
+
+def claims_against_company(company_id):
+    pass

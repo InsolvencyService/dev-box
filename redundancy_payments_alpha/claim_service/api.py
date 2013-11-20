@@ -1,9 +1,12 @@
 from birmingham_cabinet.api import employee_via_nino, get_claim, add_claim, update_claim
 from discrepancies import comparable_values
 
-
 def find_discrepancies(claim_id):
     claim = get_claim(claim_id)
+    return find_discrepancies_in_claim(claim)
+
+
+def find_discrepancies_in_claim(claim):
     discrepancies = {entry: values
                      for entry, values in comparable_values(claim).iteritems()
                      if values[0] != values[1]}
@@ -13,6 +16,7 @@ def find_discrepancies(claim_id):
 def has_discrepancies(claim_id):
     print find_discrepancies(claim_id)
     return len(find_discrepancies(claim_id)) > 0
+
 
 
 def _stringify(dictionary):

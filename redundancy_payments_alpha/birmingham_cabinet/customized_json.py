@@ -2,6 +2,14 @@ from datetime import date, datetime
 
 import simplejson as json
 
+def encode_dict(dictionary):
+    return {key: json.dumps(value, default=encode_special_types)
+                           for key, value in dictionary.items()}
+
+def decode_dict(dictionary):
+    return {key: json.loads(value, object_hook=decode_special_types)
+            for key, value in dictionary.items()}
+
 def encode_special_types(obj):
     if isinstance(obj, date):
         return {

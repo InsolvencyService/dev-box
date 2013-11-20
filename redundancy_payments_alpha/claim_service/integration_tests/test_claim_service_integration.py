@@ -20,7 +20,7 @@ class TestClaimServiceIntegration(unittest.TestCase):
                 'employer_name': 'Widgets Inc',
                 'employee_basic_weekly_pay': Decimal('300.5')
             }
-        ) 
+        )
 
     def tearDown(self):
         truncate_all_tables()
@@ -32,19 +32,19 @@ class TestClaimServiceIntegration(unittest.TestCase):
         claimant_details = {
             'gross_rate_of_pay': '11.0'
         }
-        
+
         claim_id = api.create_claim_2(personal_details)
         api.add_details_to_claim(claim_id, claimant_details)
         discrepancies = api.find_discrepancies(claim_id)
-        assert_that(discrepancies, has_entry('gross_rate_of_pay', ('11.0','300.5')))
-    
+        assert_that(discrepancies, has_entry('gross_rate_of_pay', ('11.0', '300.5')))
+
     def test_updating_claim_information(self):
         personal_details = {'nino': 'XX223344X'}
         claimant_details = {'gross_rate_of_pay': '11.0'}
         claimant_details_updated = {
             'gross_rate_of_pay': '12.0',
         }
-        
+
         claim_id = api.create_claim_2(personal_details)
         api.add_details_to_claim(claim_id, claimant_details)
 
