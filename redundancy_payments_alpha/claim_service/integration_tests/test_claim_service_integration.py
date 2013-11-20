@@ -2,10 +2,11 @@ import unittest
 from decimal import Decimal
 
 from nose.plugins.attrib import attr
-from hamcrest import assert_that, has_entry
+from hamcrest import assert_that, has_entry, has_length
 
 import claim_service.api as api
-from birmingham_cabinet.api import add_rp14a_form, truncate_all_tables
+from birmingham_cabinet.api import add_rp14a_form, truncate_all_tables, claims_against_company, add_claim
+
 
 @attr("integration")
 class TestClaimServiceIntegration(unittest.TestCase):
@@ -56,3 +57,11 @@ class TestClaimServiceIntegration(unittest.TestCase):
         assert_that(api.find_discrepancies(claim_id),
             has_entry('gross_rate_of_pay', ('12.0', '300.5')))
 
+    def test_retrieving_claims_by_company_id(self):
+        claimant_data_1 = {'foo': 'bar'}
+        employee_record_1 = {'employer_id': 1}
+
+        add_claim(claimant_data_1, employee_record_1)
+        claim = claims_against_company(1)
+
+        assert_that(claim[0][0], has_entry("foo", "bar"))

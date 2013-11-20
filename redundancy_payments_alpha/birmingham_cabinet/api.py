@@ -74,6 +74,7 @@ def add_rp14a_form(dictionary):
 def add_claim(claimant_information, employee_record):
     with contextlib.closing(make_session()) as session:
         claim = Claim()
+        claim.employer_id = employee_record.get('employer_id', None)
         claim.claimant_information = json_encode(claimant_information)
         claim.employee_record = json_encode(employee_record)
         session.add(claim)
@@ -98,5 +99,10 @@ def update_claim(claim_id, claimant_information=None, employee_record=None):
         session.commit()
 
 
-def claims_against_company(company_id):
-    pass
+def claims_against_company(employer_id):
+    with contextlib.closing(make_session()) as session:
+        claims = session.query(Claim)\
+            .filter(Claim.employer_id == employer_id).all()
+        return [(json_decode(claim.claimant_information),
+                 json_decode(claim.employee_record))
+                 for claim in claims]

@@ -51,6 +51,7 @@ class Employee(Base):
 class Claim(Base):
     __tablename__ = "claims"
     claim_id = Column(Integer, primary_key=True)
+    employer_id = Column(Integer, nullable=True) # FIXME: Migrate this to be non-nullable
     claimant_information = Column(HSTORE)
     employee_record = Column(HSTORE)
 
