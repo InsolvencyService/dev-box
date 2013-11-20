@@ -4,8 +4,15 @@ from discrepancies import comparable_values
 
 def find_discrepancies(claim_id):
     claim = get_claim(claim_id)
-    discrepancies = {entry: values for entry, values in comparable_values(claim).iteritems() if values[0] != values[1]} 
+    discrepancies = {entry: values
+                     for entry, values in comparable_values(claim).iteritems()
+                     if values[0] != values[1]}
     return discrepancies
+
+
+def has_discrepancies(claim_id):
+    print find_discrepancies(claim_id)
+    return len(find_discrepancies(claim_id)) > 0
 
 
 def _stringify(dictionary):
