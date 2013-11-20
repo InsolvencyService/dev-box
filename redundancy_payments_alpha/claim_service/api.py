@@ -18,33 +18,21 @@ def has_discrepancies(claim_id):
     return len(find_discrepancies(claim_id)) > 0
 
 
-
-def _stringify(dictionary):
-    # This is evil and should obviously be fixed once
-    # the domain model has solidified a bit more
-    def _force_string(thing):
-        try:
-            return str(thing)
-        except Exception:
-            return ':('
-    return {k: _force_string(v) for k, v in dictionary.iteritems() }
-
-
-def create_claim_2(personal_details):
+def create_claim_2(claimant_information):
     claim_id = None
-    nino = personal_details['nino']
+    nino = claimant_information['nino']
     employee_record = employee_via_nino(nino)
     if employee_record:
         claim_id = add_claim(
-            _stringify(personal_details),
-            _stringify(employee_record)
+            claimant_information,
+            employee_record
         )
     return claim_id
 
 
 def add_details_to_claim(claim_id, claimant_details):
     claim = get_claim(claim_id)
-    details = _stringify(claimant_details)
+    details = claimant_details
     claim[0].update(details)
     update_claim(claim_id, claimant_information=details)
 
