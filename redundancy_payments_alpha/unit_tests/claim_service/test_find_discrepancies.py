@@ -1,9 +1,9 @@
 import unittest
 
 from mock import patch
-from hamcrest import assert_that, has_length, has_entry
+from hamcrest import assert_that, has_length, has_entry, is_
 
-from claim_service.api import find_discrepancies
+from claim_service.api import find_discrepancies, has_discrepancies
 
 class TestFindDiscrepancies(unittest.TestCase):
     @patch('claim_service.api.get_claim')
@@ -37,6 +37,21 @@ class TestFindDiscrepancies(unittest.TestCase):
             {'employee_basic_weekly_pay': '650'}
         )
         claim_id = 1
-
         discrepancies = find_discrepancies(claim_id)
+
+    @patch('claim_service.api.get_claim')
+    def test_should_be_able_to_say_if_discrepancies(self, mock_get_claim):
+        mock_get_claim.return_value = (
+            {'gross_rate_of_pay': '650'},
+            {'employee_basic_weekly_pay': '651'}
+        )
+        assert_that(has_discrepancies(1), is_(True))
+
+    @patch('claim_service.api.get_claim')
+    def test_should_be_able_to_say_no_discrepancies(self, mock_get_claim):
+        mock_get_claim.return_value = (
+            {'gross_rate_of_pay': '650'},
+            {'employee_basic_weekly_pay': '650'}
+        )
+        assert_that(has_discrepancies(1), is_(False))
  
