@@ -2,10 +2,13 @@
 import argparse
 
 from claimants_user_journey import routes
+from operations.logs import configure_application_logging
 
 def run(args):
     if args.debug:
         routes.app.debug = True
+    configure_application_logging(routes.app)
+    routes.app.logger.info("Starting")
     routes.app.run(host='0.0.0.0', port=8000, threaded=True)
 
 
