@@ -32,15 +32,3 @@ class WagesOwed(Form):
                                        Regexp(regex=re.compile('^\d{0,8}(\.\d{0,2})?$'),
                                          message='Gross amount owed must be numeric.')])
 
-    failed_payment_from = TextField('From',
-                           validators=[Regexp(regex=re.compile('^([0-9]{2}[/][0-9]{2}[/][0-9]{4})?$'),
-                                        message='Date must be in the format dd/mm/yyyy.')])
-
-    failed_payment_to = TextField('To',
-                           validators=[Regexp(regex=re.compile('^([0-9]{2}[/][0-9]{2}[/][0-9]{4})?$'),
-                                        message='Date must be in the format dd/mm/yyyy.')])
-
-
-    net_amount = CurrencyField('Net Amount of bounced cheque or failed payment',
-                           validators=[Regexp(regex=re.compile('^(\d{0,8}(\.\d{0,2})?$)?$'),
-                                         message='Net amount must be numeric.')])

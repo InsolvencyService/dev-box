@@ -3,8 +3,8 @@
 
 forge 'http://forge.puppetlabs.com/'
 
-mod 'jfryman/nginx', '~> 0.0.6'
 mod 'attachmentgenie/ufw', '1.2.0'
+mod 'jfryman/nginx', '~> 0.0.6'
 mod 'puppetlabs/git', '0.0.2'
 mod 'puppetlabs/postgresql', '~> 3.1.0'
 mod 'puppetlabs/razor'

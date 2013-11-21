@@ -1,2 +1,4 @@
 ---
 shell_prompt_string: alpha
+classes:
+ - firewall
