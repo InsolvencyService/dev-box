@@ -1,8 +1,9 @@
 ---
 classes:
- - rps_postgres
+  - rps_postgres
+  - rps_python
+  - rps_nginx
 packages:
-  - virtualenvwrapper
   - build-essential
 
 ssl::params::ssl_path: '/etc/ssl'
