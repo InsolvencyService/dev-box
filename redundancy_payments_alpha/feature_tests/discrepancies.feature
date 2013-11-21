@@ -4,6 +4,7 @@
 # I want: to see discrepancies between details I provide and details my IP provides
 # So that: I understand the claim I'm making and can resolve discrepancies before I submit
 
+@arrears
 Feature: displaying discrepencies to the claimant
 
     Background:
@@ -17,7 +18,10 @@ Feature: displaying discrepencies to the claimant
             | ip_number                          | 0000       |
             | employer_name                      | Widgets Co |
             | employee_basic_weekly_pay          | 550        |
-    
+            | employee_owed_wages_from           | 01/01/2010 |
+            | employee_owed_wages_to             | 01/01/2013 |
+            | employee_owed_wages_in_arrears     | 5000       |
+
     @nuke_db
     Scenario: the claimant provides wages details that are discrepent
         Given the claimant is matched to the employee details
@@ -46,4 +50,17 @@ Feature: displaying discrepencies to the claimant
             | overtime                 | Yes    |
             | normal_days_of_work      | 5      |
          Then the claimant should see the next page of the form
+
+    @nuke_db
+    Scenario: the claimant provides arrears of pay that are discrepent
+        Given the claimant is matched to the employee details
+         When the claimant enters the valid arrears of pay details
+            | NAME                     | VALUE      |
+            | owed                     | Yes        |
+            | wage_owed_from           | 01/01/2010 |
+            | wage_owed_to             | 01/01/2013 |
+            | number_of_days_owed      | 1          |
+            | gross_amount_owed        | 999        |
+         Then the claimant should see a discrepancy on wage owed in arrears
+
 

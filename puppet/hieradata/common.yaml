@@ -4,6 +4,9 @@ classes:
   - shell
   - rps_python
   - harden
+  - firewall
+  - fail2ban
+
 packages:
   - ack-grep
   - aptitude
@@ -27,7 +30,8 @@ packages:
   - tree
   - unzip
   - vim-nox
-  - zip
+  - zip  - tmux
+
 # Allow SSH, HTTP, HTTPS from these IPs
 trusted_ips:
   # Internal
@@ -37,9 +41,3 @@ trusted_ips:
   - 80.194.77.100
   # Cannon House
   - 86.164.232.105
-
-firewall::allow:
-  "ssh from anywhere":
-    port: 22
-    from: any
-    ip: any
