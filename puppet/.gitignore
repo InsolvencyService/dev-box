@@ -6,10 +6,10 @@
 
 .rspec # Put "--profile" in a file called .rspec to get per-test timing results
 .rvmrc # If you are using rvm
-.tmp/ 
+.tmp/
 /.gems/
 /bin/
 /build/
-/puppet.tgz
+/puppet.tar
 /vendor/
 .bundle/

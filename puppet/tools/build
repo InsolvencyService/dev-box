@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 set -eu
 
@@ -71,8 +71,15 @@ main () {
     bundle clean
   fi
 
-  status "creating tarball at puppet.tgz"
-  tar zcf ../puppet.tgz -X .tarballignore .
+  status "creating tarball at puppet.tar"
+  if [[ `uname` == "Linux" ]]
+  then
+      # Assume we have a recent (2009-03-05) version of tar - use xz
+      tar cJf ../puppet.tar -X .tarballignore .
+  else
+      # This is probably a macintosh - use bzip2
+      tar cjf ../puppet.tar -X .tarballignore .
+  fi
 }
 
 main "$@"

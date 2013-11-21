@@ -56,7 +56,7 @@ def ensure_bootstrapping_requirements():
 @task
 def deploy_puppet(role, deploy_env="alpha"):
     ensure_bootstrapping_requirements()
-    fetch_artifact(deploy_env, 'puppet', 'puppet/puppet.tgz', '~/puppet.tgz')
+    fetch_artifact(deploy_env, 'puppet', 'puppet/puppet.tar', '~/puppet.tar')
     fetch_artifact(deploy_env, 'puppet-secrets', 'puppet-secrets.tgz', '~/puppet-secrets.tgz')
     run_puppet(role, deploy_env)
 
@@ -64,7 +64,7 @@ def deploy_puppet(role, deploy_env="alpha"):
 @task
 def deploy_local_puppet(role, deploy_env="alpha"):
     ensure_bootstrapping_requirements()
-    put("../puppet/puppet.tgz")
+    put("../puppet/puppet.tar")
     put("../../puppet-secrets/puppet-secrets.tgz")
     run_puppet(role, deploy_env)
 
@@ -73,7 +73,7 @@ def run_puppet(role, deploy_env):
     run('mkdir puppet')
     try:
         with cd('puppet'):
-            run('tar xf ~/puppet.tgz')
+            run('tar xf ~/puppet.tar')
             run('tar xf ~/puppet-secrets.tgz')
             run('sudo -i FACTER_role={role} '
                 'sh -c "cd \'$PWD\'; ./bin/puppet apply '
@@ -83,7 +83,7 @@ def run_puppet(role, deploy_env):
                 '--modulepath modules:vendor/modules '
                 'manifests/site.pp"'.format(**locals()))
     finally:
-        run('sudo rm -rf puppet puppet.tgz puppet-secrets.tgz')
+        run('sudo rm -rf puppet puppet.tar puppet-secrets.tgz')
 
 
 @contextmanager
