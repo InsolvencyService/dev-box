@@ -106,3 +106,8 @@ def claims_against_company(employer_id):
         return [(json_decode(claim.claimant_information),
                  json_decode(claim.employee_record))
                  for claim in claims]
+
+
+def submit_claim(claim_id):
+    pass
+

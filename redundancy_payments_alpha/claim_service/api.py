@@ -1,4 +1,4 @@
-from birmingham_cabinet.api import employee_via_nino, get_claim, add_claim, update_claim
+from birmingham_cabinet.api import employee_via_nino, get_claim, add_claim, update_claim, submit_claim
 from discrepancies import comparable_values
 
 def find_discrepancies(claim_id):
@@ -36,3 +36,6 @@ def add_details_to_claim(claim_id, claimant_details):
     claim[0].update(details)
     update_claim(claim_id, claimant_information=details)
 
+
+def submit(claim_id):
+    submit_claim(claim_id)
