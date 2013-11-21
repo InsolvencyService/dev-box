@@ -14,3 +14,4 @@ def send_email(to_email, subject, to_name, message_text):
         subject=subject,
         text=message_text
     )
+

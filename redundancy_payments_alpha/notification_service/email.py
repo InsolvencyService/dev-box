@@ -20,3 +20,4 @@ def send_email_via_mandrill(to_email, to_name, from_email, from_name, subject, t
         async=False,
         ip_pool='Main Pool'
     )
+

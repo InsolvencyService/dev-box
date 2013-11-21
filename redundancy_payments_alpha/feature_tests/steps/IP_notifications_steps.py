@@ -27,9 +27,12 @@ def impl(context):
 @when("The notifications are triggered")
 def step(context):
     test_client = a.test_client()
-    test_client.post('/_tasks/send-notifications/')
+    response = test_client.post('/_tasks/send-notifications/')
+    assert_that(response.status_code, is_(200))
+
 
 @then("the email is sent to the IP")
 @patch('notification_service.api.send_email')
 def step(context, mock_email_service):
     mock_email_service.assert_called_with('something')
+
