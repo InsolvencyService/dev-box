@@ -29,4 +29,14 @@ class TestFindDiscrepancies(unittest.TestCase):
 
         discrepancies = find_discrepancies(claim_id)
         assert_that(discrepancies, has_length(0))
+    
+    @patch('claim_service.api.get_claim')
+    def test_returns_does_not_exception_with_missing_gross_rate_of_pay(self, mock_get_claim):
+        mock_get_claim.return_value = (
+            {'glross_rate_of_pay': '650'},
+            {'employee_basic_weekly_pay': '650'}
+        )
+        claim_id = 1
 
+        discrepancies = find_discrepancies(claim_id)
+ 

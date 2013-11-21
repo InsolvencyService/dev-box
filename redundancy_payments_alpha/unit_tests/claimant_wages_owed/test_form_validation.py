@@ -19,10 +19,6 @@ def complete_form_data():
         'wage_owed_to': '21/03/1999',
         'number_of_days_owed': '1',
         'gross_amount_owed': '1.50',
-        'failed_payment': 'Yes',
-        'failed_payment_from': '20/02/1985',
-        'failed_payment_to': '21/03/1999',
-        'net_amount': '1.50'
     }
     return form
 
@@ -128,62 +124,3 @@ class TestGrossAmountOwed(unittest.TestCase):
         # then
         assert_that(form.gross_amount_owed.errors, has_item("Gross amount owed must be numeric.") )
 
-class TestFailedPaymentFrom(unittest.TestCase):
-    def test_failed_payment_from_field_allows_a_valid_date(self):
-        # given
-        entered_data = complete_form_data()
-        # when
-        form = complete_form(entered_data)
-        form.validate()
-        # then
-        assert_that(form.failed_payment_from.errors, has_length(0))
-
-    def test_failed_payment_from_field_does_not_allow_incorrectly_formatted_date(self):
-        # given
-        entered_date = complete_form_data()
-        entered_date['failed_payment_from'] = '01//01/1990'
-        # when
-        form = complete_form(entered_date)
-        form.validate()
-        # then
-        assert_that(form.failed_payment_from.errors, has_item("Date must be in the format dd/mm/yyyy.") )
-
-class TestFailedPaymentTo(unittest.TestCase):
-    def test_failed_payment_to_field_allows_a_valid_date(self):
-        # given
-        entered_data = complete_form_data()
-        # when
-        form = complete_form(entered_data)
-        form.validate()
-        # then
-        assert_that(form.failed_payment_to.errors, has_length(0))
-
-    def test_failed_payment_to_field_does_not_allow_incorrectly_formatted_date(self):
-        # given
-        entered_date = complete_form_data()
-        entered_date['failed_payment_to'] = '01//01/1990'
-        # when
-        form = complete_form(entered_date)
-        form.validate()
-        # then
-        assert_that(form.failed_payment_to.errors, has_item("Date must be in the format dd/mm/yyyy.") )
-
-class TestNetAmount(unittest.TestCase):
-    def test_net_amount_field_allows_valid_decimal(self):
-        # given
-        entered_data = complete_form_data()
-        # when
-        form = complete_form(entered_data)
-        form.validate()
-        # then
-        assert_that(form.net_amount.errors, has_length(0))
-
-    def test_net_amount_field_does_not_allow_non_decimal(self):
-        # given
-        entered_net_amount = complete_form_data()
-        entered_net_amount['net_amount'] = '1.x'
-        # when
-        form = complete_form(entered_net_amount)
-        form.validate()
-        # then
-        assert_that(form.net_amount.errors, has_item("Net amount must be numeric.") )

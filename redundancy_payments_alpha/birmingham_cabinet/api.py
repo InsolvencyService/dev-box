@@ -101,3 +101,6 @@ def update_claim(claim_id, claimant_information=None, employee_record=None):
             claim.employee_record = employee_record
         session.commit()
 
+
+def submit_claim(claim_id):
+    pass
