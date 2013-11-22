@@ -12,3 +12,4 @@ Feature: send email notification to IP
          When the notifications are triggered
          Then the email is sent to the IP
         #TODO: Check email contents
+

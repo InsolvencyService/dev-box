@@ -50,7 +50,8 @@ def employee_added():
 
 @app.route('/_tasks/send-notifications/', methods=['POST'])
 def send_notifications():
-    notification_api.send_email('', '', '', '')
+    notification_api.send_email('fakeip@not-an-address.com', 'Fake Subject',
+                                'Mr Phony', 'Enjoy this summary')
     return 'ok'
 
 if __name__ == '__main__':
