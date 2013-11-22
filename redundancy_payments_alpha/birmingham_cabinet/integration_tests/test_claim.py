@@ -1,9 +1,9 @@
 import unittest
 
 from nose.plugins.attrib import attr
-from hamcrest import assert_that, is_, has_length
+from hamcrest import assert_that, is_, has_length, has_entry, is_not
 
-from birmingham_cabinet.api import add_claim, get_claim, truncate_all_tables, update_claim, claims_against_company, get_claims
+from birmingham_cabinet.api import add_claim, get_claim, truncate_all_tables, update_claim, claims_against_company, get_claims, mark_claim_as_submitted
 from birmingham_cabinet.models import Claim
 
 @attr("integration")
@@ -77,3 +77,15 @@ class TestClaim(unittest.TestCase):
         add_claim(claimant_3_data, employee_record_3)
 
         assert_that(get_claims(), has_length(3))
+
+    def test_submitting_claim(self):
+        claimant_data = {'foo': 'bar'}
+        employee_record = {'x': '1'}
+
+        claim_id = add_claim(claimant_data, employee_record)
+
+        mark_claim_as_submitted(claim_id)
+
+        claim = get_claim(claim_id)
+        assert_that(claim[2], is_not(None))
+

@@ -1,4 +1,5 @@
 import contextlib
+from datetime import datetime
 
 from sqlalchemy.orm.exc import NoResultFound
 
@@ -86,7 +87,7 @@ def get_claim(claim_id):
     with contextlib.closing(make_session()) as session:
         claim = session.query(Claim).filter(Claim.claim_id==claim_id).one()
         return (json_decode(claim.claimant_information),
-                json_decode(claim.employee_record))
+                json_decode(claim.employee_record), claim.submitted_at)
 
 
 def update_claim(claim_id, claimant_information=None, employee_record=None):
@@ -108,8 +109,12 @@ def claims_against_company(employer_id):
                  for claim in claims]
 
 
-def submit_claim(claim_id):
-    pass
+def mark_claim_as_submitted(claim_id):
+    with contextlib.closing(make_session()) as session:
+        claim = session.query(Claim).filter(Claim.claim_id==claim_id).one()
+        claim.submitted_at = datetime.now()
+        session.commit()
+
 
 
 def get_claims():

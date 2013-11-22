@@ -6,8 +6,8 @@ from sqlalchemy import(
     Integer,
     Text,
     Date,
-    ForeignKey
-    )
+    ForeignKey,
+    Time, DateTime)
 from sqlalchemy.dialects.postgresql import HSTORE
 
 
@@ -52,6 +52,7 @@ class Claim(Base):
     __tablename__ = "claims"
     claim_id = Column(Integer, primary_key=True)
     employer_id = Column(Integer, nullable=True) # FIXME: Migrate this to be non-nullable
+    submitted_at = Column(DateTime, nullable=True)
     claimant_information = Column(HSTORE)
     employee_record = Column(HSTORE)
 
