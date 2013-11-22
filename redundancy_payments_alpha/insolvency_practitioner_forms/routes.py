@@ -6,6 +6,7 @@ from werkzeug.utils import redirect
 from forms.employer_details_form import EmployerDetailsForm
 from forms.employee_details_form import EmployeeDetailsForm
 from birmingham_cabinet.api import add_rp14a_form
+from notification_service import api as notification_api
 
 app = Flask(__name__)
 app.secret_key = 'i_am_a_secret'
@@ -47,7 +48,10 @@ def employee_details():
 def employee_added():
     return 'ok'
 
+@app.route('/_tasks/send-notifications/', methods=['POST'])
+def send_notifications():
+    notification_api.send_email('', '', '', '')
+    return 'ok'
 
 if __name__ == '__main__':
     app.run()
-

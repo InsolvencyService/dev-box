@@ -1,7 +1,7 @@
 import mandrill
 
 
-def send_email_via_mandrill(to_email, to_name, from_email, from_name, subject, text):
+def _send_email_via_mandrill(to_email, to_name, from_email, from_name, subject, text):
     API_KEY = 'wibble'
     mandrill_api = mandrill.Mandrill(API_KEY)
     message = {

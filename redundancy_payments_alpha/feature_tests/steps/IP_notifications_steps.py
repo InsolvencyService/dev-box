@@ -1,10 +1,13 @@
+import os
 from behave import *
 from mock import patch
+from hamcrest import assert_that, is_
 from insolvency_practitioner_forms.routes import app as a
 
 from birmingham_cabinet.api import add_rp14a_form
 from claim_service.api import submit, create_claim_2
-import notification_service.email
+import notification_service
+
 
 @given(u'the claimant has submitted a claim')
 def impl(context):
@@ -27,12 +30,13 @@ def impl(context):
 @when("The notifications are triggered")
 def step(context):
     test_client = a.test_client()
+    os.environ['USE_MOCK_EMAIL'] = 'True'
     response = test_client.post('/_tasks/send-notifications/')
+    os.unsetenv('USE_MOCK_EMAIL')
     assert_that(response.status_code, is_(200))
 
 
 @then("the email is sent to the IP")
-@patch('notification_service.api.send_email')
-def step(context, mock_email_service):
-    mock_email_service.assert_called_with('something')
-
+def step(context):
+    assert_that(os.path.exists('TestEmail.txt'), True)
+    os.remove('TestEmail.txt')

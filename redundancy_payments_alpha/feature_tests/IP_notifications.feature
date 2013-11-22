@@ -11,3 +11,4 @@ Feature: send email notification to IP
         Given the claimant has submitted a claim
          When the notifications are triggered
          Then the email is sent to the IP
+        #TODO: Check email contents
