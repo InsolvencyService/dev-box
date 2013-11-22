@@ -3,7 +3,7 @@ import unittest
 from nose.plugins.attrib import attr
 from hamcrest import assert_that, is_, has_length
 
-from birmingham_cabinet.api import add_claim, get_claim, truncate_all_tables, update_claim, claims_against_company
+from birmingham_cabinet.api import add_claim, get_claim, truncate_all_tables, update_claim, claims_against_company, get_claims
 from birmingham_cabinet.models import Claim
 
 @attr("integration")
@@ -65,3 +65,15 @@ class TestClaim(unittest.TestCase):
         assert_that(updated_claim[0]['foo'], is_('mongoose'))
         assert_that(updated_claim[1]['foo'], is_('baz'))
 
+    def test_retrieving_claims(self):
+        claimant_1_data = {'foo': 'bar'}
+        claimant_2_data = {'foo': 'zap'}
+        claimant_3_data = {'foo': 'pow'}
+        employee_record_1 = {'x': '1'}
+        employee_record_2 = {'x': '2'}
+        employee_record_3 = {'x': '3'}
+        add_claim(claimant_1_data, employee_record_1)
+        add_claim(claimant_2_data, employee_record_2)
+        add_claim(claimant_3_data, employee_record_3)
+
+        assert_that(get_claims(), has_length(3))

@@ -1,17 +1,10 @@
 from birmingham_cabinet import api as cabinet_api
-from discrepancies import comparable_values
+from claim_service.discrepancies import find_discrepancies_in_claim
 
 
 def find_discrepancies(claim_id):
     claim = cabinet_api.get_claim(claim_id)
     return find_discrepancies_in_claim(claim)
-
-
-def find_discrepancies_in_claim(claim):
-    discrepancies = {entry: values
-                     for entry, values in comparable_values(claim).iteritems()
-                     if values[0] != values[1]}
-    return discrepancies
 
 
 def has_discrepancies(claim_id):
@@ -42,4 +35,8 @@ def submit(claim_id):
 
 
 def summarise_claims():
-    return None
+    claims = cabinet_api.get_claims()
+    stuff_to_return = []
+    for claim in claims:
+        stuff_to_return.append(claim[0])
+    return stuff_to_return

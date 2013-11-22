@@ -111,3 +111,8 @@ def claims_against_company(employer_id):
 def submit_claim(claim_id):
     pass
 
+
+def get_claims():
+    with contextlib.closing(make_session()) as session:
+        claims = session.query(Claim).all()
+        return claims
