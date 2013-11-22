@@ -9,3 +9,12 @@ firewall::allow:
     port: 8001
     from: any
     ip: any
+  "2222 from anywhere":
+    port: 2222
+    from: any
+    ip: any
+  "22 from anywhere":
+    port: 22
+    from: any
+    ip: any
+
