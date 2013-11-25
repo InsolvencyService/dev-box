@@ -109,15 +109,27 @@ def claims_against_company(employer_id):
                  for claim in claims]
 
 
+def _current_time():
+    return datetime.now()
+
+
 def mark_claim_as_submitted(claim_id):
     with contextlib.closing(make_session()) as session:
         claim = session.query(Claim).filter(Claim.claim_id==claim_id).one()
-        claim.submitted_at = datetime.now()
+        claim.submitted_at = _current_time()
         session.commit()
 
+
+def get_claims_submitted_between(start, end):
+    with contextlib.closing(make_session()) as session:
+        claims = session.query(Claim).filter(Claim.submitted_at != None)\
+            .filter(Claim.submitted_at > start)\
+            .filter(Claim.submitted_at < end).all()
+
+        return [(claim.claimant_information, claim.employee_record, claim.submitted_at) for claim in claims]
 
 
 def get_claims():
     with contextlib.closing(make_session()) as session:
         claims = session.query(Claim).all()
-        return claims
+        return [(claim.claimant_information, claim.employee_record, claim.submitted_at) for claim in claims]
