@@ -1,6 +1,6 @@
 import json
 
-from flask import Flask, render_template, url_for, session, request
+from flask import Flask, render_template, url_for, session, request, send_file
 from werkzeug.utils import redirect
 
 import claim_service.api as claim_service
@@ -208,3 +208,6 @@ def summary():
 
     return render_template('summary.html', discrepancies=discrepancies, nav_links=nav_links())
 
+@app.route('/robots.txt')
+def robots_txt():
+    return send_file('static/robots.txt')

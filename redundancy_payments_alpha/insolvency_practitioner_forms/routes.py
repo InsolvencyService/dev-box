@@ -1,6 +1,6 @@
 from pprint import pprint
 
-from flask import Flask, url_for, request, render_template, session, g
+from flask import Flask, url_for, request, render_template, session, g, send_file
 from werkzeug.utils import redirect
 
 from forms.employer_details_form import EmployerDetailsForm
@@ -47,6 +47,10 @@ def employee_details():
 def employee_added():
     return 'ok'
 
+
+@app.route('/robots.txt')
+def robots_txt():
+    return send_file('static/robots.txt')
 
 if __name__ == '__main__':
     app.run()
