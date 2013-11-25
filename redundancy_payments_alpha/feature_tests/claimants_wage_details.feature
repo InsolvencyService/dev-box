@@ -9,7 +9,7 @@ Feature: claimants wage details
            And the page should have an input field called "number_of_hours_worked" labeled "Number of hours you normally work"
            And the page should have an input field called "bonus_or_commission" labeled "Did your pay include any bonus or commission ?"
            And the page should have an input field called "overtime" labeled "Did you work overtime as a part of your contract ?"
-           And the page should have an input field called "regular_days_of_work" labeled "How many days do you normally work each week?"
+           And the page should have an input field called "normal_days_of_work" labeled "How many days do you normally work each week?"
 
 
 
