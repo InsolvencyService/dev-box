@@ -73,7 +73,7 @@ run_puppet () {
   PUPPET_TMP=$(mktemp -d)
   trap "cleanup '$PUPPET_TMP'" EXIT
   cd "$PUPPET_TMP"
-  tar zxf $rootdir/puppet.tgz
+  tar xf $rootdir/puppet.tar
 
   # Finally we run puppet from the tarball.
   status "running puppet in ${env} environment"

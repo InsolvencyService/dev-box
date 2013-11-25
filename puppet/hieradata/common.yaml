@@ -29,15 +29,6 @@ packages:
   - unzip
   - vim-nox
   - zip
-# Allow SSH, HTTP, HTTPS from these IPs
-trusted_ips:
-  # Internal
-  - 192.168.2.0/29
-  # Aviation House
-  - 80.194.77.90
-  - 80.194.77.100
-  # Cannon House
-  - 86.164.232.105
 
 firewall::allow:
   "ssh from anywhere":

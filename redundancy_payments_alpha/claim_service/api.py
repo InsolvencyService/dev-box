@@ -1,42 +1,42 @@
-from birmingham_cabinet.api import employee_via_nino, get_claim, add_claim, update_claim, submit_claim
-from discrepancies import comparable_values
+from birmingham_cabinet import api as cabinet_api
+from claim_service.discrepancies import find_discrepancies_in_claim
 
 
 def find_discrepancies(claim_id):
-    claim = get_claim(claim_id)
-    discrepancies = {entry: values for entry, values in comparable_values(claim).iteritems() if values[0] != values[1]} 
-    return discrepancies
+    claim = cabinet_api.get_claim(claim_id)
+    return find_discrepancies_in_claim(claim)
 
 
-def _stringify(dictionary):
-    # This is evil and should obviously be fixed once
-    # the domain model has solidified a bit more
-    def _force_string(thing):
-        try:
-            return str(thing)
-        except Exception:
-            return ':('
-    return {k: _force_string(v) for k, v in dictionary.iteritems() }
+def has_discrepancies(claim_id):
+    return len(find_discrepancies(claim_id)) > 0
 
 
-def create_claim_2(personal_details):
+def create_claim_2(claimant_information):
     claim_id = None
-    nino = personal_details['nino']
-    employee_record = employee_via_nino(nino)
+    nino = claimant_information['nino']
+    employee_record = cabinet_api.employee_via_nino(nino)
     if employee_record:
-        claim_id = add_claim(
-            _stringify(personal_details),
-            _stringify(employee_record)
+        claim_id = cabinet_api.add_claim(
+            claimant_information,
+            employee_record
         )
     return claim_id
 
 
 def add_details_to_claim(claim_id, claimant_details):
-    claim = get_claim(claim_id)
-    details = _stringify(claimant_details)
+    claim = cabinet_api.get_claim(claim_id)
+    details = claimant_details
     claim[0].update(details)
-    update_claim(claim_id, claimant_information=details)
+    cabinet_api.update_claim(claim_id, claimant_information=details)
 
 
 def submit(claim_id):
-    submit_claim(claim_id)
+    cabinet_api.submit_claim(claim_id)
+
+
+def summarise_claims():
+    claims = cabinet_api.get_claims()
+    stuff_to_return = []
+    for claim in claims:
+        stuff_to_return.append(claim[0])
+    return stuff_to_return
