@@ -54,6 +54,7 @@ def personal_details():
         form = ClaimantContactDetails()
 
     if form.validate_on_submit():
+        form.data['nino'] = form.data['nino'].upper()
         session['user_details'] = form.data
         claim_id = claim_service.create_claim_2(form.data)
         if claim_id:

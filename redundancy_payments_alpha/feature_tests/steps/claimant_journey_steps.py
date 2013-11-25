@@ -9,7 +9,11 @@ def step(context, url, expected_title):
 
 @then('the claimant should be redirected')
 def step(context):
-    assert_that(context.response_from_posting_data.status, is_('302 FOUND'))
+    try:
+        assert_that(context.response_from_posting_data.status, is_('302 FOUND'))
+    except AssertionError:
+        print context.response_from_posting_data.data
+        raise
 
 @then('the form should display error message "{message}"')
 def step(context, message):

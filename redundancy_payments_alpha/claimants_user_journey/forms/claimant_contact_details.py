@@ -46,7 +46,7 @@ class ClaimantContactDetails(Form):
     telephone_number = TelField('Telephone Number', validators=[DataRequired('Please enter your Telephone Number')])
     nino = TextField('National Insurance Number',
                      validators=[DataRequired('Please enter your National Insurance Number'),
-                                 Regexp(regex=re.compile('^[A-Z]{2}[0-9]{6}[A-Z]{1}$'),
+                                 Regexp(regex=re.compile('^[a-zA-Z]{2}[0-9]{6}[a-zA-Z]{1}$'),
                                         message="National Insurance Number must be two letters followed by six digits and a further letter (e.g. 'AB123456C').")])
     date_of_birth = TextField('Date Of Birth',
                               validators=[DataRequired('Please enter your Date of Birth'),
