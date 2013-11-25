@@ -61,7 +61,7 @@ def personal_details():
             return redirect(url_for('employment_details'))
         else:
             return redirect(url_for('call_your_ip'))
-    return render_template('user_details.html', form=form, hide_nav=True)
+    return render_template('user_details.html', form=form, hide_nav=True, inner_id='personal-details')
 
 
 @app.route('/claim-redundancy-payment/call-your-ip/', methods=['GET'])

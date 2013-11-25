@@ -84,18 +84,18 @@
                 </header>
 
                 <div class="article-container group">
+                    {% if not hide_nav %}
                     <div class="contents">
                         <nav>
-                            {% if not hide_nav %}
                             <h2>Contents</h2>
                             <div class='link-list'>
                                 {% block nav %}{% endblock %}
                             </div>
-                            {% endif %}
                         </nav>
                     </div>
+                    {% endif %}
                     <section>
-                        <div class="inner">
+                        <div class="inner" id={{ inner_id }}>
                           {% block content %}{%endblock%}
                         </div>
                     </section>
