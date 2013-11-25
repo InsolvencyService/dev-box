@@ -108,7 +108,7 @@ def step(context):
 def step(context):
     discrepancy_html = context.followup_response.data
     page = BeautifulSoup(discrepancy_html)
-    call_to_action_elements = page.findAll("div", {"class" : "call-to-action"})
+    call_to_action_elements = page.findAll("div", {"class" : "call-to-action group discrepancy-summary"})
     assert_that(call_to_action_elements, not empty())
 
 
@@ -116,4 +116,12 @@ def step(context):
 def step(context):
     page = BeautifulSoup(context.followup_response.data)
     assert_that(page.find('h2').text, contains_string('Please enter your holiday details'))
+
+@then('the page should not have a call to action box at the top of the screen')
+def step(context):
+    discrepancy_html = context.response.data
+    page = BeautifulSoup(discrepancy_html)
+    call_to_action_elements = page.findAll("div", {"class" : "call-to-action group discrepancy-summary"})
+    assert_that(call_to_action_elements, empty())
+
 

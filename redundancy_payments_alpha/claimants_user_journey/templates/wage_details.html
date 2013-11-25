@@ -13,9 +13,11 @@
     <h1>Your wage details</h1>
         <form method="post" action="{{ request.path }}" class="form-example-1">
             <div>
-                <div class="group discrepancy-summary call-to-action">
+               {% if discrepancies|length != 0 %}
+                <div class="call-to-action group discrepancy-summary">
                     <p>Stuart's copy</p>
                 </div>
+                {% endif %}
                 <div>
                     <fieldset>
                     {{ form.hidden_tag() }}
