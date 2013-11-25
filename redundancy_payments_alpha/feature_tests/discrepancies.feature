@@ -36,6 +36,7 @@ Feature: displaying discrepencies to the claimant
             | normal_days_of_work      | 5      |
          Then the claimant should see a discrepancy on gross rate of pay
           But not see a discrepancy on frequency of work
+          And see a call to action box at the top of the screen
 
     @nuke_db
     Scenario: the claimant provides wages details that are not discrepent

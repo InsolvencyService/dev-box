@@ -104,6 +104,13 @@ def step(context):
     question_element = page.find(id="normal_days_of_work_question")
     assert_that(question_element['class'], is_not(contains_string('discrepancy')))
 
+@then('see a call to action box at the top of the screen')
+def step(context):
+    discrepancy_html = context.followup_response.data
+    page = BeautifulSoup(discrepancy_html)
+    call_to_action_elements = page.findAll("div", {"class" : "call-to-action"})
+    assert_that(call_to_action_elements, not empty())
+
 
 @then('the claimant should see the next page of the form')
 def step(context):
