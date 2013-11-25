@@ -36,7 +36,7 @@ def add_details_to_claim(claim_id, claimant_details):
 
 
 def submit(claim_id):
-    cabinet_api.submit_claim(claim_id)
+    cabinet_api.mark_claim_as_submitted(claim_id)
 
 
 def summarise_claims():

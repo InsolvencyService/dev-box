@@ -7,6 +7,7 @@ from forms.employer_details_form import EmployerDetailsForm
 from forms.employee_details_form import EmployeeDetailsForm
 from birmingham_cabinet.api import add_rp14a_form
 from notification_service import api as notification_api
+from claim_service import api as claims_api
 
 app = Flask(__name__)
 app.secret_key = 'i_am_a_secret'
@@ -50,8 +51,10 @@ def employee_added():
 
 @app.route('/_tasks/send-notifications/', methods=['POST'])
 def send_notifications():
+    claims = claims_api.claims_submitted_in_last_24_hours()
+    summary_message = '%d claims in the last 24 hours' % len(claims)
     notification_api.send_email('fakeip@not-an-address.com', 'Fake Subject',
-                                'Mr Phony', 'Enjoy this summary')
+                                'Mr Phony', summary_message)
     return 'ok'
 
 if __name__ == '__main__':
