@@ -14,7 +14,7 @@ Feature: displaying discrepencies to the claimant
             | employee_date_of_birth             | 01/01/1900 |
             | employee_title                     | Mr         |
             | employee_forenames                 | John       |
-            | employee_surname                   | Smith      |
+            | employee_surname                   | Smith      |95
             | ip_number                          | 0000       |
             | employer_name                      | Widgets Co |
             | employee_basic_weekly_pay          | 550        |

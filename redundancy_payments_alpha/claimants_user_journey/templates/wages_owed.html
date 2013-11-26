@@ -13,7 +13,7 @@
 {% endblock %}
 {% block content %}
     <h1>Wages owed</h1>
-        <form method="post" action="/claim-redundancy-payment/wages-owed-details/" class="form-example-1">
+        <form method="post" action="{{ request.path }}" class="form-example-1">
             <div>
                 {{ call_to_action_box(discrepancies)}}
                 {{ form.hidden_tag() }}
