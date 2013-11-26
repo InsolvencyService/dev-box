@@ -49,7 +49,7 @@ class DateOfBirthValidator(Regexp):
     def __init__(self, format_message = None, range_message = None):
         self.format_message = format_message
         self.range_message = range_message
-        super(DateOfBirthValidator, self).__init__(r'^[0-9]{2}[/][0-9]{2}[/][0-9]{4}$', re.IGNORECASE, format_message)
+        super(DateOfBirthValidator, self).__init__(r'^[0-9]{1,2}[/][0-9]{1,2}[/][0-9]{4}$', re.IGNORECASE, format_message)
 
     def __call__(self, form, field):
         #Handle the regex/format part using the super class
