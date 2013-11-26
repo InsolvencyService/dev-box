@@ -41,6 +41,11 @@ function pass_fail {
     if [ "$?" -ne "0" ]; then warn_quit "$JOB_DESC"; else passed "$JOB_DESC"; fi
 }
 
+function check_for_tabs {
+    JOB_DESC="Checking there are no tabs in html, python and feature files"
+    ! find . -name "*.html" -o -name "*.py" -o -name "*.feature" | xargs grep -P '\t' --color=AUTO; pass_fail
+}
+
 function activate_venv {
     VENV_NAME="rps"
     JOB_DESC="Activating the virtual environment ($VENV_NAME)"
@@ -73,6 +78,7 @@ function feature_tests {
 }
 
 function build {
+    check_for_tabs
     activate_venv
     requirements
     unit_tests

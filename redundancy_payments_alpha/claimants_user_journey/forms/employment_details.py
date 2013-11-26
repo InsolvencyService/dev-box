@@ -11,7 +11,7 @@ class EmploymentDetails(Form):
                                          ('Employed', 'Employed'),
                                          ('Labour-only Sub-contractor', 'Labour-only Sub-contractor'),
                                          ('Agency Worker', 'Agency Worker'),
-									     ('Fixed-term contracts worker', 'Fixed-term contracts worker'),
+                                         ('Fixed-term contracts worker', 'Fixed-term contracts worker'),
                                          ('Director or Shareholder', 'Director or Shareholder'),
                                          ('Freelance worker', 'Freelance worker'),
                                          ('Casual worker', 'Casual worker'),

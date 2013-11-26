@@ -16,8 +16,8 @@
             {% if session['user_details'] is defined %}
             <table>
                 <!-- Table subheading -->
-				<tr><th colspan="2">Personal details</th></tr>
-					<!-- /Table subheading -->
+                <tr><th colspan="2">Personal details</th></tr>
+                <!-- /Table subheading -->
                 <tr><td>Title</td><td>
                     {% if session['user_details'].other_title is defined %}
                     {{ session['user_details'].other_title }}
