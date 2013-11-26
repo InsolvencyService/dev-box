@@ -1,0 +1,13 @@
+{% macro call_to_action_box(discrepancies={}) %}
+    {% if discrepancies|length != 0 %}
+        <div class="call-to-action group discrepancy-summary">
+            <p>The highlighted fields below show the information from your employment records. This has been provided by the Insolvency Practitioner appointed to deal with your employers affairs.</p>
+                <ol>
+                    <li><strong>Check</strong> the information about your claim shown below.</li>
+                    <li><strong>Leave</strong> the details you have entered unchanged if you disagree with the information provided by your Insolvency Practitioner.</li>
+                    <li><strong>Change</strong> the details you have entered if you agree with the suggested values provided by your Insolvency Practitioner.</li>
+                </ol>
+            <p>You will have an opportunity to review your claim on the summary screen.</p>
+        </div>
+    {% endif %}
+{% endmacro %}

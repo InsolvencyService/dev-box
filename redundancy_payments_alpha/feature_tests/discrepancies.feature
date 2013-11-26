@@ -14,7 +14,7 @@ Feature: displaying discrepencies to the claimant
             | employee_date_of_birth             | 01/01/1900 |
             | employee_title                     | Mr         |
             | employee_forenames                 | John       |
-            | employee_surname                   | Smith      |
+            | employee_surname                   | Smith      |95
             | ip_number                          | 0000       |
             | employer_name                      | Widgets Co |
             | employee_basic_weekly_pay          | 550        |
@@ -36,6 +36,7 @@ Feature: displaying discrepencies to the claimant
             | normal_days_of_work      | 5      |
          Then the claimant should see a discrepancy on gross rate of pay
           But not see a discrepancy on frequency of work
+          And see a call to action box at the top of the screen
 
     @nuke_db
     Scenario: the claimant provides wages details that are not discrepent
@@ -62,5 +63,6 @@ Feature: displaying discrepencies to the claimant
             | number_of_days_owed      | 1          |
             | gross_amount_owed        | 999        |
          Then the claimant should see a discrepancy on wage owed in arrears
+         And see a call to action box at the top of the screen
 
 

@@ -26,10 +26,8 @@ setup_filters(app)
 
 def nav_links():
     links = [
-        ('Personal Details', url_for('personal_details')),
         ('Employment Details', url_for('employment_details')),
         ('Wage Details', url_for('wage_details')),
-        ('Holiday Pay', url_for('holiday_pay')),
         ('Wages Owed', url_for('wages_owed')),
         ('Summary', url_for('summary')),
     ]
@@ -49,7 +47,7 @@ def claim_redundancy_payment():
 
 @app.route('/claim-redundancy-payment/start/')
 def start():
-    return render_template('start.html', hide_nav=True)
+    return render_template('start.html', hide_nav=True, inner_id='start-page')
 
 
 @app.route('/claim-redundancy-payment/personal-details/', methods=['GET', 'POST'])
@@ -123,18 +121,19 @@ def arrears_pay_discrepancies():
     if existing_form:
         form = WagesOwed(**existing_form)
     else:
-        raise Exception("This should not be possible")
+        form = WagesOwed()
+
+    print request.method
     
     claim_id = session.get('claim_id')
-
     if form.validate_on_submit():
-        session['wage_owed'] = form.data
+        session['wages_owed'] = form.data
         if claim_id:
             claim_service.add_details_to_claim(claim_id, form.data)
         return redirect(url_for('summary'))
     elif request.method == 'POST' and not form.validate():
-        session['wage_owed'] = form.data
-        return redirect(url_for('wage_owed', data=form.data), code=307)
+        session['wages_owed'] = form.data
+        return redirect(url_for('wages_owed', data=form.data), code=307)
 
     discrepancies = {}
     if claim_id:
@@ -159,7 +158,7 @@ def wage_details():
             discrepancies = claim_service.find_discrepancies(claim_id)
             if len(discrepancies):
                 return redirect(url_for('wage_details_discrepancies'))
-        return redirect(url_for('holiday_pay'))
+        return redirect(url_for('wages_owed'))
 
     return render_template('wage_details.html', form=form, nav_links=nav_links(),
             discrepancies={})
@@ -179,7 +178,7 @@ def wage_details_discrepancies():
         session['wage_details'] = form.data
         if claim_id:
             claim_service.add_details_to_claim(claim_id, form.data)
-        return redirect(url_for('holiday_pay'))
+        return redirect(url_for('wages_owed'))
     elif request.method == 'POST' and not form.validate():
         session['wage_details'] = form.data
         return redirect(url_for('wage_details', data=form.data), code=307)
