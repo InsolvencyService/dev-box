@@ -23,6 +23,14 @@ class DateForm(Form):
                                           message='Month is a required field')])
     year = TextField(validators=[DataRequired('Please enter your Year of Birth'), ])
 
+    @property
+    def data(self):
+        d = super(DateForm, self).data
+        return "%(day)s/%(month)s/%(year)s" % d
+
+    def validate_day(form, field):
+        DateOfBirthValidator(format_message="Date Of Birth must be in the format dd/mm/yyyy.")(form, form)
+
 class ClaimantContactDetails(Form):
     forenames = TextField('First name(s)', validators=[DataRequired('Please enter your first name'), Length(max=60)])
     surname = TextField('Last name', validators=[DataRequired('Please enter your last name'), Length(max=60)])
