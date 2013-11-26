@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% from "macros/_form_field.html" import form_field %}
 {% from "macros/_form_nav.html" import form_nav %}
+{% from "macros/_call_to_action_box.html" import call_to_action_box %}
 
 {% block title %}Wages owed{% endblock %}
 {% block header %}
@@ -14,6 +15,7 @@
     <h1>Wages owed</h1>
         <form method="post" action="/claim-redundancy-payment/wages-owed-details/" class="form-example-1">
             <div>
+                {{ call_to_action_box(discrepancies)}}
                 {{ form.hidden_tag() }}
                 <fieldset>
                 {{ form_field(form.owed, inline=True) }}
