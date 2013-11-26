@@ -76,15 +76,14 @@ def step(context):
         follow_redirects=True
     )
     assert_that(response.status_code, is_(200))
-    context.arrears_followup_response = response
+    context.followup_response = response
 
 
 @then('the claimant should see a discrepancy on wage owed in arrears')
 def step(context):
-    page = BeautifulSoup(context.arrears_followup_response.data)
+    page = BeautifulSoup(context.followup_response.data)
     assert_that(page.find('h2').text, is_('Please enter details of any unpaid wages'))
     question_element = page.find(id="gross_amount_owed_question")
-    print question_element
     assert_that(question_element['class'], contains_string('discrepancy'))
 
 
@@ -106,7 +105,8 @@ def step(context):
 
 @then('see a call to action box at the top of the screen')
 def step(context):
-    discrepancy_html = context.followup_response.data
+    if context.followup_response:
+        discrepancy_html = context.followup_response.data
     page = BeautifulSoup(discrepancy_html)
     call_to_action_elements = page.findAll("div", {"class" : "call-to-action group discrepancy-summary"})
     assert_that(call_to_action_elements, not empty())

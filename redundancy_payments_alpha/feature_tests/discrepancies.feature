@@ -63,5 +63,6 @@ Feature: displaying discrepencies to the claimant
             | number_of_days_owed      | 1          |
             | gross_amount_owed        | 999        |
          Then the claimant should see a discrepancy on wage owed in arrears
+         And see a call to action box at the top of the screen
 
 
