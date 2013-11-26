@@ -18,10 +18,8 @@ setup_filters(app)
 
 def nav_links():
     links = [
-        ('Personal Details', url_for('personal_details')),
         ('Employment Details', url_for('employment_details')),
         ('Wage Details', url_for('wage_details')),
-        ('Holiday Pay', url_for('holiday_pay')),
         ('Wages Owed', url_for('wages_owed')),
         ('Summary', url_for('summary')),
     ]
@@ -152,7 +150,7 @@ def wage_details():
             discrepancies = claim_service.find_discrepancies(claim_id)
             if len(discrepancies):
                 return redirect(url_for('wage_details_discrepancies'))
-        return redirect(url_for('holiday_pay'))
+        return redirect(url_for('wages_owed'))
 
     return render_template('wage_details.html', form=form, nav_links=nav_links(),
             discrepancies={})
@@ -172,7 +170,7 @@ def wage_details_discrepancies():
         session['wage_details'] = form.data
         if claim_id:
             claim_service.add_details_to_claim(claim_id, form.data)
-        return redirect(url_for('holiday_pay'))
+        return redirect(url_for('wages_owed'))
     elif request.method == 'POST' and not form.validate():
         session['wage_details'] = form.data
         return redirect(url_for('wage_details', data=form.data), code=307)

@@ -10,6 +10,5 @@ Feature: form navigation
          When visiting each form page
          Then we should see a navigation bar with these links
             | LINK                                          |
-            | /claim-redundancy-payment/personal-details/   |
             | /claim-redundancy-payment/employment-details/ |
             | /claim-redundancy-payment/wage-details/       |

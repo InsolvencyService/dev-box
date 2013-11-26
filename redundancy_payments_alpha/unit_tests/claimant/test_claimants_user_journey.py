@@ -108,6 +108,6 @@ class TestFindingDiscrepanciesInPersonalDetails(unittest.TestCase):
 
         assert_that(response.headers, has_entry(
             'Location',
-            contains_string('/claim-redundancy-payment/holiday-pay/')
+            contains_string('/claim-redundancy-payment/wages-owed-details/')
         ))
 
