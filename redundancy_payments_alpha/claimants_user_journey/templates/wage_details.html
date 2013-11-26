@@ -1,5 +1,6 @@
 {% from "macros/_form_nav.html" import form_nav %}
 {% from "macros/_form_field.html" import form_field %}
+{% from "macros/_call_to_action_box.html" import call_to_action_box %}
 {% extends "base.html" %}
 {% block title %}Claimant Wage Details{% endblock %}
 {% block header %}
@@ -13,7 +14,7 @@
     <h1>Your wage details</h1>
         <form method="post" action="{{ request.path }}" class="form-example-1">
             <div>
-                <h2>Wages</h2>
+                {{ call_to_action_box(discrepancies)}}
                 <div>
                     <fieldset>
                     {{ form.hidden_tag() }}
