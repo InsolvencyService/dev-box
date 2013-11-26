@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+echo "This will be replaced by ./go.sh very soon"
+echo "This will be replaced by ./go.sh very soon"
+echo "This will be replaced by ./go.sh very soon"
+echo "This will be replaced by ./go.sh very soon"
+echo "This will be replaced by ./go.sh very soon"
+echo "This will be replaced by ./go.sh very soon"
+
 set -oe pipefail
 
 PATH=$PATH:$(pwd)
