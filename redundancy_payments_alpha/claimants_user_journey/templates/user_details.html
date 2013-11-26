@@ -16,8 +16,9 @@
                 {{ form.hidden_tag() }}
                 <fieldset>
                     <legend>Your Name</legend>
-                    {{ form_field(form.title) }}
-                    {{ form_field(form.other, hint="Enter your title if you have chosen other above", optional=True) }}
+
+                    <div style="float: left; padding-right:25px; height:75px;>{{ form_field(form.title) }}</div>
+                    {{ form_field(form.other, hint="Enter your title if you have chosen other", optional=True) }}
                     {{ form_field(form.forenames) }}
                     {{ form_field(form.surname) }}
                 </fieldset>

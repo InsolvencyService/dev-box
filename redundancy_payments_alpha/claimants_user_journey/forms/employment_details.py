@@ -6,7 +6,7 @@ from claimants_user_journey.forms.validators import FutureDateValidator
 
 class EmploymentDetails(Form):
     job_title = TextField('Job Title', validators=[Length(max=30)])
-    category_of_worker = SelectField('Category of Worker',
+    category_of_worker = SelectField('What type of worker are you?',
                                      choices=[
                                          ('Employed', 'Employed'),
                                          ('Labour-only Sub-contractor', 'Labour-only Sub-contractor'),
