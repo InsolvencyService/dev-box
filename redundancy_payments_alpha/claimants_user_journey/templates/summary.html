@@ -15,72 +15,66 @@
         <div>
             {% if session['user_details'] is defined %}
             <table>
-                <caption>Personal details</caption>
-                <tr><th>Title</th><td>
+                <!-- Table subheading -->
+				<tr><th colspan="2">Personal details</th></tr>
+					<!-- /Table subheading -->
+                <tr><td>Title</td><td>
                     {% if session['user_details'].other_title is defined %}
                     {{ session['user_details'].other_title }}
                     {% else %}
                     {{ session['user_details'].title }}
                     {% endif %}
                 </td></tr>
-                <tr><th>Name</th><td>{{ session['user_details'].forenames + ' ' + session['user_details'].surname }}</td></tr>
-                <tr><th>National Insurance Number</th><td>{{ session['user_details'].nino }}</td></tr>
-                <tr><th>Date of birth</th><td>{{ session['user_details'].date_of_birth }}</td></tr>
-                <tr><th>Address</th><td>
+                <tr><td>Name</td><td>{{ session['user_details'].forenames + ' ' + session['user_details'].surname }}</td></tr>
+                <tr><td>National Insurance Number</td><td>{{ session['user_details'].nino }}</td></tr>
+                <tr><td>Date of birth</td><td>{{ session['user_details'].date_of_birth }}</td></tr>
+                <tr><td>Address</td><td>
                     {% if session['user_details'].building_number is defined %}{{ session['user_details'].building_number }}<br/>{% endif %}
                     {% if session['user_details'].street is defined %}{{ session['user_details'].street }}<br/>{% endif %}
                     {% if session['user_details'].district is defined %}{{ session['user_details'].district }}<br/>{% endif %}
                     {% if session['user_details'].town_or_city is defined %}{{ session['user_details'].town_or_city }}<br/>{% endif %}
                     {% if session['user_details'].county is defined %}{{ session['user_details'].county }}<br/>{% endif %}
                     {% if session['user_details'].postcode is defined %}{{ session['user_details'].postcode }}<br/>{% endif %}
-                <tr><th>Contact number</th><td>{{ session['user_details'].telephone_number }}</td></tr>
-                <tr><th>Email address</th><td>{{ session['user_details'].email }}</td></tr>
-            </table>
+                <tr><td>Contact number</td><td>{{ session['user_details'].telephone_number }}</td></tr>
+                <tr><td>Email address</td><td>{{ session['user_details'].email }}</td></tr>
             {% endif %}
             {% if session['employment_details'] is defined %}
-            <table>
-                <caption>Employer details</caption>
-                <tr><th>Job title</th><td>{{ session['employment_details'].job_title }}</td></tr>
-                <tr><th>Category of worker</th><td>{{ session['employment_details'].category_of_worker }}</td></tr>
-                <tr><th>Dates of employment</th><td>{{ session['employment_details'].start_date }} to {{ session['employment_details'].end_date }}</td></tr>
-            </table>
+
+                <tr><th colspan="2">Employer details</th></tr>
+                <tr><td>Job title</td><td>{{ session['employment_details'].job_title }}</td></tr>
+                <tr><td>Category of worker</td><td>{{ session['employment_details'].category_of_worker }}</td></tr>
+                <tr><td>Dates of employment</td><td>{{ session['employment_details'].start_date }} to {{ session['employment_details'].end_date }}</td></tr>
             {% endif %}
             {% if session['wage_details'] is defined %}
-            <table>
-                <caption>Wage Details</caption>
+            <tr><th colspan="2">Wage Details</th></tr>
                 {{ summary_row('Gross pay', 'gross_rate_of_pay', session['wage_details'].gross_rate_of_pay, discrepancies) }}
                 {{ summary_row('Day of the week paid on', 'day_of_payment', session['wage_details'].day_of_payment, discrepancies) }}
                 {{ summary_row('Number of hours normally worked', 'number_of_hours_worked', session['wage_details'].number_of_hours_worked, discrepancies) }}
                 {{ summary_row('Bonus or commission included', 'bonus_or_commission', session['wage_details'].bonus_or_commission, discrepancies) }}
                 {{ summary_row('Work overtime', 'overtime', session['wage_details'].overtime, discrepancies) }}
-                <tr><th>Days overtime normally worked</th><td>{{ session['wage_details'].hours_of_overtime }} to {{ session['wage_details'].frequency_of_overtime }}</td></tr>
+                <tr><td>Days overtime normally worked</td><td>{{ session['wage_details'].hours_of_overtime }} per {{ session['wage_details'].frequency_of_overtime }}</td></tr>
                 {{ summary_row('Days normally worked each week', normal_days_of_work, session['wage_details'].normal_days_of_work, discrepancies) }}
-            </table>
             {% endif %}
             {% if session['wages_owed'] is defined %}
-            <table>
-                <caption>Wages Owed</caption>
-                <tr><th>Period owed</th><td>{{ session['wages_owed'].wage_owed_from }} to {{ session['wages_owed'].wage_owed_to }}</td></tr>
-                <tr><th>Number of days owed</th><td>{{ session['wages_owed'].number_of_days_owed }}</td></tr>
-                <tr><th>Gross amount owed</th><td>{{ session['wages_owed'].gross_amount_owed }}</td></tr>
-                <tr><th>Failed payment owed</th><td>{{ session['wages_owed'].failed_payment_to }} to {{ session['wages_owed'].failed_payment_to }}</td></tr>
-                <tr><th>Amount of failed payment owed</th><td>{{ session['wages_owed'].net_amount }}</td></tr>
-            </table>
+                <tr><th colspan="2">Wages Owed</th></tr>
+                <tr><td>Period owed</td><td>{{ session['wages_owed'].wage_owed_from }} to {{ session['wages_owed'].wage_owed_to }}</td></tr>
+                <tr><td>Number of days owed</td><td>{{ session['wages_owed'].number_of_days_owed }}</td></tr>
+                <tr><td>Gross amount owed</td><td>{{ session['wages_owed'].gross_amount_owed }}</td></tr>
+                <tr><td>Failed payment owed</td><td>{{ session['wages_owed'].failed_payment_to }} to {{ session['wages_owed'].failed_payment_to }}</td></tr>
+                <tr><td>Amount of failed payment owed</td><td>{{ session['wages_owed'].net_amount }}</td></tr>
             {% endif %}
+            </table>
             <div class="discrepancy-summary">
-                <p>If you do not agree with the figures your Insolvency Practitioner has suggested, you may call them to discuss this before submitting your claim.</p>
+                <p>If you disagree with any of the information provided by the Insolvency Practitioner you can contact them on <strong>0800 100 300</strong>.</p>
 
-                <p>You may also submit the claim with both yours and the Insolvency Practitioners suggested values.  It will be treated as a dispute and you will receive an initial minimum payment.  Once the dispute is settled, you may receive an additional payment.</p>
-
-                <p>Alternatively, you can choose to submit your claim with the Insolvency Practitioner's values and your payment will be calculated based on these values.</p>
             </div>
+             <p>Alternatively, you can choose to submit your claim to receive the minimum payment. You can then contact your Insolvency Practitioner to discuss the claim and you may be entitled to receive a further payment.</p>
          </div>
-
         <input class="button" type="submit" value="Contact IP">
         <input class="button" type="submit" value="Amend">
-
     </form>
+
     <form method="post" action="/claim-redundancy-payment/submit-claim/{{ claim_id }}/">
-        <input class="button" type="submit" value="Submit">
+        <input class="button" type="submit" value="Process this claim">
     </form>
 {% endblock %}
