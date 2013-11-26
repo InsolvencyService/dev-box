@@ -18,10 +18,8 @@ setup_filters(app)
 
 def nav_links():
     links = [
-        ('Personal Details', url_for('personal_details')),
         ('Employment Details', url_for('employment_details')),
         ('Wage Details', url_for('wage_details')),
-#        ('Holiday Pay', url_for('holiday_pay')),
         ('Wages Owed', url_for('wages_owed')),
         ('Summary', url_for('summary')),
     ]
