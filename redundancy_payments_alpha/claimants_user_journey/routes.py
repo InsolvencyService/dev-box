@@ -1,6 +1,14 @@
 import json
 
-from flask import Flask, render_template, url_for, session, request, abort
+from flask import (
+    Flask,
+    render_template,
+    url_for,
+    session,
+    request,
+    abort,
+    send_file
+)
 from werkzeug.utils import redirect
 
 import claim_service.api as claim_service
@@ -54,6 +62,7 @@ def personal_details():
         form = ClaimantContactDetails()
 
     if form.validate_on_submit():
+        form.data['nino'] = form.data['nino'].upper()
         session['user_details'] = form.data
         claim_id = claim_service.create_claim_2(form.data)
         if claim_id:
@@ -216,3 +225,8 @@ def submit_claim(claim_id):
 
     claim_service.submit(claim_id)
     return "attempted to submit claim %s" % claim_id
+
+
+@app.route('/robots.txt')
+def robots_txt():
+    return send_file('static/robots.txt')

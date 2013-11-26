@@ -26,7 +26,7 @@ def step(context):
     context.response_from_posting_data = test_client.post(
         '/claim-redundancy-payment/personal-details/',
         data=context.form_data,
-        follow_redirects=True
+        follow_redirects=False
     )
 
 

@@ -29,3 +29,24 @@ Feature: claimants contact details
          When the claimant goes to /claim-redundancy-payment/personal-details/
           And enters their details
          Then the claimant should stay on /claimant-contact-details/ with title "Claimant Contact Details"
+
+    Scenario: filling in the contact details from with valid data
+        Given a claimant with the personal details
+            | DETAILS          | VALUE           |
+            | title            | Mr              |
+            | forenames        | Bill            |
+            | surname          | Bailey          |
+            | nino             | ab123456c       |
+            | date_of_birth    | 12/07/1999      |
+            | building_number  | 1               |
+            | street           | Cannon Street   |
+            | district         | Birmingham      |
+            | town_or_city     | Birmingham      |
+            | county           | West Midlands   |
+            | postcode         | W78 9AT         |
+            | email            | bill@bailey.com |
+            | telephone_number | 00000000        |
+         When the claimant goes to /claim-redundancy-payment/personal-details/
+          And enters their details
+         Then the claimant should be redirected
+          #sent to /claim-redundancy-payment/call-your-ip/

@@ -293,6 +293,15 @@ class TestNINoValidation(unittest.TestCase):
         # then
         assert_that(form.nino.errors, has_item("National Insurance Number must be two letters followed by six digits and a further letter (e.g. 'AB123456C')."))
 
+    def test_nino_field_allows_lower_case_letters(self):
+        # given
+        entered_data = complete_form_data()
+        entered_data['nino'] = 'ab123456c'
+        # when
+        form = complete_form(entered_data)
+        form.validate()
+        # then
+        assert_that(form.nino.errors, has_length(0))
 
 class TestDateOfBirthValidation(unittest.TestCase):
     def test_date_of_birth_field_allows_valid_date_of_birth(self):
