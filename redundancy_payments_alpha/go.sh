@@ -75,8 +75,8 @@ function feature_tests {
 function build {
     activate_venv
     requirements
-    load_environment
     unit_tests
+    load_environment
     feature_tests
     build_passed
 }

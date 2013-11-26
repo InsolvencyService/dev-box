@@ -1,3 +1,4 @@
 #!/bin/bash
 
-USE_MOCK_EMAIL=1
+export USE_MOCK_EMAIL=1
+

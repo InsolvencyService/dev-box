@@ -30,7 +30,6 @@ def impl(context):
 @when("The notifications are triggered")
 def step(context):
     test_client = a.test_client()
-    os.environ['USE_MOCK_EMAIL'] = 'True'
     response = test_client.post('/_tasks/send-notifications/')
     os.unsetenv('USE_MOCK_EMAIL')
     assert_that(response.status_code, is_(200))
