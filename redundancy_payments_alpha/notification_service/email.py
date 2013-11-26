@@ -27,7 +27,7 @@ def _send_email_via_mandrill(to_email, to_name, from_email, from_name, subject, 
 
 def _write_email_to_disk(to_email, to_name, from_email, from_name, subject, text):
     output = os.path.join(os.getcwd(), 'sent_emails', to_email)
-    
+
     with open(output, 'w') as f:
         email = {
             'to_email': to_email,

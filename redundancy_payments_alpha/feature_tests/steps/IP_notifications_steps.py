@@ -38,5 +38,6 @@ def step(context):
 
 @then("the email is sent to the IP")
 def step(context):
-    assert_that(os.path.exists('TestEmail.txt'), True)
-    os.remove('TestEmail.txt')
+    path_to_emails = os.path.join('sent_emails', 'fakeip@not-an-address.com')
+    assert_that(os.path.exists(path_to_emails), True)
+    os.remove(path_to_emails)
