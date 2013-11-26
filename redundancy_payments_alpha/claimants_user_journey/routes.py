@@ -115,18 +115,19 @@ def arrears_pay_discrepancies():
     if existing_form:
         form = WagesOwed(**existing_form)
     else:
-        raise Exception("This should not be possible")
+        form = WagesOwed()
+
+    print request.method
     
     claim_id = session.get('claim_id')
-
     if form.validate_on_submit():
-        session['wage_owed'] = form.data
+        session['wages_owed'] = form.data
         if claim_id:
             claim_service.add_details_to_claim(claim_id, form.data)
         return redirect(url_for('summary'))
     elif request.method == 'POST' and not form.validate():
-        session['wage_owed'] = form.data
-        return redirect(url_for('wage_owed', data=form.data), code=307)
+        session['wages_owed'] = form.data
+        return redirect(url_for('wages_owed', data=form.data), code=307)
 
     discrepancies = {}
     if claim_id:
