@@ -115,7 +115,7 @@ def step(context):
 @then('the claimant should see the next page of the form')
 def step(context):
     page = BeautifulSoup(context.followup_response.data)
-    assert_that(page.find('h2').text, contains_string('Please enter your holiday details'))
+    assert_that(page.find('h2').text, contains_string('Please enter details of any unpaid wages'))
 
 @then('the page should not have a call to action box at the top of the screen')
 def step(context):
