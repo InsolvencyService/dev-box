@@ -41,7 +41,7 @@ def claim_redundancy_payment():
 
 @app.route('/claim-redundancy-payment/start/')
 def start():
-    return render_template('start.html', hide_nav=True)
+    return render_template('start.html', hide_nav=True, inner_id='start-page')
 
 
 @app.route('/claim-redundancy-payment/personal-details/', methods=['GET', 'POST'])
