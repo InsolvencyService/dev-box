@@ -25,23 +25,25 @@ def step(context):
     get_the_page = context.app.get('/claim-redundancy-payment/personal-details/')
     response = context.app.post(
         '/claim-redundancy-payment/personal-details/',
-        data = dict(
-            forenames='John',
-            surname='Smith',
-            title='Mr',
-            other='',
-            building_number='0',
-            street='Fake Street',
-            district='9',
-            town_or_city='Fake Town',
-            county='Not-a-county',
-            postcode='XXXXXX',
-            email='foo@bar.com',
-            telephone_number='000000 000 000',
-            nino=context.nino,
-            date_of_birth='01/01/1900',
-            csrf_token=parse_csrf_token(get_the_page)
-        ),
+        data={
+            'forenames': 'John',
+            'surname': 'Smith',
+            'title': 'Mr',
+            'other': '',
+            'building_number': '0',
+            'street': 'Fake Street',
+            'district': '9',
+            'town_or_city': 'Fake Town',
+            'county': 'Not-a-county',
+            'postcode': 'XXXXXX',
+            'email': 'foo@bar.com',
+            'telephone_number': '000000 000 000',
+            'nino': context.nino,
+            'date_of_birth-day': '1',
+            'date_of_birth-month': '2',
+            'date_of_birth-year': '1983',
+            'csrf_token': parse_csrf_token(get_the_page)
+        },
         follow_redirects=True
     )
     assert_that(response.status_code, is_(200))
