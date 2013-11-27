@@ -47,7 +47,12 @@ function check_for_tabs {
 }
 
 function activate_venv {
-    VENV_NAME="rps"
+    if [ -n "${JENKINS_VENV_NAME}" ];
+    then
+    VENV_NAME="${JENKINS_VENV_NAME}";
+    else
+    VENV_NAME="rps";
+    fi
     JOB_DESC="Activating the virtual environment ($VENV_NAME)"
     INSIDE_VENV=`python -c "import sys; print hasattr(sys, 'real_prefix')"`
 
