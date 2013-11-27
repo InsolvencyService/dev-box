@@ -74,7 +74,7 @@ function load_environment {
 function unit_tests {
     JOB_DESC="Running unit tests"
     ./ensure_clean_tables
-    nosetests -q --exe 1> unit_tests.log 2>&1; pass_fail
+    nosetests -q --with-xunit --exe 1> unit_tests.log 2>&1; pass_fail
 }
 
 function feature_tests {
