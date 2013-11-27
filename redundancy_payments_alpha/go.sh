@@ -12,23 +12,23 @@ YAY=$(tput bold)$(tput setaf 3)
 
 function warn_quit {
     echo "${WARN}[FAILED] $1"
-    echo ""
-    echo "BBBBB   UU   UU IIIII LL      DDDDD       FFFFFFF   AAA   IIIII LL      EEEEEEE DDDDD"
-    echo "BB   B  UU   UU  III  LL      DD  DD      FF       AAAAA   III  LL      EE      DD  DD"
-    echo "BBBBBB  UU   UU  III  LL      DD   DD     FFFF    AA   AA  III  LL      EEEEE   DD   DD"
-    echo "BB   BB UU   UU  III  LL      DD   DD     FF      AAAAAAA  III  LL      EE      DD   DD"
-    echo "BBBBBB   UUUUU  IIIII LLLLLLL DDDDDD      FF      AA   AA IIIII LLLLLLL EEEEEEE DDDDDD"
+    echo ' ____        _ _     _    __       _ _          _ '
+    echo '| __ ) _   _(_) | __| |  / _| __ _(_) | ___  __| |'
+    echo '|  _ \| | | | | |/ _` | | |_ / _` | | |/ _ \/ _` |'
+    echo '| |_) | |_| | | | (_| | |  _| (_| | | |  __/ (_| |'
+    echo '|____/ \__,_|_|_|\__,_| |_|  \__,_|_|_|\___|\__,_|'
     echo "${RESET}"
     exit
 }
 
 function build_passed {
     echo "${YAY}"
-    echo "BBBBB   UU   UU IIIII LL      DDDDD       PPPPPP    AAA    SSSSS   SSSSS  EEEEEEE DDDDD"
-    echo "BB   B  UU   UU  III  LL      DD  DD      PP   PP  AAAAA  SS      SS      EE      DD  DD"
-    echo "BBBBBB  UU   UU  III  LL      DD   DD     PPPPPP  AA   AA  SSSSS   SSSSS  EEEEE   DD   DD"
-    echo "BB   BB UU   UU  III  LL      DD   DD     PP      AAAAAAA      SS      SS EE      DD   DD"
-    echo "BBBBBB   UUUUU  IIIII LLLLLLL DDDDDD      PP      AA   AA  SSSSS   SSSSS  EEEEEEE DDDDDD"
+    echo ' ____        _ _     _                                _ '
+    echo '| __ ) _   _(_) | __| |  _ __   __ _ ___ ___  ___  __| |'
+    echo '|  _ \| | | | | |/ _` | | '\''_ \ / _` / __/ __|/ _ \/ _` |'
+    echo '| |_) | |_| | | | (_| | | |_) | (_| \__ \__ \  __/ (_| |'
+    echo '|____/ \__,_|_|_|\__,_| | .__/ \__,_|___/___/\___|\__,_|'
+    echo '                        |_|                             '
     echo "${RESET}"
     exit
 }
