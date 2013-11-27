@@ -1,0 +1,23 @@
+{% from 'macros/_form_field.html' import form_field  %}
+<html>
+    <head>
+        <title>IP Dashboard</title>
+    </head>
+    <body>
+        {% if claim_summary  %}
+        <table>
+            <tr>
+                <th>Summary</th><th>Discrepant</th>
+            </tr>
+            {% for summary in claim_summary %}
+            <tr>
+                <td>{{ summary }}</td><td>{{ summary['discrepancy'] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <label>No claims</label>
+        {% endif %}
+    </body>
+</html>
+

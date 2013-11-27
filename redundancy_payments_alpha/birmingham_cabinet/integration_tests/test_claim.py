@@ -88,7 +88,7 @@ class TestClaim(unittest.TestCase):
 
         claims = get_claims()
         assert_that(claims, has_length(3))
-        assert_that(claims[0][0], has_entry('foo', is_(basestring)))
+        assert_that(claims[0][0], has_entry('foo', is_('bar')))
 
     @patch('birmingham_cabinet.api._current_time')
     def test_submitting_claim(self, mock_time):
