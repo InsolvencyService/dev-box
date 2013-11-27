@@ -60,9 +60,10 @@ def personal_details():
         form = ClaimantContactDetails()
 
     if form.validate_on_submit():
-        form.data['nino'] = form.data['nino'].upper()
         session['user_details'] = form.data
-        claim_id = claim_service.create_claim_2(form.data)
+        session['user_details']['nino'] = form.data['nino'].upper()
+
+        claim_id = claim_service.create_claim_2(session['user_details'])
         if claim_id:
             session['claim_id'] = claim_id
             return redirect(url_for('employment_details'))
