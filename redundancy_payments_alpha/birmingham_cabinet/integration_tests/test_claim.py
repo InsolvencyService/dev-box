@@ -1,10 +1,20 @@
+from datetime import datetime
 import unittest
+from mock import patch
 
 from nose.plugins.attrib import attr
 from hamcrest import assert_that, is_, has_length, has_entry, is_not
 
-from birmingham_cabinet.api import add_claim, get_claim, truncate_all_tables, update_claim, claims_against_company, get_claims, mark_claim_as_submitted
-from birmingham_cabinet.models import Claim
+from birmingham_cabinet.api import (
+    add_claim,
+    get_claim,
+    truncate_all_tables,
+    update_claim,
+    claims_against_company,
+    get_claims,
+    mark_claim_as_submitted,
+    get_claims_submitted_between)
+
 
 @attr("integration")
 class TestClaim(unittest.TestCase):
@@ -76,9 +86,13 @@ class TestClaim(unittest.TestCase):
         add_claim(claimant_2_data, employee_record_2)
         add_claim(claimant_3_data, employee_record_3)
 
-        assert_that(get_claims(), has_length(3))
+        claims = get_claims()
+        assert_that(claims, has_length(3))
+        assert_that(claims[0][0], has_entry('foo', is_(basestring)))
 
-    def test_submitting_claim(self):
+    @patch('birmingham_cabinet.api._current_time')
+    def test_submitting_claim(self, mock_time):
+        mock_time.return_value = datetime(1990, 1, 1, 1)
         claimant_data = {'foo': 'bar'}
         employee_record = {'x': '1'}
 
@@ -87,5 +101,20 @@ class TestClaim(unittest.TestCase):
         mark_claim_as_submitted(claim_id)
 
         claim = get_claim(claim_id)
-        assert_that(claim[2], is_not(None))
+        assert_that(claim[2], is_(datetime(1990, 1, 1, 1)))
 
+    @patch('birmingham_cabinet.api._current_time')
+    def test_getting_submitted_claims_since_a_given_time(self, mock_time):
+        mock_time.return_value = datetime(1990, 1, 1, 1)
+        claimant_1_data = {'foo': 'bar'}
+        employee_record_1 = {'x': '1'}
+        claim_id = add_claim(claimant_1_data, employee_record_1)
+        mark_claim_as_submitted(claim_id)
+
+        claims = get_claims_submitted_between(
+            start=datetime(1990, 1, 1),
+            end=datetime(1990, 1, 2)
+        )
+
+        assert_that(claims, has_length(1))
+        assert_that(claims[0][2], is_(datetime(1990, 1, 1, 1)))

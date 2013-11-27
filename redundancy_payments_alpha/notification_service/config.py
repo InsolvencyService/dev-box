@@ -1,2 +1,1 @@
-
-API_KEY = 'XHGRAElh9HW5axXBjhG-bA'
+API_KEY = 'foobar'

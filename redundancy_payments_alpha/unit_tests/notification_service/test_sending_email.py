@@ -6,7 +6,7 @@ from notification_service import api as notifications_api
 
 
 class TestSendingEmail(unittest.TestCase):
-    @patch('notification_service.api.send_email_via_mandrill')
+    @patch('notification_service.api._send_email_via_mandrill')
     def test_sending_an_email(self, mock_send_email_via_mandrill):
         to_email = 'foo@bar.com'
         subject = 'an email'

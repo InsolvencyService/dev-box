@@ -16,8 +16,8 @@
             {% if session['user_details'] is defined %}
             <table>
                 <!-- Table subheading -->
-				<tr><th colspan="2">Personal details</th></tr>
-					<!-- /Table subheading -->
+                <tr><th colspan="2">Personal details</th></tr>
+                <!-- /Table subheading -->
                 <tr><td>Title</td><td>
                     {% if session['user_details'].other_title is defined %}
                     {{ session['user_details'].other_title }}
@@ -70,6 +70,11 @@
             </div>
              <p>Alternatively, you can choose to submit your claim to receive the minimum payment. You can then contact your Insolvency Practitioner to discuss the claim and you may be entitled to receive a further payment.</p>
          </div>
+        <input class="button" type="submit" value="Contact IP">
+        <input class="button" type="submit" value="Amend">
+    </form>
+
+    <form method="post" action="/claim-redundancy-payment/submit-claim/{{ claim_id }}/">
         <input class="button" type="submit" value="Process this claim">
-        </form>
+    </form>
 {% endblock %}

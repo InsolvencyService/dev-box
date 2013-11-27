@@ -1,6 +1,14 @@
 import json
 
-from flask import Flask, render_template, url_for, session, request, send_file
+from flask import (
+    Flask,
+    render_template,
+    url_for,
+    session,
+    request,
+    abort,
+    send_file
+)
 from werkzeug.utils import redirect
 
 import claim_service.api as claim_service
@@ -206,7 +214,17 @@ def summary():
     if claim_id:
         discrepancies = claim_service.find_discrepancies(claim_id)
 
-    return render_template('summary.html', discrepancies=discrepancies, nav_links=nav_links())
+    return render_template('summary.html', discrepancies=discrepancies, nav_links=nav_links(), claim_id=claim_id)
+
+
+@app.route('/claim-redundancy-payment/submit-claim/<claim_id>/', methods=['POST'])
+def submit_claim(claim_id):
+    if not claim_id:
+        abort(400)
+
+    claim_service.submit(claim_id)
+    return "attempted to submit claim %s" % claim_id
+
 
 @app.route('/robots.txt')
 def robots_txt():

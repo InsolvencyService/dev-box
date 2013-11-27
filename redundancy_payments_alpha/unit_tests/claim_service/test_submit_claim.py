@@ -8,4 +8,4 @@ class TestSubmitClaim(unittest.TestCase):
     def test_claim_submission(self, mock_cabinet):
         claim_id = 123456
         submit(123456)
-        mock_cabinet.submit_claim.assert_called_with(claim_id)
+        mock_cabinet.mark_claim_as_submitted.assert_called_with(claim_id)
