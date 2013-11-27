@@ -50,9 +50,9 @@ function check_for_tabs {
 function activate_venv {
     if [ -n "${JENKINS_VENV_NAME}" ];
     then
-    VENV_NAME="${JENKINS_VENV_NAME}";
+        VENV_NAME="${JENKINS_VENV_NAME}";
     else
-    VENV_NAME="rps";
+        VENV_NAME="rps";
     fi
     JOB_DESC="Activating the virtual environment ($VENV_NAME)"
     INSIDE_VENV=`python -c "import sys; print hasattr(sys, 'real_prefix')"`
@@ -75,12 +75,26 @@ function load_environment {
 function unit_tests {
     JOB_DESC="Running unit tests"
     ./ensure_clean_tables
-    nosetests -q --with-xunit --exe 1> unit_tests.log 2>&1; pass_fail
+    nosetests -q --with-xunit --exe 1> unit_tests.log 2>&1
+    if [[ $? == 0 ]]
+    then
+        passed
+    else
+        cat unit_tests.log
+        warn_quit
+    fi
 }
 
 function feature_tests {
     JOB_DESC="Running feature tests"
-    behave -q --tags=-wip --stop feature_tests/ 1> feature_tests.log 2>&1; pass_fail
+    behave -q --tags=-wip --stop feature_tests/ 1> feature_tests.log 2>&1
+    if [[ $? == 0 ]]
+    then
+        passed
+    else
+        cat feature_tests.log
+        warn_quit
+    fi
 }
 
 function build {
