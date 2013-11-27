@@ -4,8 +4,11 @@
         <title>Employee Information from Insolvency Practitioner</title>
     </head>
     <body>
-        <form method="post" action="/create-employee-record/employee-details/">
-            <h1>Employee Information from Insolvency Practitioner</h1>
+
+
+    <div class="container">
+        <form method="post" action="/create-employee-record/employee-details/" class="form-horizontal">
+            <h2>Employee Information from Insolvency Practitioner</h2>
             <fieldset>
                 <legend>About the employer</legend>
                 {{ form_field(form.employer_name) }}
@@ -48,7 +51,8 @@
             </fieldset>
             <input type="submit"></input>
         </form>
-    <link href="/static/simple.css" rel="stylesheet" type="text/css"/>
+     </div>
+    <link href="/static/bootstrap.css" rel="stylesheet" type="text/css"/>
     </body>
 </html>
 

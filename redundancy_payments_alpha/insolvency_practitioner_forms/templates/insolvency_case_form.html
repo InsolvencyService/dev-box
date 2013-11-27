@@ -4,7 +4,10 @@
         <title>Create an Insolvency Case</title>
     </head>
     <body>
-        <form method="post" action="/create-insolvency-case/employer-details/">
+
+    <div class="container">
+        <h2>Create an Insolvency Case</h2>
+        <form method="post" action="/create-insolvency-case/employer-details/" class="form-horizontal">
             <fieldset>
                 <legend>About the business that has gone insolvent</legend>
                 {{ form_field(form.company_name) }}
@@ -31,9 +34,11 @@
                 {{ form_field(form.telephone_number) }}
             </fieldset>
             {{ form.hidden_tag() }}
-            <input type="submit"></input>
+             <input class="button" type="submit" value="Save and Continue" />
         </form>
-    <link href="/static/simple.css" rel="stylesheet" type="text/css"/>
+     </div>
+
+    <link href="/static/bootstrap.css" rel="stylesheet" type="text/css"/>
     </body>
 </html>
 
