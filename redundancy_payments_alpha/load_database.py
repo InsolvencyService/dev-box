@@ -1,0 +1,21 @@
+from contextlib import closing
+import os
+
+from birmingham_cabinet.models import Claim, Claimant, Employer, Employee
+from birmingham_cabinet.base import make_session, Base 
+from pickle import load
+
+
+def restore_all_tables(path_to_backup):
+    with closing(make_session()) as session, open(path_to_backup) as f:
+        tables = load(f)
+        for table in tables:
+            for obj in table:
+                session.merge(obj)
+        session.commit()
+
+
+if __name__ == "__main__":
+    backup_path = os.path.join(os.path.dirname(__file__), 'database_dumps', 'BACKUP')
+    restore_all_tables(backup_path)
+
