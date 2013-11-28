@@ -19,7 +19,7 @@ function warn_quit {
     echo '|____/ \__,_|_|_|\__,_| |_|  \__,_|_|_|\___|\__,_|'
     echo ''
     echo "${RESET}"
-    exit
+    exit 1
 }
 
 function build_passed {
@@ -31,7 +31,7 @@ function build_passed {
     echo '|____/ \__,_|_|_|\__,_| | .__/ \__,_|___/___/\___|\__,_|'
     echo '                        |_|                             '
     echo "${RESET}"
-    exit
+    exit 0
 }
 
 function passed {
