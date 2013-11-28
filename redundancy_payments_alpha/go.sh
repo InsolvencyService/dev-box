@@ -80,7 +80,7 @@ function unit_tests {
 
 function feature_tests {
     JOB_DESC="Running feature tests"
-    behave -q --tags=-wip --stop feature_tests/ 1> feature_tests.log 2>&1; pass_fail
+    behave -q --tags=-wip --junit --stop feature_tests/ 1> feature_tests.log 2>&1; pass_fail
 }
 
 function build {
