@@ -2,13 +2,16 @@ from datetime import date, datetime
 
 import simplejson as json
 
+
 def json_encode(dictionary):
     return {key: json.dumps(value, default=encode_special_types)
-                           for key, value in dictionary.items()}
+            for key, value in dictionary.items()}
+
 
 def json_decode(dictionary):
     return {key: json.loads(value, object_hook=decode_special_types)
             for key, value in dictionary.items()}
+
 
 def encode_special_types(obj):
     if isinstance(obj, date):
@@ -18,6 +21,7 @@ def encode_special_types(obj):
         }
     else:
         raise TypeError
+
 
 def decode_special_types(obj):
     iso_format = "%Y-%m-%d"
