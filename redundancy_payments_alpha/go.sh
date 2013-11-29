@@ -7,7 +7,7 @@ cd ${PROJECT_ROOT}
 JOB_DESC="None"
 WARN=$(tput bold)$(tput setaf 1)
 RESET=$(tput sgr0)
-YAY=$(tput bold)$(tput setaf 3)
+YAY=$(tput bold)$(tput setaf 2)
 
 
 function warn_quit {
@@ -19,7 +19,7 @@ function warn_quit {
     echo '|____/ \__,_|_|_|\__,_| |_|  \__,_|_|_|\___|\__,_|'
     echo ''
     echo "${RESET}"
-    exit
+    exit 1
 }
 
 function build_passed {
@@ -31,7 +31,7 @@ function build_passed {
     echo '|____/ \__,_|_|_|\__,_| | .__/ \__,_|___/___/\___|\__,_|'
     echo '                        |_|                             '
     echo "${RESET}"
-    exit
+    exit 0
 }
 
 function passed {
@@ -57,9 +57,13 @@ function activate_venv {
     JOB_DESC="Activating the virtual environment ($VENV_NAME)"
     INSIDE_VENV=`python -c "import sys; print hasattr(sys, 'real_prefix')"`
 
-    if [ ${INSIDE_VENV} != "True" ]; then
-    source "$HOME/.virtualenvs/$VENV_NAME/bin/activate" 2> /dev/null; pass_fail
-    fi
+    if [ ${INSIDE_VENV} != "True" ];
+    then
+        source "$HOME/.virtualenvs/$VENV_NAME/bin/activate" 2> /dev/null; pass_fail;
+    else
+        JOB_DESC="Already inside virtual env ($VENV_NAME)"; pass_fail;
+    fi;
+
 }
 
 function requirements {
@@ -78,7 +82,7 @@ function unit_tests {
     nosetests -q --with-xunit --exe 1> unit_tests.log 2>&1
     if [[ $? == 0 ]]
     then
-        passed
+        passed "$JOB_DESC"
     else
         cat unit_tests.log
         warn_quit
@@ -87,10 +91,10 @@ function unit_tests {
 
 function feature_tests {
     JOB_DESC="Running feature tests"
-    behave -q --tags=-wip --stop feature_tests/ 1> feature_tests.log 2>&1
+    behave -q --tags=-wip --junit --stop feature_tests/ 1> feature_tests.log 2>&1
     if [[ $? == 0 ]]
     then
-        passed
+        passed "$JOB_DESC"
     else
         cat feature_tests.log
         warn_quit
@@ -108,3 +112,4 @@ function build {
 }
 
 build
+
