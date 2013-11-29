@@ -8,11 +8,9 @@ from birmingham_cabinet.api import add_rp14a_form
 from claim_service.api import submit, create_claim_2
 import notification_service
 
-claim_id = ""
 
 @given(u'the claimant has created a claim')
 def step(context):
-    global claim_id
     rp14a = {
         "employee_national_insurance_number": "AB123456Z",
         "employee_date_of_birth": "01/01/1900",
@@ -25,15 +23,14 @@ def step(context):
     }
     add_rp14a_form(rp14a)
     personal_details = {"nino": "AB123456Z"}
-    claim_id = create_claim_2(personal_details)
+    context.claim_id = create_claim_2(personal_details)
 
 
 @when("the claimant submits the claim")
 def step(context):
-    submit(claim_id)
-
+    submit(context.claim_id)
 
 
 @then("the queue should have the claim on it")
 def step(context):
-    raise NotImplemented
+    raise NotImplementedError()

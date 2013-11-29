@@ -4,7 +4,7 @@
 # I want: to see claims that were submitted
 # So that: I can post the xml to CHAMP
 
-@wip
+@leenatron
 Feature: get messages from the queue
 
     Scenario: submitting a claim results in a message on the queue
