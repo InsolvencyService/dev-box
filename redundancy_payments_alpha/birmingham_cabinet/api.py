@@ -102,9 +102,17 @@ def update_claim(claim_id, claimant_information=None, employee_record=None):
     with contextlib.closing(make_session()) as session:
         claim = session.query(Claim).filter(Claim.claim_id == claim_id).one()
         if claimant_information:
-            claim.claimant_information = json_encode(claimant_information)
+            updated_claimant_info = dict(
+                claim.claimant_information,
+                **claimant_information
+            )
+            claim.claimant_information = json_encode(updated_claimant_info)
         if employee_record:
-            claim.employee_record = json_encode(employee_record)
+            updated_employee_record = dict(
+                claim.employee_record,
+                **employee_record
+            )
+            claim.employee_record = json_encode(updated_employee_record)
         session.commit()
 
 
