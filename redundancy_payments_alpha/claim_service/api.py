@@ -30,9 +30,9 @@ def create_claim_2(claimant_information):
 
 def add_details_to_claim(claim_id, claimant_details):
     claim = cabinet_api.get_claim(claim_id)
-    details = claimant_details
-    claim[0].update(details)
-    cabinet_api.update_claim(claim_id, claimant_information=details)
+    wibble = claim[0]
+    wibble.update(claimant_details)
+    cabinet_api.update_claim(claim_id, claimant_information=wibble)
 
 
 def submit(claim_id):
