@@ -60,6 +60,3 @@ def send_notifications():
 @app.route('/robots.txt')
 def robots_txt():
     return send_file('static/robots.txt')
-
-if __name__ == '__main__':
-    app.run()
