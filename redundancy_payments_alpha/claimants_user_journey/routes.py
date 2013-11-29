@@ -213,7 +213,6 @@ def summary():
     claim_id = session.get('claim_id')
     if claim_id:
         discrepancies = claim_service.find_discrepancies(claim_id)
-        print discrepancies, '<----------------------'
 
     return render_template('summary.html', discrepancies=discrepancies, nav_links=nav_links(), claim_id=claim_id)
 
