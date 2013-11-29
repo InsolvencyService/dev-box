@@ -30,4 +30,11 @@ server {
         auth_basic "Redundancy Payment Service Showcase";
         auth_basic_user_file /etc/nginx/htpasswd;
     }
+
+    location /chomp {
+        proxy_pass http://localhost:8002;
+        proxy_set_header Host $host;
+        auth_basic "Redundancy Payment Service Showcase";
+        auth_basic_user_file /etc/nginx/htpasswd;
+    }
 }
