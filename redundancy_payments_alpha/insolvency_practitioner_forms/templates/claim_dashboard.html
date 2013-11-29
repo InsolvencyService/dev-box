@@ -11,7 +11,12 @@
             </tr>
             {% for summary in claim_summary %}
             <tr>
-                <td>{{ summary }}</td><td>{{ summary['discrepancy'] }}</td>
+                <td>
+                    {{ summary['surname'] }} {{ summary['initials'] }}</br>
+                    {{ summary['nino'] }}{{ summary['date_of_birth'] }}</br>
+                    {{ summary['date_submitted'].strftime('%d/%m/%Y') }}
+                </td>
+                <td>{{ summary['discrepancy'] }}</td>
             </tr>
             {% endfor %}
         </table>
