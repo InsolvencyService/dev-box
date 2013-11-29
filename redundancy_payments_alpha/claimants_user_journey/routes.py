@@ -115,6 +115,7 @@ def wages_owed():
     return render_template('wages_owed.html', form=form, nav_links=nav_links(),
             discrepancies={})
 
+
 @app.route('/claim-redundancy-payment/wages-owed-details/discrepancies/', methods=['GET','POST'])
 def arrears_pay_discrepancies():
     existing_form = session.get('wages_owed')
@@ -124,8 +125,6 @@ def arrears_pay_discrepancies():
     else:
         form = WagesOwed()
 
-    print request.method
-    
     claim_id = session.get('claim_id')
     if form.validate_on_submit():
         session['wages_owed'] = form.data
