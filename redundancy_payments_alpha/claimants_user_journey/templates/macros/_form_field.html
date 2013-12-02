@@ -16,3 +16,12 @@
         {% endif %}
     </p>
 {% endmacro %}
+
+{% macro date_field(field, discrepancies={}, hint=None, optional=False, inline=False) %}
+        <div class="combined_date">
+                    {{ field.day }}
+                    {{ field.month }}
+                    {{ field.year }}
+                    {% if hint %}<span class="hint">{{ hint }}</span>{% endif %}
+        </div>
+{% endmacro %}

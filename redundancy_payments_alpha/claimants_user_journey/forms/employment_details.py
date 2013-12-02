@@ -1,6 +1,7 @@
 from flask_wtf import Form
-from wtforms import TextField, SelectField, RadioField
+from wtforms import TextField, SelectField, RadioField, FormField
 from wtforms.validators import DataRequired, Length, AnyOf
+from claimants_user_journey.forms.custom_field_types import DateForm
 from claimants_user_journey.forms.validators import FutureDateValidator
 
 
@@ -28,12 +29,5 @@ class EmploymentDetails(Form):
             ('home worker', '<strong>Home Worker</strong></br>You work from home but attend an office for meetings')
         ],
     )
-    start_date = TextField('When did you start working for this employer?',
-                           validators=[DataRequired('Please enter the date you started working for this employer'),
-                                       FutureDateValidator(format_message="Start date must be in the format dd/mm/yyyy.",
-                                                           future_message='Start date cannot be in the future.')])
-    end_date = TextField('When did your employment end?',
-                           validators=[DataRequired('Please enter the date you stopped working for this employer'),
-                                       FutureDateValidator(format_message="End date must be in the format dd/mm/yyyy.",
-                                                           future_message='End date cannot be in the future.')])
-
+    start_date = FormField(DateForm)
+    end_date = FormField(DateForm)

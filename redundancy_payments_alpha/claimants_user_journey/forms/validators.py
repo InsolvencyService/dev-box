@@ -1,3 +1,4 @@
+import logging
 import re
 from datetime import date
 from wtforms.validators import Regexp, ValidationError, StopValidation, DataRequired
@@ -58,10 +59,15 @@ class DateOfBirthValidator(Regexp):
 
         range_message = self.range_message
         if range_message == None:
-            range_message = 'Date Of Birth must be greater than or equal to 1900 and not in the future.'
+            range_message = 'Date must be greater than or equal to 1900 and not in the future.'
 
         try:
-            parsed_date = convert_string_to_date(field.data)
+            if hasattr(form, "date"):
+                logging.warn("Getting date from date property")
+                parsed_date = convert_string_to_date(form.date)
+            else:
+                logging.warn("Getting date from data property")
+                parsed_date = convert_string_to_date(field.data)
         except SyntaxError:
             raise ValidationError(range_message)
         if parsed_date.year < 1900 or parsed_date >= date.today():
