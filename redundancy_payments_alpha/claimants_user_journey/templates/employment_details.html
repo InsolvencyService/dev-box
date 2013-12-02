@@ -17,7 +17,15 @@
                 <legend>Your employment</legend>
                 {{ form.hidden_tag() }}
                 {{ form_field(form.job_title) }}
-                {{ form_field(form.category_of_worker) }}
+                {{ form.type_of_worker.label }}
+                <ul class="inline-choice">
+                {% for subfield in form.type_of_worker %}
+                    <li class="row">
+                    {{ subfield }}
+                    {{ subfield.label }}
+                    </li>
+                {% endfor %}
+                </ul>
             </fieldset>
             <fieldset>
                 <legend>Dates of employment</legend>
