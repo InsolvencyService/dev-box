@@ -16,7 +16,7 @@ def complete_form(data):
 def complete_form_data():
     form = {
         'job_title': 'Job Title',
-        'category_of_worker': 'Employed',
+        'type_of_worker': 'employed',
         'start_date': '20/02/1985',
         'end_date': '21/03/1999'
     }
@@ -55,24 +55,24 @@ class TestJobTitleValidation(unittest.TestCase):
         assert_that(form.job_title.errors, has_item('Field cannot be longer than 30 characters.'))
 
 class TestCategoryOfWorker(unittest.TestCase):
-    def test_category_of_worker_field_allows_a_valid_selection(self):
+    def test_type_of_worker_field_allows_a_valid_selection(self):
         # given
         entered_data = complete_form_data()
         # when
         form = complete_form(entered_data)
         form.validate()
         # then
-        assert_that(form.category_of_worker.errors, has_length(0))
+        assert_that(form.type_of_worker.errors, has_length(0))
 
-    def test_category_of_worker_field_will_not_allow_invalid_selection(self):
+    def test_type_of_worker_field_will_not_allow_invalid_selection(self):
         # given
         entered_data = complete_form_data()
-        entered_data['category_of_worker'] = 'not a valid choice'
+        entered_data['type_of_worker'] = 'not a valid choice'
         # when
         form = complete_form(entered_data)
         form.validate()
         # then
-        assert_that(form.category_of_worker.errors, has_item('Please choose a Category of Worker'))
+        assert_that(form.type_of_worker.errors, has_item('Not a valid choice'))
 
 class TestStartDate(unittest.TestCase):
     def test_start_date_field_allows_a_valid_date(self):
