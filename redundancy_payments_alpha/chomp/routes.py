@@ -1,4 +1,4 @@
-from flask import Flask, redirect, request
+from flask import Flask, redirect, request, Response
 from werkzeug.exceptions import NotImplemented
 
 from birmingham_cabinet import api as brum_cab
@@ -37,14 +37,28 @@ def set_state(id_):
 @app.route("/chomp/<id_>/acceptdoc", methods=["GET"])
 def acceptdoc(id_):
     dms_id = payload_generator.generate_dms_id()
-    return payload_generator.generate_accept_doc_request(dms_id)
+    acceptdoc = payload_generator.generate_accept_doc_request(dms_id)
+    app.logger.info("Generated an acceptdoc for {id_}".format(**locals()))
+    return Response(acceptdoc, mimetype="text/xml")
 
 
 @app.route("/chomp/<id_>/rp1", methods=["GET"])
 def rp1(id_):
-    raise NotImplemented()
+    rp1_document = payload_generator.generate_claimant_information_submit_request(
+        {})
+    app.logger.info("Generated rp1 for {id_}".format(**locals()))
+    return Response(rp1_document, mimetype="text/xml")
+
+
+@app.route("/chomp/<id_>/rp14", methods=["GET"])
+def rp14(id_):
+    rp14_document = payload_generator.generate_rp14_request({})
+    app.logger.info("Generated rp14 for {id_}".format(**locals()))
+    return Response(rp14_document, mimetype="text/xml")
 
 
 @app.route("/chomp/<id_>/rp14a", methods=["GET"])
 def rp14a(id_):
-    raise NotImplemented()
+    rp14a_document = payload_generator.generate_rp14a_request({})
+    app.logger.info("Generated rp14a for {id_}".format(**locals()))
+    return Response(rp14a_document, mimetype="text/xml")

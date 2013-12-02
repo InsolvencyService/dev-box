@@ -20,3 +20,21 @@ Feature: Chomp
   Scenario: getting an acceptdoc
     Given a claim is in In Progress
     Then we can get the acceptdoc
+
+  @nuke_db
+  @chomp
+  Scenario: getting an rp1
+    Given a claim is in In Progress
+    Then we can get the rp1
+
+  @nuke_db
+  @chomp
+  Scenario: getting an rp14
+    Given a claim is in In Progress
+    Then we can get the rp14
+
+  @nuke_db
+  @chomp
+  Scenario: getting an rp14a
+    Given a claim is in In Progress
+    Then we can get the rp14a

@@ -92,4 +92,43 @@ def step(context):
     response_for_acceptdoc = chomp_app.test_client().get(
         "/chomp/{claim_id}/acceptdoc".format(**locals()))
     assert_that(response_for_acceptdoc.status_code, is_(200))
-    assert_that(response_for_acceptdoc.data, contains_string("Accept Document"))
+    assert_that(response_for_acceptdoc.content_type,
+                contains_string("text/xml"))
+    assert_that(response_for_acceptdoc.data,
+                contains_string("CHAMP Acceptdoc Payload"))
+
+
+@then('we can get the rp1')
+def step(context):
+    claim_id = context.claim_id
+    response_for_rp1 = chomp_app.test_client().get(
+        "/chomp/{claim_id}/rp1".format(**locals()))
+    assert_that(response_for_rp1.status_code, is_(200))
+    assert_that(response_for_rp1.content_type,
+                contains_string("text/xml"))
+    assert_that(response_for_rp1.data,
+                contains_string("CHAMP RP1 Payload"))
+
+
+@then('we can get the rp14')
+def step(context):
+    claim_id = context.claim_id
+    response_for_rp14 = chomp_app.test_client().get(
+        "/chomp/{claim_id}/rp14".format(**locals()))
+    assert_that(response_for_rp14.status_code, is_(200))
+    assert_that(response_for_rp14.content_type,
+                contains_string("text/xml"))
+    assert_that(response_for_rp14.data,
+                contains_string("CHAMP RP14 Payload"))
+
+
+@then('we can get the rp14a')
+def step(context):
+    claim_id = context.claim_id
+    response_for_rp14a = chomp_app.test_client().get(
+        "/chomp/{claim_id}/rp14a".format(**locals()))
+    assert_that(response_for_rp14a.status_code, is_(200))
+    assert_that(response_for_rp14a.content_type,
+                contains_string("text/xml"))
+    assert_that(response_for_rp14a.data,
+                contains_string("CHAMP RP14A Payload"))
