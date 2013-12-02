@@ -152,6 +152,7 @@ def get_claims_submitted_between(start, end):
 def get_claims():
     with contextlib.closing(make_session()) as session:
         claims = session.query(Claim).all()
-        return [(claim.claimant_information,
-                 claim.employee_record,
+
+        return [(json_decode(claim.claimant_information),
+                 json_decode(claim.employee_record),
                  claim.submitted_at) for claim in claims]

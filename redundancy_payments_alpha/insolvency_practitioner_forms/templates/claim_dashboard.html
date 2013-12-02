@@ -1,0 +1,35 @@
+{% from 'macros/_form_field.html' import form_field  %}
+<html>
+    <head>
+        <title>IP Dashboard</title>
+
+        <link href="/static/bootstrap.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <div class="container">
+            <h2>IP Dashboard</h2>
+            <fieldset>
+                {% if claim_summary  %}
+                <table>
+                    <tr>
+                        <th>Summary</th><th>Discrepant</th>
+                    </tr>
+                    {% for summary in claim_summary %}
+                    <tr>
+                        <td>
+                            {{ summary['surname'] }} {{ summary['initials'] }}</br>
+                            {{ summary['nino'] }} {{ summary['date_of_birth'] }}</br>
+                            {{ summary['date_submitted'].strftime('%d/%m/%Y') }}
+                        </td>
+                        <td>{{ summary['discrepancy'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% else %}
+                <label>No claims</label>
+                {% endif %}
+            </fieldset>
+        </body>
+    </container>
+</html>
+

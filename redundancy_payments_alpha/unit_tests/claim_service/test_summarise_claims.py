@@ -1,10 +1,9 @@
-import string
 import unittest
-from hamcrest import assert_that, has_item, has_entry, has_items
+from hamcrest import assert_that, has_entry, has_items
 from mock import patch
 
 import claim_service.api as claims_api
-from claim_service.discrepancies import find_discrepancies_in_claim
+from claim_service.claims import summarise_claim
 
 
 class TestSummariseClaims(unittest.TestCase):
@@ -29,8 +28,8 @@ class TestSummariseClaims(unittest.TestCase):
             'nino': 'AB112233X'
         }
 
-        claim_1 = (claimant_information, employee_information)
-        claim_2 = (claimant_information_2, employee_information)
+        claim_1 = (claimant_information, employee_information, None)
+        claim_2 = (claimant_information_2, employee_information, None)
 
         mock_cabinet.get_claims.return_value = [
             claim_1,
@@ -45,28 +44,6 @@ class TestSummariseClaims(unittest.TestCase):
             has_entry('nino', 'AB112233Z'),
             has_entry('nino', 'AB112233X')
         ))
-
-
-def _initials(claimant_information):
-    initials = None
-    forenames = claimant_information.get('forenames')
-    if forenames:
-        first_letters = [name[0] for name in forenames.split(' ')]
-        initials = string.join(first_letters)
-    return initials
-
-
-def summarise_claim(claim):
-    claimant_information = claim[0]
-    claim_summary = {
-        'discrepancy': bool(find_discrepancies_in_claim(claim)),
-        'surname': claimant_information.get('surname'),
-        'initials': (_initials(claimant_information)),
-        'nino': claimant_information.get('nino'),
-        'date_of_birth': claimant_information.get('date_of_birth'),
-        'date_submitted': claim[2]
-    }
-    return claim_summary
 
 
 class TestSummariseClaim(unittest.TestCase):
@@ -103,6 +80,7 @@ class TestSummariseClaim(unittest.TestCase):
         assert_that(claim_summary, has_entry('initials', 'S J'))
         assert_that(claim_summary, has_entry('date_of_birth', '01/12/1970'))
         assert_that(claim_summary, has_entry('date_submitted', '01/10/2013'))
+        assert_that(claim_summary, has_entry('nino', 'AB112233Z'))
 
     def test_summarising_a_claim_with_no_discrepancies(self):
         #Given that we have a claim
