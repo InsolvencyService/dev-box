@@ -45,6 +45,6 @@ def step(context):
 
 @then("that claim's status is In Progress")
 def step(context):
-    status_url = URLObject(context.claim_location).add_path_segment("status")
-    response_for_status = context.test_client.get(status_url)
+    state_url = URLObject(context.claim_location).add_path_segment("state")
+    response_for_status = context.test_client.get(state_url)
     assert_that(response_for_status.data, is_("In Progress"))

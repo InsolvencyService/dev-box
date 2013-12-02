@@ -26,7 +26,7 @@ states = OrderedDict([
     (is_suspicious, "Suspicious"),
 ])
 
-def status_of_claim(claim):
+def state_of_claim(claim):
     for is_in_state, state_name in states.items():
         if is_in_state(claim):
             claim_id = claim.claim_id

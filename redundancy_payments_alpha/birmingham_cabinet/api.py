@@ -178,8 +178,8 @@ def get_next_claim_not_processed_by_chomp():
         return unprocessed_claim.claim_id
 
 
-def get_chomp_status_of_claim(claim_id):
+def chomp_state_of_claim(claim_id):
     with contextlib.closing(make_session()) as session:
         claim = session.query(Claim).filter(
             Claim.claim_id == claim_id).one()
-        return chomp_states.status_of_claim(claim)
+        return chomp_states.state_of_claim(claim)

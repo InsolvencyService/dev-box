@@ -17,9 +17,9 @@ def next():
 def claim(id_):
     raise NotImplemented()
 
-@app.route("/chomp/<id_>/status", methods=["GET"])
-def status(id_):
-    return brum_cab.get_chomp_status_of_claim(id_)
+@app.route("/chomp/<id_>/state", methods=["GET"])
+def state(id_):
+    return brum_cab.chomp_state_of_claim(id_)
 
 @app.route("/chomp/<id_>/acceptdoc", methods=["GET"])
 def acceptdoc(id_):
