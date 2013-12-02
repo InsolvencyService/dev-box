@@ -1,9 +1,16 @@
 import contextlib
+from collections import OrderedDict
 from datetime import datetime
 
 from sqlalchemy.orm.exc import NoResultFound
 
-from models import Claim, Claimant, Employer, Employee
+from models import (
+    ChompClaimLifecycle,
+    Claim,
+    Claimant,
+    Employee,
+    Employer,
+)
 from base import make_session, Base, local_unix_socket_engine
 from customized_json import json_encode, json_decode
 
@@ -12,7 +19,7 @@ def truncate_all_tables():
     with contextlib.closing(local_unix_socket_engine.connect()) as conn:
         trans = conn.begin()
         for table in reversed(Base.metadata.sorted_tables):
-            conn.execute("truncate table {table_name}".format(
+            conn.execute("truncate table {table_name} cascade;".format(
                 table_name=table.name))
         trans.commit()
 
@@ -153,3 +160,35 @@ def get_claims():
         return [(claim.claimant_information,
                  claim.employee_record,
                  claim.submitted_at) for claim in claims]
+
+
+def get_next_claim_not_processed_by_chomp():
+    with contextlib.closing(make_session()) as session:
+        unprocessed_claim = session.query(Claim).filter(
+            Claim.chomp_claim_lifecycle == None).one()
+        lifecycle = ChompClaimLifecycle()
+        lifecycle.claim_id = unprocessed_claim.claim_id
+        lifecycle.in_progress = datetime.now()
+        session.add(lifecycle)
+        session.commit()
+        return unprocessed_claim.claim_id
+
+
+def get_chomp_status_of_claim(claim_id):
+    def is_ready(claim):
+        return claim.chomp_claim_lifecycle is None
+
+    def is_in_progress(claim):
+        return claim.chomp_claim_lifecycle.in_progress is not None
+
+    states = OrderedDict([
+        (is_ready, "Ready"),
+        (is_in_progress, "In Progress"),
+    ])
+
+    with contextlib.closing(make_session()) as session:
+        claim = session.query(Claim).filter(
+            Claim.claim_id == claim_id).one()
+        for is_in_state, state_name in states.items():
+            if is_in_state(claim):
+                return state_name
