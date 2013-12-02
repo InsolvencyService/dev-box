@@ -18,7 +18,21 @@ class TestFindDiscrepancies(unittest.TestCase):
         assert_that(discrepancies, has_length(1))
         assert_that(discrepancies, has_entry('gross_rate_of_pay', ('600','650')))
 
+    @patch('claim_service.api.cabinet_api')
+    def test_returns_values_for_multiple_discrepancies(self, mock_cabinet):
+        mock_cabinet.get_claim.return_value = (
+            {'gross_rate_of_pay': '600',
+             'gross_amount_owed': '500'},
+            {'employee_basic_weekly_pay': '650',
+             'employee_owed_wages_in_arrears': '700'}
+        )
+        claim_id = 1
 
+        discrepancies = find_discrepancies(claim_id)
+        assert_that(discrepancies, has_length(2))
+        assert_that(discrepancies, has_entry('gross_rate_of_pay', ('600','650')))
+        assert_that(discrepancies, has_entry('gross_amount_owed', ('500','700')))
+    
     @patch('claim_service.api.cabinet_api')
     def test_returns_no_discrepancies_for_matching_data(self, mock_cabinet):
         mock_cabinet.get_claim.return_value = (
@@ -54,3 +68,4 @@ class TestFindDiscrepancies(unittest.TestCase):
             {'employee_basic_weekly_pay': '650'}
         )
         assert_that(has_discrepancies(1), is_(False))
+

@@ -30,10 +30,10 @@ def create_claim_2(claimant_information):
 
 
 def add_details_to_claim(claim_id, claimant_details):
-    claim = cabinet_api.get_claim(claim_id)
-    details = claimant_details
-    claim[0].update(details)
-    cabinet_api.update_claim(claim_id, claimant_information=details)
+    cabinet_api.update_claim(
+        claim_id,
+        claimant_information=claimant_details
+    )
 
 
 def submit(claim_id):
@@ -57,3 +57,4 @@ def claims_submitted_in_last_24_hours():
         start=yesterday,
         end=now
     )
+

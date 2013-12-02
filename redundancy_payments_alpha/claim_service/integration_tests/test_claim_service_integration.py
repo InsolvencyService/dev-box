@@ -19,12 +19,30 @@ class TestClaimServiceIntegration(unittest.TestCase):
                 'employee_surname': 'SURNAME',
                 'employee_forenames': 'FORENAMES',
                 'employer_name': 'Widgets Inc',
-                'employee_basic_weekly_pay': Decimal('300.5')
+                'employee_basic_weekly_pay': Decimal('300.5'),
+                'employee_owed_wages_in_arrears': Decimal('50')
             }
         )
 
     def tearDown(self):
         truncate_all_tables()
+
+    def test_creating_updating_and_finding_multiple_discrepancies(self):
+        personal_details = {
+            'nino': 'XX223344X'
+        }
+        claimant_details = {
+            'gross_rate_of_pay': '11.0'
+        }
+        updated_claimant_details = {
+            'gross_amount_owed': '12.0'
+        }
+
+        claim_id = api.create_claim_2(personal_details)
+        api.add_details_to_claim(claim_id, claimant_details)
+        api.add_details_to_claim(claim_id, updated_claimant_details)
+        discrepancies = api.find_discrepancies(claim_id)
+        assert_that(discrepancies, has_length(2))
 
     def test_creating_updating_and_finding_discrepancies_on_a_claim(self):
         personal_details = {
