@@ -47,3 +47,4 @@ def step(context):
     nino = context.form_data["employee_national_insurance_number"]
     employee = employee_via_nino(nino)
     assert_that(employee, is_(not_none()))
+    

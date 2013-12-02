@@ -19,10 +19,11 @@ def truncate_all_tables():
 
 
 def employee_via_nino(nino):
+    nino = nino.upper()
     with contextlib.closing(make_session()) as session:
         try:
             employee = session.query(Employee).filter(
-                func.upper(Employee.nino) == func.upper(nino)).one()
+                Employee.nino == nino).one()
             return json_decode(employee.hstore)
         except NoResultFound:
             pass
@@ -37,7 +38,7 @@ def get_rp1_form():
 def add_rp1_form(dictionary):
     with contextlib.closing(make_session()) as session:
         claimant = Claimant()
-        claimant.nino = dictionary["nino"]
+        claimant.nino = dictionary["nino"].upper()
         claimant.date_of_birth = dictionary["date_of_birth"]
         claimant.title = dictionary["title"]
         claimant.forenames = dictionary["forenames"]
@@ -62,7 +63,7 @@ def add_rp14_form(dictionary):
 def add_rp14a_form(dictionary):
     with contextlib.closing(make_session()) as session:
         employee = Employee()
-        employee.nino = dictionary["employee_national_insurance_number"]
+        employee.nino = dictionary["employee_national_insurance_number"].upper()
         employee.date_of_birth = dictionary["employee_date_of_birth"]
         employee.title = dictionary["employee_title"]
         employee.forenames = dictionary["employee_forenames"]
