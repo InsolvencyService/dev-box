@@ -7,7 +7,7 @@ cd ${PROJECT_ROOT}
 JOB_DESC="None"
 WARN=$(tput bold)$(tput setaf 1)
 RESET=$(tput sgr0)
-YAY=$(tput bold)$(tput setaf 3)
+YAY=$(tput bold)$(tput setaf 2)
 
 
 function warn_quit {
@@ -19,7 +19,7 @@ function warn_quit {
     echo '|____/ \__,_|_|_|\__,_| |_|  \__,_|_|_|\___|\__,_|'
     echo ''
     echo "${RESET}"
-    exit
+    exit 1
 }
 
 function build_passed {
@@ -31,7 +31,7 @@ function build_passed {
     echo '|____/ \__,_|_|_|\__,_| | .__/ \__,_|___/___/\___|\__,_|'
     echo '                        |_|                             '
     echo "${RESET}"
-    exit
+    exit 0
 }
 
 function passed {
@@ -50,16 +50,20 @@ function check_for_tabs {
 function activate_venv {
     if [ -n "${JENKINS_VENV_NAME}" ];
     then
-    VENV_NAME="${JENKINS_VENV_NAME}";
+        VENV_NAME="${JENKINS_VENV_NAME}";
     else
-    VENV_NAME="rps";
+        VENV_NAME="rps";
     fi
     JOB_DESC="Activating the virtual environment ($VENV_NAME)"
     INSIDE_VENV=`python -c "import sys; print hasattr(sys, 'real_prefix')"`
 
-    if [ ${INSIDE_VENV} != "True" ]; then
-    source "$HOME/.virtualenvs/$VENV_NAME/bin/activate" 2> /dev/null; pass_fail
-    fi
+    if [ ${INSIDE_VENV} != "True" ];
+    then
+        source "$HOME/.virtualenvs/$VENV_NAME/bin/activate" 2> /dev/null; pass_fail;
+    else
+        JOB_DESC="Already inside virtual env ($VENV_NAME)"; pass_fail;
+    fi;
+
 }
 
 function requirements {
@@ -75,12 +79,26 @@ function load_environment {
 function unit_tests {
     JOB_DESC="Running unit tests"
     ./ensure_clean_tables
-    nosetests -q --with-xunit --exe 1> unit_tests.log 2>&1; pass_fail
+    nosetests -q --with-xunit --exe 1> unit_tests.log 2>&1
+    if [[ $? == 0 ]]
+    then
+        passed "$JOB_DESC"
+    else
+        cat unit_tests.log
+        warn_quit
+    fi
 }
 
 function feature_tests {
     JOB_DESC="Running feature tests"
-    behave -q --tags=-wip --stop feature_tests/ 1> feature_tests.log 2>&1; pass_fail
+    behave -q --tags=-wip --junit --stop feature_tests/ 1> feature_tests.log 2>&1
+    if [[ $? == 0 ]]
+    then
+        passed "$JOB_DESC"
+    else
+        cat feature_tests.log
+        warn_quit
+    fi
 }
 
 function build {
@@ -94,3 +112,4 @@ function build {
 }
 
 build
+

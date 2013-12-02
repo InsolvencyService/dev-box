@@ -8,6 +8,7 @@ def configure_application_logging(app):
 
     """
     logging.basicConfig(level=logging.INFO)
+    logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
     handler = StreamHandler(stream=sys.stdout)
     handler.setLevel(logging.INFO)
     app.logger.addHandler(handler)

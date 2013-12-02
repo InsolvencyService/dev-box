@@ -14,6 +14,6 @@ def comparable_values(claim):
 
 def find_discrepancies_in_claim(claim):
     discrepancies = {entry: values
-                     for entry, values in comparable_values(claim).iteritems()
-                     if values[0] != values[1]}
+                     for entry, values in comparable_values(claim).iteritems() if values[0] != values[1]}
     return discrepancies
+

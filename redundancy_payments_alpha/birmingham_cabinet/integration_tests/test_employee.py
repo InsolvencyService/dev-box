@@ -1,15 +1,14 @@
-from datetime import datetime
 import unittest
 
 from nose.plugins.attrib import attr
-from hamcrest import is_, assert_that, not_none
+from hamcrest import is_, assert_that
 
 from birmingham_cabinet.api import (
     add_rp14a_form,
     employee_via_nino,
     truncate_all_tables,
     )
-from birmingham_cabinet.models import Employee
+
 
 @attr("integration")
 class TestEmployee(unittest.TestCase):
@@ -30,4 +29,3 @@ class TestEmployee(unittest.TestCase):
         add_rp14a_form(employee_dict)
         employee = employee_via_nino(nino)
         assert_that(employee, is_(employee_dict))
-

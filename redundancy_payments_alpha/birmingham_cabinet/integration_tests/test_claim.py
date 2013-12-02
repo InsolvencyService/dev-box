@@ -3,14 +3,13 @@ import unittest
 from mock import patch
 
 from nose.plugins.attrib import attr
-from hamcrest import assert_that, is_, has_length, has_entry, is_not
+from hamcrest import assert_that, is_, has_length, has_entry
 
 from birmingham_cabinet.api import (
     add_claim,
     get_claim,
     truncate_all_tables,
     update_claim,
-    claims_against_company,
     get_claims,
     mark_claim_as_submitted,
     get_claims_submitted_between)
