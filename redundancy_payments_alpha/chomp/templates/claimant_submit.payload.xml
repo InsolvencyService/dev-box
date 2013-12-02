@@ -17,7 +17,7 @@
                 <rp1:Gender>{{ gender }}</rp1:Gender>
                 <rp1:DateOfBirth>{{ date_of_birth }}</rp1:DateOfBirth>
                 <rp1:Address>
-                        <rp1:Line>{{ building_number}}</rp1:Line>
+                        <rp1:Line>{{ building_number }}</rp1:Line>
                         <rp1:Line>{{ street }}</rp1:Line>
                         <rp1:Town>{{ town_or_city }}</rp1:Town>
                         <rp1:Postcode>{{ postcode }}</rp1:Postcode>

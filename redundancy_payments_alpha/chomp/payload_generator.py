@@ -4,6 +4,7 @@ from random import randint
 
 environment = Environment(
     loader=PackageLoader("chomp", "templates"),
+    # FIXME: Turn strictness on once all the fields are being filled
     # undefined=StrictUndefined,
 )
 
