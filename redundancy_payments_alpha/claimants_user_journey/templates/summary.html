@@ -39,10 +39,9 @@
                 <tr><td>Email address</td><td>{{ session['user_details'].email }}</td></tr>
             {% endif %}
             {% if session['employment_details'] is defined %}
-
                 <tr><th colspan="2">Employer details</th></tr>
                 <tr><td>Job title</td><td>{{ session['employment_details'].job_title }}</td></tr>
-                <tr><td>Category of worker</td><td>{{ session['employment_details'].category_of_worker }}</td></tr>
+                <tr><td>Type of worker</td><td>{{ session['employment_details'].type_of_worker }}</td></tr>
                 <tr><td>Dates of employment</td><td>{{ session['employment_details'].start_date }} to {{ session['employment_details'].end_date }}</td></tr>
             {% endif %}
             {% if session['wage_details'] is defined %}
