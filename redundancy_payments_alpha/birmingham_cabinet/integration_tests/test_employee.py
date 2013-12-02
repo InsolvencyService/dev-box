@@ -29,3 +29,17 @@ class TestEmployee(unittest.TestCase):
         add_rp14a_form(employee_dict)
         employee = employee_via_nino(nino)
         assert_that(employee, is_(employee_dict))
+
+    def test_ninos_are_case_insensitive(self):
+        employee_dict = {
+            "employee_national_insurance_number": 'AB123456C',
+            "employee_date_of_birth": "2012/1/1",
+            "employee_title": "Mr",
+            "employee_forenames": "Donald Duck",
+            "employee_surname": "Quack",
+            "employer_name": "McDuck Enterprises"
+        }
+        add_rp14a_form(employee_dict)
+        employee = employee_via_nino('ab123456c')
+        assert_that(employee, is_(employee_dict))
+

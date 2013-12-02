@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 from birmingham_cabinet import api as cabinet_api
+from claim_service.claims import summarise_claim
 from claim_service.discrepancies import find_discrepancies_in_claim
 
 
@@ -29,10 +30,10 @@ def create_claim_2(claimant_information):
 
 
 def add_details_to_claim(claim_id, claimant_details):
-    claim = cabinet_api.get_claim(claim_id)
-    details = claimant_details
-    claim[0].update(details)
-    cabinet_api.update_claim(claim_id, claimant_information=details)
+    cabinet_api.update_claim(
+        claim_id,
+        claimant_information=claimant_details
+    )
 
 
 def submit(claim_id):
@@ -43,7 +44,7 @@ def summarise_claims():
     claims = cabinet_api.get_claims()
     stuff_to_return = []
     for claim in claims:
-        stuff_to_return.append(claim[0])
+        stuff_to_return.append(summarise_claim(claim))
     return stuff_to_return
 
 
@@ -56,3 +57,4 @@ def claims_submitted_in_last_24_hours():
         start=yesterday,
         end=now
     )
+
