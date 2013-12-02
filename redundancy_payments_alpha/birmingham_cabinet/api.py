@@ -2,6 +2,7 @@ import contextlib
 from datetime import datetime
 
 from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy import func
 
 from models import Claim, Claimant, Employer, Employee
 from base import make_session, Base, local_unix_socket_engine
@@ -21,7 +22,7 @@ def employee_via_nino(nino):
     with contextlib.closing(make_session()) as session:
         try:
             employee = session.query(Employee).filter(
-                Employee.nino == nino).one()
+                func.upper(Employee.nino) == func.upper(nino)).one()
             return json_decode(employee.hstore)
         except NoResultFound:
             pass
