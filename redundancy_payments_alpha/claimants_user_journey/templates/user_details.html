@@ -43,8 +43,8 @@
                     <label>Date of Birth</label>
                         {{ date_field(form.date_of_birth) }}
                         {% if form.date_of_birth.errors %}
-                            {% for error in form.date_of_birth.errors.itervalues() %}
-                                <span class="validation-message">{{ error[0] }}</span>
+                            {% for error in form.date_of_birth.errors %}
+                                <span class="validation-message">{{ error }}</span>
                             {% endfor %}
                         {% endif %}
                     </p>

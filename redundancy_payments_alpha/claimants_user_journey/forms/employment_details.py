@@ -29,5 +29,5 @@ class EmploymentDetails(Form):
             ('home worker', '<strong>Home Worker</strong></br>You work from home but attend an office for meetings')
         ],
     )
-    start_date = FormField(DateForm)
-    end_date = FormField(DateForm)
+    start_date = FormField(DateForm, label="When did you start working for this employer?")
+    end_date = FormField(DateForm, label="When did your employment end?")

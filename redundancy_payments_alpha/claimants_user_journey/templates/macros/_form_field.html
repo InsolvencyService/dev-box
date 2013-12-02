@@ -18,10 +18,16 @@
 {% endmacro %}
 
 {% macro date_field(field, discrepancies={}, hint=None, optional=False, inline=False) %}
-        <div class="combined_date">
-                    {{ field.day }}
-                    {{ field.month }}
-                    {{ field.year }}
-                    {% if hint %}<span class="hint">{{ hint }}</span>{% endif %}
+        <div class="combined_date {% if field.errors %}validation{% endif %}" name="{{ field.name }}">
+            {{ field.label }}
+            {{ field.day }}
+            {{ field.month }}
+            {{ field.year }}
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    <span class="validation-message">{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+            {% if hint %}<span class="hint">{{ hint }}</span>{% endif %}
         </div>
 {% endmacro %}
