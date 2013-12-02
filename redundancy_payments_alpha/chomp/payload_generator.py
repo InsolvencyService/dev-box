@@ -26,11 +26,8 @@ def generate_dms_id():
     return str(randint(6000000000, 7000000000))
 
 
-def generate_accept_doc_request(values_dict):
-    """This function just takes a dms_id and returns a long string which is an
-    accept_doc request
-    """
-    return generate_payload_with_template(values_dict, RP1_ACCEPT_DOC_TEMPLATE)
+def generate_accept_doc_request(dms_id):
+    return generate_payload_with_template({"dms_id": dms_id}, RP1_ACCEPT_DOC_TEMPLATE)
 
 
 def generate_payload_with_template(values_dict, template_filename):

@@ -64,3 +64,4 @@ class ChompClaimLifecycle(Base):
     __tablename__ = "chomp_claims"
     claim_id = Column(ForeignKey(Claim.claim_id), primary_key=True)
     in_progress = Column(DateTime, nullable=False)
+    done = Column(DateTime, nullable=True)
