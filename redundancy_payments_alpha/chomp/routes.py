@@ -1,4 +1,4 @@
-from flask import Flask, redirect
+from flask import Flask, redirect, request
 from werkzeug.exceptions import NotImplemented
 
 from birmingham_cabinet import api as brum_cab
@@ -8,7 +8,10 @@ app = Flask(__name__)
 @app.route("/chomp/next", methods=["POST"])
 def next():
     claim_id = brum_cab.get_next_claim_not_processed_by_chomp()
-    return redirect("/chomp/{claim_id}/".format(**locals()), 303)
+    next_url = "/chomp/{claim_id}/".format(**locals())
+    client = request.remote_addr
+    app.logger.info("Redirecting {client} to {next_url}".format(**locals()))
+    return redirect(next_url, 303)
 
 @app.route("/chomp/<id_>/", methods=["GET", "POST"])
 def claim(id_):

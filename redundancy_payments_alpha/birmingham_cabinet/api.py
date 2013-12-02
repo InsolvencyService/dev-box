@@ -1,6 +1,6 @@
 import contextlib
-from collections import OrderedDict
 from datetime import datetime
+import logging
 
 from sqlalchemy.orm.exc import NoResultFound
 
@@ -13,7 +13,9 @@ from models import (
 )
 from base import make_session, Base, local_unix_socket_engine
 from customized_json import json_encode, json_decode
+from birmingham_cabinet import chomp_states
 
+logger = logging.getLogger(__name__)
 
 def truncate_all_tables():
     with contextlib.closing(local_unix_socket_engine.connect()) as conn:
@@ -171,24 +173,13 @@ def get_next_claim_not_processed_by_chomp():
         lifecycle.in_progress = datetime.now()
         session.add(lifecycle)
         session.commit()
+        logger.info("Claim {claim_id} state changed to In Progress".format(
+            claim_id=unprocessed_claim.claim_id))
         return unprocessed_claim.claim_id
 
 
 def get_chomp_status_of_claim(claim_id):
-    def is_ready(claim):
-        return claim.chomp_claim_lifecycle is None
-
-    def is_in_progress(claim):
-        return claim.chomp_claim_lifecycle.in_progress is not None
-
-    states = OrderedDict([
-        (is_ready, "Ready"),
-        (is_in_progress, "In Progress"),
-    ])
-
     with contextlib.closing(make_session()) as session:
         claim = session.query(Claim).filter(
             Claim.claim_id == claim_id).one()
-        for is_in_state, state_name in states.items():
-            if is_in_state(claim):
-                return state_name
+        return chomp_states.status_of_claim(claim)
