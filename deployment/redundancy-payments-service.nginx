@@ -16,7 +16,7 @@ server {
         auth_basic_user_file /etc/nginx/htpasswd;
     }
 
-    # FIXME: A common url prefix would be nice
+    #FIXME: A common url prefix would be nice
     location /create-insolvency-case {
         proxy_pass http://localhost:8001;
         proxy_set_header Host $host;
@@ -25,6 +25,13 @@ server {
     }
 
     location /create-employee-record {
+        proxy_pass http://localhost:8001;
+        proxy_set_header Host $host;
+        auth_basic "Redundancy Payment Service Showcase";
+        auth_basic_user_file /etc/nginx/htpasswd;
+    }
+
+    location /_tasks/send-notifications {
         proxy_pass http://localhost:8001;
         proxy_set_header Host $host;
         auth_basic "Redundancy Payment Service Showcase";
