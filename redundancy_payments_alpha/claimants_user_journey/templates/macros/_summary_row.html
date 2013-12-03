@@ -3,8 +3,7 @@
         <td>{{ label }}</td>
         {% if discrepancies.get(field_name) %}
             <td class="discrepancy_field">
-            {{ field }} <span class="discrepancy-message">
-            Your Insolvency Practitioner has suggested <strong>{{ discrepancies[field_name][1] }}</strong>
+            {{ field }} <span class="discrepancy-message"> {{ discrepancies[field_name]|summary_message }}
             </span>
             </td>
         {% else %}

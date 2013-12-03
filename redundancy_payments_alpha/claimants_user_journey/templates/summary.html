@@ -56,9 +56,21 @@
             {% endif %}
             {% if session['wages_owed'] is defined %}
                 <tr><th colspan="2">Wages Owed</th></tr>
+
                 <tr><td>Period owed</td><td>{{ session['wages_owed'].wage_owed_from|date_summary }} to {{ session['wages_owed'].wage_owed_to|date_summary }}</td></tr>
                 <tr><td>Number of days owed</td><td>{{ session['wages_owed'].number_of_days_owed }}</td></tr>
-                {{ summary_row('Gross amount owed', 'gross_amount_owed', session['wages_owed'].gross_amount_owed, discrepancies) }}
+                <tr><td>Gross amount owed</td>
+                    {% if discrepancies.get('gross_amount_owed') %}
+                        <td class="discrepancy_field">
+                        {{ session['wages_owed'].gross_amount_owed }}<span class="discrepancy-message">{{ discrepancies['gross_amount_owed']|summary_message }}</span>
+                    {% else %}
+                        <td>
+                        {{ session['wages_owed'].gross_amount_owed }}
+                    {% endif %}
+                </td></tr>
+
+                <tr><td>Failed payment owed</td><td>{{ session['wages_owed'].failed_payment_to }} to {{ session['wages_owed'].failed_payment_to }}</td></tr>
+                <tr><td>Amount of failed payment owed</td>{{ session['wages_owed'].net_amount }}</tr>
             {% endif %}
             </table>
             <div class="discrepancy-summary">
