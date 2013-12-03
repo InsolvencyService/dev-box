@@ -64,3 +64,4 @@ class ClaimantContactDetails(Form):
                                  Regexp(regex=re.compile('^[a-zA-Z]{2}[0-9]{6}[a-zA-Z]{1}$'),
                                         message="National Insurance Number must be two letters followed by six digits and a further letter (e.g. 'AB123456C').")])
     date_of_birth = FormField(DateForm)
+

@@ -20,6 +20,15 @@ def summary_message(discrepancy):
                'lower figure of %s' % (cl_value, cl_value)
 
 
+def date_summary(date_dict):
+    return "%s/%s/%s" % (
+        date_dict['day'],
+        date_dict['month'],
+        date_dict['year']
+    )
+
+
 def setup_filters(app):
     app.jinja_env.filters['discrepancy_message'] = discrepancy_message
     app.jinja_env.filters['summary_message'] = summary_message
+    app.jinja_env.filters['date_summary'] = date_summary
