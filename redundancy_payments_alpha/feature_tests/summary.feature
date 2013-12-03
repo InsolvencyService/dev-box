@@ -34,17 +34,16 @@ Feature: summary details
     @nuke_db
     Scenario: the claimant has provided discrepant wages owed details
         Given the claimant is matched to the employee details
-          And a claimant with the unpaid wage details
+         When the claimant enters the valid wages owed details
             | DETAILS             | VALUE      |
             | owed                | Yes        |
             | wage_owed_from      | 01/01/2012 |
             | wage_owed_to        | 02/02/2012 |
             | number_of_days_owed | 20         |
             | gross_amount_owed   | 2000.00    |
-         When the claimant goes to /claim-redundancy-payment/wages-owed-details/
-          And enters the unpaid wages details
           And the claimant views the summary page
-         Then the page should include "The Insolvency Practitioner has suggested 05/01/2012 to 02/02/2012. Your payment will be calculated using the shorter period of 05/01/2012 to 02/02/2012"
+         Then the page should include "The Insolvency Practitioner has suggested 1550. Your payment will be calculated using the lower figure of 1550"
+         #Then the page should include "The Insolvency Practitioner has suggested 05/01/2012 to 02/02/2012. Your payment will be calculated using the shorter period of 05/01/2012 to 02/02/2012"
 
 
 
