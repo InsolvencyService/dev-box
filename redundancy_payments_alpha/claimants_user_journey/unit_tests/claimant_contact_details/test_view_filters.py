@@ -14,10 +14,20 @@ def test_discrepancy_message_filter_with_numbers():
     assert_that(output, is_(u"The value you provided was 950 but the insolvency practitioner handling this case suggested 340."))
 
 
-def test_summary_message_filter_with_numbers():
+def test_summary_message_filter_where_ip_higher():
     # given
     discrepancy = (u"950", u"340")
     # when
     output = summary_message(discrepancy)
     # then
-    assert_that(output, is_(u"The Insolvency Practitioner has suggested 340. Your payment will be calculated using the lower figure of 340"))
+    assert_that(output, is_(u"The Insolvency Practitioner has suggested 340. Your payment will therefore be calculated using the lower figure of 340"))
+
+
+def test_summary_message_filter_where_claimant_higher():
+    # given
+    discrepancy = (u"340", u"950")
+    # when
+    output = summary_message(discrepancy)
+    # then
+    assert_that(output, is_(u"You have suggested 340. Your payment will therefore be calculated using the lower figure of 340"))
+
