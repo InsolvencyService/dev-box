@@ -30,6 +30,7 @@ Feature: summary details
            And the claimant views the summary page
          Then the page should include "Your Insolvency Practitioner has suggested"
 
+    @wip
     @nuke_db
     Scenario: the claimant has provided discrepant wages owed details
         Given the claimant is matched to the employee details
