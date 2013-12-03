@@ -20,4 +20,4 @@ def test_summary_message_filter_with_numbers():
     # when
     output = summary_message(discrepancy)
     # then
-    assert_that(output, is_(u"The Insolvency Practitioner has suggested 950. Your payment will be calculated using the lower figure of 950"))
+    assert_that(output, is_(u"The Insolvency Practitioner has suggested 340. Your payment will be calculated using the lower figure of 340"))

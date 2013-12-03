@@ -4,7 +4,12 @@ def discrepancy_message(discrepancy):
            'suggested %s.' % (discrepancy[0], discrepancy[1])
 
 def summary_message(discrepancy):
-    return 'The Insolvency Practitioner has suggested 950. Your payment will be calculated using the lower figure of 950'
+    cl_value = discrepancy[0]
+    ip_value = discrepancy[1]
+    
+    return 'The Insolvency Practitioner has suggested %s. ' \
+           'Your payment will be calculated using the ' \
+           'lower figure of %s' % (ip_value, ip_value)
 
 
 def setup_filters(app):
