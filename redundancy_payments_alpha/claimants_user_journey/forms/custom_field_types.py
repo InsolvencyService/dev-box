@@ -59,6 +59,7 @@ class DateForm(Form):
             _err.extend(v)
         return _err
 
+
 class UnvalidatedDateForm(DateForm):
     day = SelectField(choices=blank_and_number_range_tuples(1, 32))
     month = SelectField(choices=blank_and_number_range_tuples(1, 13))
@@ -67,3 +68,4 @@ class UnvalidatedDateForm(DateForm):
     def validate_day(form, field):
         # Deliberately don't validate
         pass
+

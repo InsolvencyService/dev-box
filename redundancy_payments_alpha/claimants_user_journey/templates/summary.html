@@ -27,7 +27,7 @@
                 </td></tr>
                 <tr><td>Name</td><td>{{ session['user_details'].forenames + ' ' + session['user_details'].surname }}</td></tr>
                 <tr><td>National Insurance Number</td><td>{{ session['user_details'].nino }}</td></tr>
-                <tr><td>Date of birth</td><td>{{ session['user_details'].date_of_birth }}</td></tr>
+                <tr><td>Date of birth</td><td>{{ session['user_details'].date_of_birth|date_summary }}</td></tr>
                 <tr><td>Address</td><td>
                     {% if session['user_details'].building_number is defined %}{{ session['user_details'].building_number }}<br/>{% endif %}
                     {% if session['user_details'].street is defined %}{{ session['user_details'].street }}<br/>{% endif %}
@@ -42,7 +42,7 @@
                 <tr><th colspan="2">Employer details</th></tr>
                 <tr><td>Job title</td><td>{{ session['employment_details'].job_title }}</td></tr>
                 <tr><td>Type of worker</td><td>{{ session['employment_details'].type_of_worker }}</td></tr>
-                <tr><td>Dates of employment</td><td>{{ session['employment_details'].start_date }} to {{ session['employment_details'].end_date }}</td></tr>
+                <tr><td>Dates of employment</td><td>{{ session['employment_details'].start_date|date_summary }} to {{ session['employment_details'].end_date|date_summary }}</td></tr>
             {% endif %}
             {% if session['wage_details'] is defined %}
             <tr><th colspan="2">Wage Details</th></tr>
@@ -56,7 +56,7 @@
             {% endif %}
             {% if session['wages_owed'] is defined %}
                 <tr><th colspan="2">Wages Owed</th></tr>
-                <tr><td>Period owed</td><td>{{ session['wages_owed'].wage_owed_from }} to {{ session['wages_owed'].wage_owed_to }}</td></tr>
+                <tr><td>Period owed</td><td>{{ session['wages_owed'].wage_owed_from|date_summary }} to {{ session['wages_owed'].wage_owed_to|date_summary }}</td></tr>
                 <tr><td>Number of days owed</td><td>{{ session['wages_owed'].number_of_days_owed }}</td></tr>
                 {{ summary_row('Gross amount owed', 'gross_amount_owed', session['wages_owed'].gross_amount_owed, discrepancies) }}
             {% endif %}
