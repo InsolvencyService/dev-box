@@ -7,13 +7,16 @@ import payload_generator
 
 app = Flask(__name__)
 
-@app.route("/chomp/next", methods=["POST"])
+@app.route("/chomp/next", methods=["GET"])
 def next():
     claim_id = brum_cab.get_next_claim_not_processed_by_chomp()
-    next_url = "/chomp/{claim_id}/".format(**locals())
-    client = request.remote_addr
-    app.logger.info("Redirecting {client} to {next_url}".format(**locals()))
-    return redirect(next_url, 303)
+    if claim_id is None:
+        return "", 204
+    else:
+        next_url = "/chomp/{claim_id}/".format(**locals())
+        client = request.remote_addr
+        app.logger.info("Redirecting {client} to {next_url}".format(**locals()))
+        return redirect(next_url, 303)
 
 
 @app.route("/chomp/<id_>/", methods=["GET", "POST"])

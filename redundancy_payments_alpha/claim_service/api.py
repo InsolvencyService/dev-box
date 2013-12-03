@@ -3,6 +3,9 @@ from birmingham_cabinet import api as cabinet_api
 from claim_service.discrepancies import find_discrepancies_in_claim
 
 
+class NoEmployeeException(Exception):
+    pass
+
 def _current_time():
     return datetime.now()
 
@@ -17,7 +20,6 @@ def has_discrepancies(claim_id):
 
 
 def create_claim_2(claimant_information):
-    claim_id = None
     nino = claimant_information['nino']
     employee_record = cabinet_api.employee_via_nino(nino)
     if employee_record:
@@ -25,7 +27,10 @@ def create_claim_2(claimant_information):
             claimant_information,
             employee_record
         )
-    return claim_id
+        return claim_id
+    else:
+        raise NoEmployeeException(
+            "Can't create a claim without first creating an employee")
 
 
 def add_details_to_claim(claim_id, claimant_details):

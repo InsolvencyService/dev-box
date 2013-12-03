@@ -12,6 +12,7 @@ from flask import (
 from werkzeug.utils import redirect
 
 import claim_service.api as claim_service
+from claim_service.api import NoEmployeeException
 from claimants_user_journey.view_filters.filters import setup_filters
 from forms.claimant_contact_details import ClaimantContactDetails
 from forms.claimant_wage_details import ClaimantWageDetails
@@ -63,11 +64,11 @@ def personal_details():
         session['user_details'] = form.data
         session['user_details']['nino'] = form.data['nino'].upper()
 
-        claim_id = claim_service.create_claim_2(session['user_details'])
-        if claim_id:
+        try:
+            claim_id = claim_service.create_claim_2(session['user_details'])
             session['claim_id'] = claim_id
             return redirect(url_for('employment_details'))
-        else:
+        except NoEmployeeException:
             return redirect(url_for('call_your_ip'))
     return render_template('user_details.html', form=form, hide_nav=True, inner_id='personal-details')
 

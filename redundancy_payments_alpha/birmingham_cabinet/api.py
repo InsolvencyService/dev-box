@@ -166,16 +166,19 @@ def get_claims():
 
 def get_next_claim_not_processed_by_chomp():
     with contextlib.closing(make_session()) as session:
-        unprocessed_claim = session.query(Claim).filter(
-            Claim.chomp_claim_lifecycle == None).one()
-        lifecycle = ChompClaimLifecycle()
-        lifecycle.claim_id = unprocessed_claim.claim_id
-        lifecycle.in_progress = datetime.now()
-        session.add(lifecycle)
-        session.commit()
-        logger.info("Claim {claim_id} state changed to In Progress".format(
-            claim_id=unprocessed_claim.claim_id))
-        return unprocessed_claim.claim_id
+        try:
+            unprocessed_claim = session.query(Claim).filter(
+                Claim.chomp_claim_lifecycle == None).one()
+            lifecycle = ChompClaimLifecycle()
+            lifecycle.claim_id = unprocessed_claim.claim_id
+            lifecycle.in_progress = datetime.now()
+            session.add(lifecycle)
+            session.commit()
+            logger.info("Claim {claim_id} state changed to In Progress".format(
+                claim_id=unprocessed_claim.claim_id))
+            return unprocessed_claim.claim_id
+        except NoResultFound:
+            pass
 
 
 def chomp_state_of_claim(claim_id):

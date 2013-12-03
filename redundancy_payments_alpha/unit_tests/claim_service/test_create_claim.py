@@ -5,7 +5,7 @@ from datetime import date
 from hamcrest import *
 from mock import patch
 
-from claim_service.api import add_details_to_claim, create_claim_2
+from claim_service.api import add_details_to_claim, create_claim_2, NoEmployeeException
 
 
 class TestCreateClaim2(unittest.TestCase):
@@ -19,14 +19,14 @@ class TestCreateClaim2(unittest.TestCase):
         claim_id = create_claim_2(personal_details)
         mock_cabinet.add_claim.assert_called_with(personal_details, {'foo':'bar'})
 
+
     @patch('claim_service.api.cabinet_api')
     def test_claims_dont_get_created_if_no_record_is_found(self, mock_cabinet):
         mock_cabinet.employee_via_nino.return_value = None
         personal_details = {
             'nino': 'AB012345Z'
         }
-        claim_id = create_claim_2(personal_details)
-        assert_that(claim_id, is_(None))
+        self.assertRaises(NoEmployeeException,create_claim_2, personal_details)
 
 
 class TestAddDetailsToClaim(unittest.TestCase):

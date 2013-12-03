@@ -37,7 +37,7 @@ def step(context):
 @when("we ask for the next claim")
 def step(context):
     context.test_client = chomp_app.test_client()
-    context.response_for_next = context.test_client.post("/chomp/next")
+    context.response_for_next = context.test_client.get("/chomp/next")
 
 @then("we are redirected to the next claim")
 def step(context):
