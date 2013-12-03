@@ -22,6 +22,7 @@ class EmploymentDetails(Form):
             ('employed', '<strong>Employed</strong></br>You are employed under a contract of employment'),
             ('labour-only sub-contractor', '<strong>Labour-only Sub-contractor</strong></br>You are self employed and pay tax and national insurance on that basis'),
             ('agency worker', '<strong>Agency Worker</strong></br>You are working for the client of an agency'),
+            ('fixed term contract', '<strong>Fixed Term Contract</strong></br>Your contract is for a specific period of time i.e. it has an end date'),
             ('director or shareholder', '<strong>Director or Shareholder</strong></br>You are an office holder of the company'),
             ('freelance', '<strong>Freelance</strong></br>You work for yourself and the business is a client'),
             ('casual worker', '<strong>Casual Worker</strong></br>You work for the employer as and when required'),
