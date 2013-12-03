@@ -59,8 +59,6 @@
                 <tr><td>Period owed</td><td>{{ session['wages_owed'].wage_owed_from }} to {{ session['wages_owed'].wage_owed_to }}</td></tr>
                 <tr><td>Number of days owed</td><td>{{ session['wages_owed'].number_of_days_owed }}</td></tr>
                 {{ summary_row('Gross amount owed', 'gross_amount_owed', session['wages_owed'].gross_amount_owed, discrepancies) }}
-                <tr><td>Failed payment owed</td><td>{{ session['wages_owed'].failed_payment_to }} to {{ session['wages_owed'].failed_payment_to }}</td></tr>
-                <tr><td>Amount of failed payment owed</td><td>{{ session['wages_owed'].net_amount }}</td></tr>
             {% endif %}
             </table>
             <div class="discrepancy-summary">
