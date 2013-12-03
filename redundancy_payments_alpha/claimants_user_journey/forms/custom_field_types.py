@@ -1,6 +1,6 @@
 from wtforms import TextField, Form, SelectField
 from wtforms.validators import AnyOf, DataRequired
-from claimants_user_journey.forms.validators import DateOfBirthValidator
+from claimants_user_journey.forms.validators import DateOfBirthValidator, RequiredIfFieldHasValue
 
 
 class CurrencyField(TextField):
@@ -19,6 +19,7 @@ def blank_and_number_range_tuples(min, max_plus_one):
     lst = [('','')]
     lst += [(str(x), str(x)) for x in xrange(min, max_plus_one)]
     return lst
+
 
 class DateForm(Form):
     def __init__(self, csrf_enabled=False, *args, **kwargs):
@@ -48,3 +49,12 @@ class DateForm(Form):
         for (k,v) in super(DateForm,self).errors.iteritems():
             _err.extend(v)
         return _err
+
+class UnvalidatedDateForm(DateForm):
+    day = SelectField(choices=blank_and_number_range_tuples(1, 32))
+    month = SelectField(choices=blank_and_number_range_tuples(1, 13))
+    year = TextField()
+
+    def validate_day(form, field):
+        # Deliberately don't validate
+        pass
