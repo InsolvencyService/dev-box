@@ -1,6 +1,9 @@
-from wtforms import TextField, Form, SelectField
+from datetime import date
+import logging
+import re
+from wtforms import TextField, Form, SelectField, ValidationError
 from wtforms.validators import AnyOf, DataRequired
-from claimants_user_journey.forms.validators import DateOfBirthValidator, RequiredIfFieldHasValue
+from claimants_user_journey.forms.validators import DateOfBirthValidator, RequiredIfFieldHasValue, convert_string_to_date
 
 
 class CurrencyField(TextField):
@@ -22,10 +25,6 @@ def blank_and_number_range_tuples(min, max_plus_one):
 
 
 class DateForm(Form):
-    def __init__(self, csrf_enabled=False, *args, **kwargs):
-        #if "formdata" in kwargs and kwargs["formdata"]:
-        #    day,month,year = kwargs["formdata"]["start_date"].split("/")
-        super(DateForm, self).__init__(csrf_enabled=csrf_enabled, *args, **kwargs)
 
     day = SelectField(choices=blank_and_number_range_tuples(1, 32),
                       validators=[AnyOf(values=[str(x) for x in xrange(1, 32)],
@@ -36,12 +35,22 @@ class DateForm(Form):
     year = TextField(validators=[DataRequired('Year is a required field'), ])
 
     @property
-    def data(self):
+    def date(self):
         d = super(DateForm, self).data
         return "%(day)s/%(month)s/%(year)s" % d
 
     def validate_day(form, field):
-        DateOfBirthValidator(format_message="Date must be in the format dd/mm/yyyy.")(form, form)
+        if not re.match(r'^[0-9]{1,2}[/][0-9]{1,2}[/][0-9]{4}$', form.date, re.IGNORECASE):
+             raise ValidationError("Date must be in the format dd/mm/yyyy.")
+
+        range_message = 'Date must be greater than or equal to 1900 and not in the future.'
+
+        try:
+            parsed_date = convert_string_to_date(form.date)
+        except SyntaxError:
+            raise ValidationError(range_message)
+        if parsed_date.year < 1900 or parsed_date >= date.today():
+            raise ValidationError(range_message)
 
     @property
     def errors(self):
@@ -49,6 +58,7 @@ class DateForm(Form):
         for (k,v) in super(DateForm,self).errors.iteritems():
             _err.extend(v)
         return _err
+
 
 class UnvalidatedDateForm(DateForm):
     day = SelectField(choices=blank_and_number_range_tuples(1, 32))
@@ -58,3 +68,4 @@ class UnvalidatedDateForm(DateForm):
     def validate_day(form, field):
         # Deliberately don't validate
         pass
+
