@@ -14,8 +14,8 @@ class WagesOwed(Form):
                                          'No'
                                      ], message='Please choose an option')])
 
-    wage_owed_from = FormField(UnvalidatedDateForm)
-    wage_owed_to = FormField(UnvalidatedDateForm)
+    wage_owed_from = FormField(UnvalidatedDateForm, label='From')
+    wage_owed_to = FormField(UnvalidatedDateForm, label='To')
 
     number_of_days_owed = TextField('Number of days for which pay is owed',
                            validators=[RequiredIfFieldHasValue(other_field_name='owed', other_field_value='Yes', message='Please enter number of days for which pay is owed'),
