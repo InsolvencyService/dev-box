@@ -1,3 +1,4 @@
+import collections
 import re
 from flask_wtf import Form
 from wtforms import TextField, SelectField, StringField, ValidationError, FormField
@@ -32,6 +33,19 @@ class DateForm(Form):
         DateOfBirthValidator(format_message="Date Of Birth must be in the format dd/mm/yyyy.")(form, form)
 
 class ClaimantContactDetails(Form):
+    @property
+    def errors(self):
+        errs = super(ClaimantContactDetails, self).errors
+
+        items = []
+        for key, value in errs.items():
+            key
+            if isinstance(value, collections.MutableMapping):
+                items.extend(value.items())
+            else:
+                items.append((key, value))
+        return dict(items)
+
     forenames = TextField('First name(s)', validators=[DataRequired('Please enter your first name'), Length(max=60)])
     surname = TextField('Last name', validators=[DataRequired('Please enter your last name'), Length(max=60)])
     title = SelectField('Title',
