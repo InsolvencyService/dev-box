@@ -20,7 +20,7 @@ def test_summary_message_filter_where_ip_higher():
     # when
     output = summary_message(discrepancy)
     # then
-    assert_that(output, is_(u"The Insolvency Practitioner has suggested 340. Your payment will therefore be calculated using the lower figure of 340"))
+    assert_that(output, is_(u"The Insolvency Practitioner has suggested 340. Your payment will be calculated using the lower figure of 340"))
 
 
 def test_summary_message_filter_where_claimant_higher():
@@ -29,5 +29,5 @@ def test_summary_message_filter_where_claimant_higher():
     # when
     output = summary_message(discrepancy)
     # then
-    assert_that(output, is_(u"You have suggested 340. Your payment will therefore be calculated using the lower figure of 340"))
+    assert_that(output, is_(u"You have suggested 340. Your payment will be calculated using the lower figure of 340"))
 

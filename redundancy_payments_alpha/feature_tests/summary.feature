@@ -28,7 +28,7 @@ Feature: summary details
             | normal_days_of_work      | 5      |
             | overtime                 | Yes    |
            And the claimant views the summary page
-         Then the page should include "Your Insolvency Practitioner has suggested"
+         Then the page should include "The Insolvency Practitioner has suggested"
 
     @wip
     @nuke_db
@@ -43,6 +43,7 @@ Feature: summary details
             | gross_amount_owed   | 2000.00    |
           And the claimant views the summary page
          Then the page should include "The Insolvency Practitioner has suggested 1550. Your payment will be calculated using the lower figure of 1550"
+         #TODO:
          #Then the page should include "The Insolvency Practitioner has suggested 05/01/2012 to 02/02/2012. Your payment will be calculated using the shorter period of 05/01/2012 to 02/02/2012"
 
 
