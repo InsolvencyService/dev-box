@@ -1,9 +1,9 @@
 import re
 from flask_wtf import Form
-from wtforms import TextField, RadioField
+from wtforms import TextField, RadioField, FormField
 from wtforms.validators import Regexp, DataRequired, AnyOf
 from validators import RequiredIfFieldHasValue
-from custom_field_types import CurrencyField
+from custom_field_types import CurrencyField, DateForm, UnvalidatedDateForm
 
 
 class WagesOwed(Form):
@@ -14,14 +14,8 @@ class WagesOwed(Form):
                                          'No'
                                      ], message='Please choose an option')])
 
-    wage_owed_from = TextField('From',
-                           validators=[RequiredIfFieldHasValue(other_field_name='owed', other_field_value='Yes', message='Please enter a from date'),
-                                       Regexp(regex=re.compile('^[0-9]{2}[/][0-9]{2}[/][0-9]{4}$'),
-                                        message='Date must be in the format dd/mm/yyyy.')])
-    wage_owed_to = TextField('To',
-                           validators=[RequiredIfFieldHasValue(other_field_name='owed', other_field_value='Yes', message='Please enter a to date'),
-                                       Regexp(regex=re.compile('^[0-9]{2}[/][0-9]{2}[/][0-9]{4}$'),
-                                        message='Date must be in the format dd/mm/yyyy.')])
+    wage_owed_from = FormField(UnvalidatedDateForm, label='From')
+    wage_owed_to = FormField(UnvalidatedDateForm, label='To')
 
     number_of_days_owed = TextField('Number of days for which pay is owed',
                            validators=[RequiredIfFieldHasValue(other_field_name='owed', other_field_value='Yes', message='Please enter number of days for which pay is owed'),
@@ -31,4 +25,3 @@ class WagesOwed(Form):
                            validators=[RequiredIfFieldHasValue(other_field_name='owed', other_field_value='Yes', message='Please enter the Gross amount of pay owed'),
                                        Regexp(regex=re.compile('^\d{0,8}(\.\d{0,2})?$'),
                                          message='Gross amount owed must be numeric.')])
-

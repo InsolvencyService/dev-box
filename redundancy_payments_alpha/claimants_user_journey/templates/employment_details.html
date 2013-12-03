@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "macros/_form_field.html" import form_field %}
+{% from "macros/_form_field.html" import form_field, date_field %}
 {% from "macros/_form_nav.html" import form_nav %}
 
 {% block title %}Employment Details{% endblock %}
@@ -42,8 +42,8 @@
             </fieldset>
             <fieldset>
                 <legend>Dates of employment</legend>
-                {{ form_field(form.start_date, hint="Use the dd/mm/yyyy format, for example 01/01/1975") }}
-                {{ form_field(form.end_date, hint="Use the dd/mm/yyyy format, for example 01/01/1975") }}
+                {{ date_field(form.start_date, hint="Use the dd/mm/yyyy format, for example 01/01/1975") }}
+                {{ date_field(form.end_date, hint="Use the dd/mm/yyyy format, for example 01/01/1975") }}
             </fieldset>
             <input class="button" type="submit" value="Save and Continue" />
         </form>

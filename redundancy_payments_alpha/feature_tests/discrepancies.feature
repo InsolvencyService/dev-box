@@ -58,8 +58,12 @@ Feature: displaying discrepencies to the claimant
          When the claimant enters the valid arrears of pay details
             | NAME                     | VALUE      |
             | owed                     | Yes        |
-            | wage_owed_from           | 01/01/2010 |
-            | wage_owed_to             | 01/01/2013 |
+            | wage_owed_from-day       | 1          |
+            | wage_owed_from-month     | 1          |
+            | wage_owed_from-year      | 2010       |
+            | wage_owed_to-day         | 1          |
+            | wage_owed_to-month       | 1          |
+            | wage_owed_to-year        | 2013       |
             | number_of_days_owed      | 1          |
             | gross_amount_owed        | 999        |
          Then the claimant should see a discrepancy on wage owed in arrears

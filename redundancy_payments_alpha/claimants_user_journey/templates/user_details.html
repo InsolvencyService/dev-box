@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "macros/_form_field.html" import form_field %}
+{% from "macros/_form_field.html" import form_field, date_field %}
 {% from "macros/_form_nav.html" import form_nav %}
 
 {% block title %}Claimant Contact Details{% endblock %}
@@ -41,12 +41,10 @@
                     {{ form_field(form.nino, hint="Your national insurance number will have two letters, six digits and then a letter, for example: AB123456C. Leave out any spaces or dashes") }}
                     <p class="group {% if form.date_of_birth.errors %}validation{% endif %}" id="date_of_birth_id">
                     <label>Date of Birth</label>
-                    {{ form.date_of_birth.day }}
-                    {{ form.date_of_birth.month }}
-                    {{ form.date_of_birth.year }}
+                        {{ date_field(form.date_of_birth) }}
                         {% if form.date_of_birth.errors %}
-                            {% for error in form.date_of_birth.errors.itervalues() %}
-                                <span class="validation-message">{{ error[0] }}</span>
+                            {% for error in form.date_of_birth.errors %}
+                                <span class="validation-message">{{ error }}</span>
                             {% endfor %}
                         {% endif %}
                     </p>
