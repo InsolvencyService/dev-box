@@ -40,7 +40,6 @@
                     <legend>National Insurance Number and Date of Birth</legend>
                     {{ form_field(form.nino, hint="Your national insurance number will have two letters, six digits and then a letter, for example: AB123456C. Leave out any spaces or dashes") }}
                     <p class="group {% if form.date_of_birth.errors %}validation{% endif %}" id="date_of_birth_id">
-                    <label>Date of Birth</label>
                         {{ date_field(form.date_of_birth) }}
                         {% if form.date_of_birth.errors %}
                             {% for error in form.date_of_birth.errors %}
