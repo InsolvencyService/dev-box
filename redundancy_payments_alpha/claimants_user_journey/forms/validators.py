@@ -58,7 +58,7 @@ class DateOfBirthValidator(Regexp):
 
         range_message = self.range_message
         if range_message == None:
-            range_message = 'Date Of Birth must be greater than or equal to 1900 and not in the future.'
+            range_message = 'Date must be greater than or equal to 1900 and not in the future.'
 
         try:
             parsed_date = convert_string_to_date(field.data)

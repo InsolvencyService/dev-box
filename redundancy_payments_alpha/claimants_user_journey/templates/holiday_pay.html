@@ -12,6 +12,19 @@
 {% block content %}
     <h1>Your holiday details</h1>
         <form method="post" action="/claim-redundancy-payment/holiday-pay/" class="form-example-1">
+            {% if form.errors %}
+            <div class="validation-summary">
+                <h1>There was a problem submitting the form</h1>
+                <p>Please try the following:</p>
+                <ol>
+                    {% for error_dict in form.errors.itervalues() %}
+                        {% for error in error_dict %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ol>
+            </div>
+            {% endif %}
             <fieldset>
                 <legend>Holiday Pay</legend>
                 {{ form.hidden_tag() }}

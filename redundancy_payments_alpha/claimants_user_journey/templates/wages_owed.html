@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "macros/_form_field.html" import form_field %}
+{% from "macros/_form_field.html" import form_field, date_field %}
 {% from "macros/_form_nav.html" import form_nav %}
 {% from "macros/_call_to_action_box.html" import call_to_action_box %}
 
@@ -14,13 +14,26 @@
 {% block content %}
     <h1>Wages owed</h1>
         <form method="post" action="{{ request.path }}" class="form-example-1">
+            {% if form.errors %}
+            <div class="validation-summary">
+                <h1>There was a problem submitting the form</h1>
+                <p>Please try the following:</p>
+                <ol>
+                    {% for error_dict in form.errors.itervalues() %}
+                        {% for error in error_dict %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ol>
+            </div>
+            {% endif %}
             <div>
                 {{ call_to_action_box(discrepancies)}}
                 {{ form.hidden_tag() }}
                 <fieldset>
                 {{ form_field(form.owed, inline=True) }}
-                {{ form_field(form.wage_owed_from, hint="Use the dd/mm/yyyy format, for example 01/01/1975") }}
-                {{ form_field(form.wage_owed_to, hint="Use the dd/mm/yyyy format, for example 01/01/1975") }}
+                {{ date_field(form.wage_owed_from, hint="Use the dd/mm/yyyy format, for example 01/01/1975") }}
+                {{ date_field(form.wage_owed_to, hint="Use the dd/mm/yyyy format, for example 01/01/1975") }}
                 {{ form_field(form.number_of_days_owed) }}
                 {{ form_field(form.gross_amount_owed, discrepancies) }}
                 </fieldset>

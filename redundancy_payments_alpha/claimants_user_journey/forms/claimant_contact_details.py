@@ -1,37 +1,27 @@
+import collections
 import re
 from flask_wtf import Form
 from wtforms import TextField, SelectField, StringField, ValidationError, FormField
 from wtforms.fields.html5 import TelField, EmailField
 from wtforms.validators import DataRequired, Length, Email, AnyOf, Regexp, Optional
+from claimants_user_journey.forms.custom_field_types import DateForm
 from claimants_user_journey.forms.validators import DateOfBirthValidator
 
 
-def blank_and_number_range_tuples(min, max_plus_one):
-    lst = [('','')]
-    lst += [(str(x), str(x)) for x in xrange(min, max_plus_one)]
-    return lst
-
-class DateForm(Form):
-    def __init__(self, csrf_enabled=False, *args, **kwargs):
-        super(DateForm, self).__init__(csrf_enabled=csrf_enabled, *args, **kwargs)
-
-    day = SelectField(choices=blank_and_number_range_tuples(1, 32),
-                      validators=[AnyOf(values=[str(x) for x in xrange(1, 32)],
-                                        message='Day is a required field')])
-    month = SelectField(choices=blank_and_number_range_tuples(1, 13),
-                        validators=[AnyOf(values=[str(x) for x in xrange(1, 13)],
-                                          message='Month is a required field')])
-    year = TextField(validators=[DataRequired('Please enter your Year of Birth'), ])
-
-    @property
-    def data(self):
-        d = super(DateForm, self).data
-        return "%(day)s/%(month)s/%(year)s" % d
-
-    def validate_day(form, field):
-        DateOfBirthValidator(format_message="Date Of Birth must be in the format dd/mm/yyyy.")(form, form)
-
 class ClaimantContactDetails(Form):
+    @property
+    def errors(self):
+        errs = super(ClaimantContactDetails, self).errors
+
+        items = []
+        for key, value in errs.items():
+            key
+            if isinstance(value, collections.MutableMapping):
+                items.extend(value.items())
+            else:
+                items.append((key, value))
+        return dict(items)
+
     forenames = TextField('First name(s)', validators=[DataRequired('Please enter your first name'), Length(max=60)])
     surname = TextField('Last name', validators=[DataRequired('Please enter your last name'), Length(max=60)])
     title = SelectField('Title',

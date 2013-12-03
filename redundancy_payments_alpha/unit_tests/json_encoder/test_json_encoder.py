@@ -51,3 +51,14 @@ class TestJsonEncoder(unittest.TestCase):
             ),
             is_(json_with_date)
         )
+
+    def test_json_encode_string(self):
+        sample_dict = {'aa':'bb','cc':'dd'}
+        assert_that(json.loads(
+                json.dumps(
+                    sample_dict,
+                    default=encode_special_types
+                ),
+                object_hook=decode_special_types
+            ),
+            is_(sample_dict))
