@@ -1,8 +1,7 @@
 import re
 from flask_wtf import Form
-from wtforms import TextField, SelectField, RadioField
-from wtforms.fields.html5 import IntegerField
-from wtforms.validators import DataRequired, AnyOf, Regexp, NumberRange
+from wtforms import StringField, SelectField, RadioField
+from wtforms.validators import DataRequired, AnyOf, Regexp
 from custom_field_types import CurrencyField
 
 
@@ -33,21 +32,11 @@ class ClaimantWageDetails(Form):
                                  ],
                                  default='')
 
-
-    number_of_hours_worked = TextField('Number of hours you normally work',
+    number_of_hours_worked = StringField('Number of hours you normally work',
                                        validators=[DataRequired('Please enter the number of hours you normally work'),
                                                    Regexp(regex=re.compile('^\d{0,2}(\.\d{0,2})?$'),
                                         message="Number of hours you normally work must be a number e.g 40.25.")])
 
-    bonus_or_commission = RadioField('Did your pay include any bonus or commission ?',
-                                     choices=[
-                                         ('Yes', 'Yes'),
-                                         ('No', 'No')
-                                     ],
-                                     validators=[DataRequired('Please choose an option'), AnyOf(values=[
-                                         'Yes',
-                                         'No'
-                                     ])])
     overtime = RadioField('Did you work overtime as a part of your contract ?',
                                      choices=[
                                          ('Yes', 'Yes'),
@@ -58,7 +47,7 @@ class ClaimantWageDetails(Form):
                                          'No'
                                      ])])
 
-    hours_of_overtime = TextField('How many hours overtime did you normally work?')
+    hours_of_overtime = StringField('How many hours overtime did you normally work?')
 
     frequency_of_overtime = SelectField('every',
                     choices=[
@@ -98,3 +87,14 @@ class ClaimantWageDetails(Form):
                                         ],
                                       message='Please choose how many days you normally work each week')])
 
+    bonus_or_commission = RadioField('Did your pay include any bonus or commission ?',
+                                     choices=[
+                                         ('Yes', 'Yes'),
+                                         ('No', 'No')
+                                     ],
+                                     validators=[DataRequired('Please choose an option'), AnyOf(values=[
+                                         'Yes',
+                                         'No'
+                                     ])])
+
+    bonus_details = StringField('Please provide details')

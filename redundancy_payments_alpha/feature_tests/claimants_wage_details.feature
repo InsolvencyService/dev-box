@@ -10,7 +10,5 @@ Feature: claimants wage details
            And the page should have an input field called "bonus_or_commission" labeled "Did your pay include any bonus or commission ?"
            And the page should have an input field called "overtime" labeled "Did you work overtime as a part of your contract ?"
            And the page should have an input field called "normal_days_of_work" labeled "How many days do you normally work each week?"
+           And the page should have an input field called "bonus_details" labeled "Please provide details"
            And the page should not have a call to action box at the top of the screen
-
-
-
