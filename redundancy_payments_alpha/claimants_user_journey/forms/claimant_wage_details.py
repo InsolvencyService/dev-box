@@ -32,7 +32,8 @@ class ClaimantWageDetails(Form):
                                  ],
                                  default='')
 
-    number_of_hours_worked = StringField('Number of hours you normally work',
+    number_of_hours_worked = StringField('Number of hours you normally work per'
+                                         ' week',
                                        validators=[DataRequired('Please enter the number of hours you normally work'),
                                                    Regexp(regex=re.compile('^\d{0,2}(\.\d{0,2})?$'),
                                         message="Number of hours you normally work must be a number e.g 40.25.")])
@@ -97,4 +98,5 @@ class ClaimantWageDetails(Form):
                                          'No'
                                      ])])
 
-    bonus_details = StringField('Please provide details')
+    bonus_details = StringField('Give details of the amount and type of bonus '
+                                'or commission earned, and when it was paid')
