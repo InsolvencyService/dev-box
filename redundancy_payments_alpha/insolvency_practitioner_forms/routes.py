@@ -60,3 +60,11 @@ def send_notifications():
 @app.route('/robots.txt')
 def robots_txt():
     return send_file('static/robots.txt')
+
+
+@app.route('/ip-dashboard/claims/')
+def claim_dashboard():
+    return render_template('claim_dashboard.html', claim_summary=claims_api.summarise_claims())
+
+if __name__ == '__main__':
+    app.run()

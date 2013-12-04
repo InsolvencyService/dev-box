@@ -3,6 +3,7 @@ from datetime import datetime
 import logging
 
 from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy import func
 
 from models import (
     ChompClaimLifecycle,
@@ -27,6 +28,7 @@ def truncate_all_tables():
 
 
 def employee_via_nino(nino):
+    nino = nino.upper()
     with contextlib.closing(make_session()) as session:
         try:
             employee = session.query(Employee).filter(
@@ -45,7 +47,7 @@ def get_rp1_form():
 def add_rp1_form(dictionary):
     with contextlib.closing(make_session()) as session:
         claimant = Claimant()
-        claimant.nino = dictionary["nino"]
+        claimant.nino = dictionary["nino"].upper()
         claimant.date_of_birth = dictionary["date_of_birth"]
         claimant.title = dictionary["title"]
         claimant.forenames = dictionary["forenames"]
@@ -70,7 +72,7 @@ def add_rp14_form(dictionary):
 def add_rp14a_form(dictionary):
     with contextlib.closing(make_session()) as session:
         employee = Employee()
-        employee.nino = dictionary["employee_national_insurance_number"]
+        employee.nino = dictionary["employee_national_insurance_number"].upper()
         employee.date_of_birth = dictionary["employee_date_of_birth"]
         employee.title = dictionary["employee_title"]
         employee.forenames = dictionary["employee_forenames"]
@@ -112,13 +114,13 @@ def update_claim(claim_id, claimant_information=None, employee_record=None):
         claim = session.query(Claim).filter(Claim.claim_id == claim_id).one()
         if claimant_information:
             updated_claimant_info = dict(
-                claim.claimant_information,
+                json_decode(claim.claimant_information),
                 **claimant_information
             )
             claim.claimant_information = json_encode(updated_claimant_info)
         if employee_record:
             updated_employee_record = dict(
-                claim.employee_record,
+                json_decode(claim.employee_record),
                 **employee_record
             )
             claim.employee_record = json_encode(updated_employee_record)
@@ -159,8 +161,9 @@ def get_claims_submitted_between(start, end):
 def get_claims():
     with contextlib.closing(make_session()) as session:
         claims = session.query(Claim).all()
-        return [(claim.claimant_information,
-                 claim.employee_record,
+
+        return [(json_decode(claim.claimant_information),
+                 json_decode(claim.employee_record),
                  claim.submitted_at) for claim in claims]
 
 

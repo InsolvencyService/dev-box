@@ -76,14 +76,39 @@
     #form-example-1 .discrepancy .discrepancy-message {
     font-size: 14px;
     line-height: 1.14286;
-}
+    }
 }
 
 
 .form-example-1 .inline-choice label {
     display: inline-block;
-    line-height: 10px;
-    padding-right: 8px;
+    max-width: 500px;
+    line-height: 24px;
+    vertical-align: middle;
+    margin-left: 8px;
+}
+
+.inline-choice .row input {
+    height: auto;
+    margin: 0 16px 0 16px;
+}
+
+ul.inline-choice li.row:nth-child(odd) {
+    background-color: #f8f8f8;
+}
+
+.inline-choice .row {
+    padding: 0;
+    margin: 0;
+}
+
+ul.inline-choice {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.inline-choice li.row {
+    border: dotted 1px #bfc1c3;
 }
 
 .form-example-1 .inline-choice input {

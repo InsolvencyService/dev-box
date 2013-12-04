@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 from birmingham_cabinet import api as cabinet_api
+from claim_service.claims import summarise_claim
 from claim_service.discrepancies import find_discrepancies_in_claim
 
 
@@ -48,7 +49,7 @@ def summarise_claims():
     claims = cabinet_api.get_claims()
     stuff_to_return = []
     for claim in claims:
-        stuff_to_return.append(claim[0])
+        stuff_to_return.append(summarise_claim(claim))
     return stuff_to_return
 
 

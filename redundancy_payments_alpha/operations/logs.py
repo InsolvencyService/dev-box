@@ -12,3 +12,4 @@ def configure_application_logging(app):
     handler = StreamHandler(stream=sys.stdout)
     handler.setLevel(logging.INFO)
     app.logger.addHandler(handler)
+
