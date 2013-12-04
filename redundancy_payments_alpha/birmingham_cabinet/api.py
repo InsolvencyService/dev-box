@@ -156,3 +156,4 @@ def get_claims():
         return [(json_decode(claim.claimant_information),
                  json_decode(claim.employee_record),
                  claim.submitted_at) for claim in claims]
+
