@@ -1,6 +1,6 @@
 import re
 from flask_wtf import Form
-from wtforms import StringField, SelectField, RadioField
+from wtforms import StringField, SelectField, RadioField, TextAreaField
 from wtforms.validators import DataRequired, AnyOf, Regexp
 from custom_field_types import CurrencyField
 
@@ -98,5 +98,5 @@ class ClaimantWageDetails(Form):
                                          'No'
                                      ])])
 
-    bonus_details = StringField('Give details of the amount and type of bonus '
+    bonus_details = TextAreaField('Give details of the amount and type of bonus '
                                 'or commission earned, and when it was paid')
