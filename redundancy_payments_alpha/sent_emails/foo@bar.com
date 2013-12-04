@@ -1,1 +1,0 @@
-{"to_email": "foo@bar.com", "from_name": "Redundancy Payments Service", "text": "Some message text", "from_email": "to-be-confirmed@rps.com", "to_name": "Mr Foo", "subject": "an email"}
