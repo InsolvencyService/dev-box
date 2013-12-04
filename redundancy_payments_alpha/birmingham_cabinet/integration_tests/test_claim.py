@@ -52,7 +52,7 @@ class TestClaim(unittest.TestCase):
         assert_that(claim[1]['x'], is_('3'))
 
     def test_updating_a_claim(self):
-        claimant_data = {'foo': 'bar'}
+        claimant_data = {'foo': 'bar', 'unchanged': 'grep'}
         employee_record = {'foo': 'baz'}
 
         updated_claimant_data = {
@@ -65,6 +65,7 @@ class TestClaim(unittest.TestCase):
         claim = get_claim(claim_id)
 
         assert_that(claim[0]['foo'], is_('bar'))
+        assert_that(claim[0]['unchanged'], is_('grep'))
         assert_that(claim[1]['foo'], is_('baz'))
 
         update_claim(claim_id, claimant_information=updated_claimant_data)
@@ -72,6 +73,7 @@ class TestClaim(unittest.TestCase):
         updated_claim = get_claim(claim_id)
         assert_that(updated_claim[0]['zap'], is_('pow'))
         assert_that(updated_claim[0]['foo'], is_('mongoose'))
+        assert_that(updated_claim[0]['unchanged'], is_('grep'))
         assert_that(updated_claim[1]['foo'], is_('baz'))
 
     def test_retrieving_claims(self):
