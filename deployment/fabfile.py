@@ -49,7 +49,7 @@ def ensure_bootstrapping_requirements():
             missing_packages.append(package)
     if len(missing_packages) != 0:
         sudo("apt-get -yq update")
-        for missing_package in missing_package:
+        for package in missing_packages:
             sudo("apt-get -yq install {package}".format(**locals()))
 
 
