@@ -1,1 +1,4 @@
 ---
+classes:
+  - rps_python
+  - rps_nginx
