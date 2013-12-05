@@ -136,4 +136,5 @@ def ensure_upstart():
 def ensure_nginx():
     sudo("rm /etc/nginx/conf.d/*")
     put("redundancy-payments-service.nginx", "/etc/nginx/conf.d/redundancy-payments-service.conf", use_sudo=True)
+    put("redundancy-payments-cd-staging.nginx", "/etc/nginx/conf.d/redundancy-payments-cd-staging.conf", use_sudo=True)
     sudo("/etc/init.d/nginx restart")
