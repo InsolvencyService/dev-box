@@ -6,20 +6,16 @@ from nose.plugins.attrib import attr
 
 from chomp.routes import app as chomp_app
 from claim_service import api as claim_service_api
-from birmingham_cabinet.api import add_rp14a_form
+from birmingham_cabinet.api import add_rp14a_form, truncate_all_tables
 
 
 @attr('integration')
 class TestChomp(unittest.TestCase):
 
-    def test_should_return_204_when_no_claims(self):
-        test_client = chomp_app.test_client()
+    def setUp(self):
+        truncate_all_tables()
 
-        no_claims_response = test_client.get("/chomp/next")
-
-        assert_that(no_claims_response.status_code, is_(204))
-
-    def test_should_redirect_when_claims(self):
+    def prepare_claim(self):
         add_rp14a_form(
             {
             "employee_national_insurance_number": "foobar",
@@ -34,8 +30,29 @@ class TestChomp(unittest.TestCase):
             {"nino": "foobar"}
         )
 
+    def test_should_redirect_when_claims_available(self):
+        self.prepare_claim()
         test_client = chomp_app.test_client()
+        next_response = test_client.get("/chomp/next")
+        assert_that(next_response.status_code, is_(303))
 
-        no_claims_response = test_client.get("/chomp/next")
+        state_url = next_response.headers["Location"] + "state"
+        state_response = test_client.get(state_url)
+        assert_that(state_response.status_code, is_(200))
+        assert_that(state_response.data, is_("In Progress"))
 
-        assert_that(no_claims_response.status_code, is_(303))
+    def test_should_return_204_when_no_claims(self):
+        test_client = chomp_app.test_client()
+        next_response = test_client.get("/chomp/next")
+        assert_that(next_response.status_code, is_(204))
+
+    def test_should_be_able_to_set_state_to_done(self):
+        self.prepare_claim()
+        test_client = chomp_app.test_client()
+        next_response = test_client.get("/chomp/next")
+        state_url = next_response.headers["Location"] + "state"
+        test_client.post(state_url, data="Done")
+        state_response = test_client.get(state_url)
+
+        assert_that(state_response.status_code, is_(200))
+        assert_that(state_response.data, is_("Done"))

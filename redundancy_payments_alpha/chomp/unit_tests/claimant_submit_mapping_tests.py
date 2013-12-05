@@ -3,7 +3,7 @@ from functools import partial
 from helpers import get_value_from_xpath
 
 # sut:
-from chomp.payload_generator import generate_claimant_information_submit_request
+from chomp.payloads import claimant_information
 
 
 def test_claimant_information_json_is_mapped_to_valid_champ_xml():
@@ -38,7 +38,7 @@ def check_value_is_mapped_into_xml(key, xpath_location):
     # given
     values_dict = {key: "test_value"}
     # when
-    xml_payload = generate_claimant_information_submit_request(values_dict)
+    xml_payload = claimant_information(values_dict)
     # then
     xml_value = get_value_from_xpath(xpath_location, xml_payload)
     assert_that(xml_value, is_(values_dict[key]))

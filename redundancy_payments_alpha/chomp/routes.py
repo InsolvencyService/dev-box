@@ -21,7 +21,7 @@ def next():
 
 @app.route("/chomp/<id_>/", methods=["GET", "POST"])
 def claim(id_):
-    raise NotImplemented()
+    claim = brum_cab.get_claim
 
 
 @app.route("/chomp/<id_>/state", methods=["GET"])
@@ -47,8 +47,7 @@ def acceptdoc(id_):
 
 @app.route("/chomp/<id_>/rp1", methods=["GET"])
 def rp1(id_):
-    rp1_document = payloads.claimant_information(
-        {})
+    rp1_document = payloads.claimant_information({})
     app.logger.info("Generated rp1 for {id_}".format(**locals()))
     return Response(rp1_document, mimetype="text/xml")
 

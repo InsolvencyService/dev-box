@@ -79,7 +79,13 @@ function load_environment {
 function unit_tests {
     JOB_DESC="Running unit tests"
     ./ensure_clean_tables
-    nosetests -q --with-xunit --exe 1> unit_tests.log 2>&1
+    nosetests \
+        -q \
+        --cover-html \
+        --cover-xml \
+        --with-coverage \
+        --with-xunit \
+        --exe 1> unit_tests.log 2>&1
     if [[ $? == 0 ]]
     then
         passed "$JOB_DESC"
