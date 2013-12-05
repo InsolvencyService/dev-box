@@ -9,9 +9,8 @@
         {% endif %}
         <td>{{ claim.get('date_submitted')|datetime_string }}</td>
         <td>{{ claim.get('initials') }} {{ claim.get('surname') }}</td>
-        <td>{{ claim.get('date_of_birth')|datetime_string }}</td>
+        <td>{{ claim.get('date_of_birth')|date_string }}</td>
         <td>{{ claim.get('nino') }}</td>
-        <td>{{ claim.get('employer_name') }}</td>
-        <td>{{ claim.get('employment_date_start') }} to {{ claim.get('employment_date_end') }}</td>
+        <td>Iron Core Mining LTD</td>
     </tr>
 {% endmacro %}

@@ -1,5 +1,5 @@
 import string
-from datetime import date
+from datetime import date, datetime
 
 from claim_service.discrepancies import find_discrepancies_in_claim
 
@@ -26,10 +26,25 @@ def _parse_date_of_birth(date_of_birth_dict):
     return date(year, month, day)
 
 
+def _parse_employment_date(date_string):
+    date_from_string = None
+    if date_string:
+        try:
+            date_from_string = datetime.strptime(date_string, '%d/%m/%Y').date()
+        except TypeError as e:
+            pass
+
+    return date_from_string
+
+
 def summarise_claim(claim):
     claimant_information = claim[0]
+    employee_information = claim[1]
 
     date_of_birth_dict = claimant_information.get('date_of_birth')
+    print employee_information, '<--------------'
+    employment_start = employee_information.get('employee_start_date')
+    employment_end = employee_information.get('employee_end_date')
     
     claim_summary = {
         'discrepancy': bool(find_discrepancies_in_claim(claim)),
@@ -37,7 +52,9 @@ def summarise_claim(claim):
         'initials': (_initials(claimant_information)),
         'nino': claimant_information.get('nino'),
         'date_of_birth': _parse_date_of_birth(date_of_birth_dict),
-        'date_submitted': claim[2]
+        'date_submitted': claim[2],
+        'employment_start_date': _parse_employment_date(employment_start),
+        'employment_end_date': _parse_employment_date(employment_end)
     }
     return claim_summary
 

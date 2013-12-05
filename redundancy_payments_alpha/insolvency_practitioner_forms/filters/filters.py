@@ -18,4 +18,5 @@ def date_string(date):
 
 def setup_filters(app):
     app.jinja_env.filters['datetime_string'] = datetime_string
+    app.jinja_env.filters['date_string'] = date_string
 

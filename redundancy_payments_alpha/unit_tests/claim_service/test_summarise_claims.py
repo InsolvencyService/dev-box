@@ -18,7 +18,9 @@ class TestSummariseClaims(unittest.TestCase):
             'employee_surname': 'SURNAME',
             'employee_forenames': 'FORENAMES',
             'employer_name': 'Widgets Inc',
-            'employee_basic_weekly_pay': '300.5'
+            'employee_basic_weekly_pay': '300.5',
+            'employee_start_date': '01/01/1990',
+            'employee_end_date': '01/04/1990'
         }
 
         claimant_information = {
@@ -45,6 +47,11 @@ class TestSummariseClaims(unittest.TestCase):
             has_entry('nino', 'AB112233Z'),
             has_entry('nino', 'AB112233X')
         ))
+
+        assert_that(claim_summary[0],
+            has_entry('employment_start_date', date(1990, 01, 01)))
+        assert_that(claim_summary[0],
+            has_entry('employment_end_date', date(1990, 04, 01)))
 
 
 class TestSummariseClaim(unittest.TestCase):
