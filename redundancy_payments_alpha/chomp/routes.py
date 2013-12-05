@@ -1,4 +1,10 @@
-from flask import Flask, redirect, request, Response
+from flask import (
+    Flask,
+    Response,
+    jsonify,
+    redirect,
+    request,
+)
 from werkzeug.exceptions import NotImplemented
 
 from birmingham_cabinet import api as brum_cab
@@ -19,9 +25,14 @@ def next():
         return redirect(next_url, 303)
 
 
-@app.route("/chomp/<id_>/", methods=["GET", "POST"])
-def claim(id_):
-    claim = brum_cab.get_claim
+@app.route("/chomp/<claim_id>/", methods=["GET", "POST"])
+def claim(claim_id):
+    chomp_claim = brum_cab.get_chomp_claim(int(claim_id))
+    if chomp_claim is None:
+        status_code = 404
+    else:
+        status_code = 200
+    return jsonify(claim=chomp_claim), status_code
 
 
 @app.route("/chomp/<id_>/state", methods=["GET"])

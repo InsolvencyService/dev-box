@@ -172,6 +172,18 @@ def get_claims():
                  claim.submitted_at) for claim in claims]
 
 
+def get_chomp_claim(claim_id):
+    with contextlib.closing(make_session()) as session:
+        try:
+            claim = session.query(Claim).filter(
+                Claim.claim_id == claim_id).one()
+            return {
+                "claim_id": claim.claim_id,
+                "state" : chomp_states.state_of_claim(claim)
+            }
+        except NoResultFound:
+            return None
+
 def get_next_claim_not_processed_by_chomp():
     with contextlib.closing(make_session()) as session:
         try:

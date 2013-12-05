@@ -1,3 +1,4 @@
+import json
 import unittest
 
 from hamcrest import assert_that, is_
@@ -26,7 +27,7 @@ class TestChomp(unittest.TestCase):
             "employer_name" : "Boo"
            }
         )
-        claim_service_api.create_claim_2(
+        return claim_service_api.create_claim_2(
             {"nino": "foobar"}
         )
 
@@ -56,3 +57,26 @@ class TestChomp(unittest.TestCase):
 
         assert_that(state_response.status_code, is_(200))
         assert_that(state_response.data, is_("Done"))
+
+    def test_should_be_able_to_get_chomp_claim_by_id(self):
+        claim_id = self.prepare_claim()
+        test_client = chomp_app.test_client()
+        response = test_client.get("/chomp/1/")
+
+        assert_that(response.status_code, is_(200))
+        response_data = json.loads(response.data)
+        assert_that(
+            response_data,
+            is_({
+                "claim": {
+                    "claim_id": 1,
+                    "state": "Ready"
+                }
+            }))
+
+
+    def test_should_be_able_to_return_404_if_no_claim(self):
+        test_client = chomp_app.test_client()
+        response = test_client.get("/chomp/1/")
+
+        assert_that(response.status_code, is_(404))
