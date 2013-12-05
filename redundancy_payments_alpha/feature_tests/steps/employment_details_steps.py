@@ -11,7 +11,7 @@ def step(context):
 
 @when('enters the employment details')
 def step(context):
-    context.response_from_posting_data = test_client.post(
+    context.response = test_client.post(
         '/claim-redundancy-payment/employment-details/',
         data=context.form_data
     )

@@ -1,6 +1,6 @@
 from flask_wtf import Form
 from wtforms import TextField, SelectField, RadioField, FormField
-from wtforms.validators import DataRequired, Length, AnyOf
+from wtforms.validators import DataRequired, Length, AnyOf, ValidationError
 from claimants_user_journey.forms.custom_field_types import DateForm
 from claimants_user_journey.forms.validators import FutureDateValidator
 
@@ -32,3 +32,16 @@ class EmploymentDetails(Form):
     )
     start_date = FormField(DateForm, label="When did you start working for this employer?")
     end_date = FormField(DateForm, label="When did your employment end?")
+
+    def validate(self):
+        if not super(EmploymentDetails, self).validate():
+            return False
+
+        if self.start_date > self.end_date:
+            errors = []
+            errors.append("The end date cannot be before the start date")
+
+            self._errors = {'whole_form' : errors}
+            return False
+
+        return True
