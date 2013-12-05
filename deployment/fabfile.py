@@ -122,6 +122,8 @@ def ensure_upstart():
         sudo("start redundancy-payments-service")
         sudo("stop insolvency-practitioner-app", warn_only=True)
         sudo("start insolvency-practitioner-app")
+        sudo("stop chomp", warn_only=True)
+        sudo("start chomp")
     put("redundancy-payments-service.upstart", "/etc/init/redundancy-payments-service.conf", use_sudo=True, mode=0644)
     sudo("chown root:root /etc/init/redundancy-payments-service.conf")
     put("insolvency-practitioner-app.upstart", "/etc/init/insolvency-practitioner-app.conf", use_sudo=True, mode=0644)
