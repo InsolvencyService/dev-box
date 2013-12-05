@@ -119,3 +119,4 @@ class TestClaim(unittest.TestCase):
 
         assert_that(claims, has_length(1))
         assert_that(claims[0][2], is_(datetime(1990, 1, 1, 1)))
+

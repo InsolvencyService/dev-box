@@ -1,7 +1,16 @@
-def datetime_string(date):
+def datetime_string(datetime):
+    datetime_string = None
+    try:
+        datetime_string = datetime.strftime('%H:%M - %d/%m/%Y')
+    except AttributeError as e:
+        pass
+    return datetime_string
+
+
+def date_string(date):
     date_string = None
     try:
-        date_string = date.strftime('%H:%M - %d/%m/%Y')
+        date_string = date.strftime('%d/%m/%Y')
     except AttributeError as e:
         pass
     return date_string

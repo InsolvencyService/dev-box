@@ -60,6 +60,7 @@ def personal_details():
         form = ClaimantContactDetails()
 
     if form.validate_on_submit():
+        user_details = form.data
         session['user_details'] = form.data
         session['user_details']['nino'] = form.data['nino'].upper()
 

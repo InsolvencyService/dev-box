@@ -1,0 +1,17 @@
+{% macro claim_summary(claim) %}
+    <tr>
+        {% if claim.get('discrepancy') and claim.get('date_submitted') %}
+        <td><span class="label label-info">Disputed</span></td>
+        {% elif claim.get('date_submitted') %}
+        <td><span class="label label-success">Processed</span></td>
+        {% else %}
+        <td><span class="label label-warning">Pending</span></td>
+        {% endif %}
+        <td>{{ claim.get('date_submitted')|datetime_string }}</td>
+        <td>{{ claim.get('initials') }} {{ claim.get('surname') }}</td>
+        <td>{{ claim.get('date_of_birth')|datetime_string }}</td>
+        <td>{{ claim.get('nino') }}</td>
+        <td>{{ claim.get('employer_name') }}</td>
+        <td>{{ claim.get('employment_date_start') }} to {{ claim.get('employment_date_end') }}</td>
+    </tr>
+{% endmacro %}

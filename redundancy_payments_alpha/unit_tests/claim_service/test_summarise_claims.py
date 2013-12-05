@@ -1,4 +1,5 @@
 import unittest
+from datetime import date
 from hamcrest import assert_that, has_entry, has_items
 from mock import patch
 
@@ -64,7 +65,7 @@ class TestSummariseClaim(unittest.TestCase):
             'gross_rate_of_pay': '250.5',
             'surname': 'Rogers',
             'forenames': 'Steve James',
-            'date_of_birth': '01/12/1970'
+            'date_of_birth': {'day': 1, 'month': 1, 'year': 1990}
         }
 
         date_submitted = '01/10/2013'
@@ -78,7 +79,7 @@ class TestSummariseClaim(unittest.TestCase):
         assert_that(claim_summary, has_entry('discrepancy', True))
         assert_that(claim_summary, has_entry('surname', 'Rogers'))
         assert_that(claim_summary, has_entry('initials', 'S J'))
-        assert_that(claim_summary, has_entry('date_of_birth', '01/12/1970'))
+        assert_that(claim_summary, has_entry('date_of_birth', date(1990, 1, 1)))
         assert_that(claim_summary, has_entry('date_submitted', '01/10/2013'))
         assert_that(claim_summary, has_entry('nino', 'AB112233Z'))
 
@@ -108,3 +109,4 @@ class TestSummariseClaim(unittest.TestCase):
 
         #Then we should get back a summary of the claim
         assert_that(claim_summary, has_entry('discrepancy', False))
+
