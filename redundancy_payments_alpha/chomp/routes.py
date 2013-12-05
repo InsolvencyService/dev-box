@@ -15,7 +15,8 @@ def next():
     else:
         next_url = "/chomp/{claim_id}/".format(**locals())
         client = request.remote_addr
-        app.logger.info("Redirecting {client} to {next_url}".format(**locals()))
+        app.logger.info("Redirecting {client} to {next_url}".format(
+            **locals()))
         return redirect(next_url, 303)
 
 

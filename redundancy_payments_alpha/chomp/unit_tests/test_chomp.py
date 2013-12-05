@@ -1,5 +1,7 @@
 import unittest
+
 from hamcrest import assert_that, is_
+from mock import patch
 
 from chomp.routes import app as chomp_app
 from claim_service import api as claim_service_api
@@ -7,7 +9,10 @@ from birmingham_cabinet.api import add_rp14a_form
 
 
 class TestChomp(unittest.TestCase):
-    def test_should_return_204_when_no_claims(self):
+
+    @patch("chomp.routes.brum_cab.get_next_claim_not_processed_by_chomp")
+    def test_should_return_204_when_no_claims(self, get_next_claim):
+        get_next_claim.return_value = None
         test_client = chomp_app.test_client()
 
         no_claims_response = test_client.get("/chomp/next")
