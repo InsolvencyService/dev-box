@@ -190,9 +190,11 @@ def chomp_state_of_claim(claim_id):
             Claim.claim_id == claim_id).one()
         return chomp_states.state_of_claim(claim)
 
+
 def chomp_claim_done(claim_id):
     with contextlib.closing(make_session()) as session:
         claim = session.query(Claim).filter(
             Claim.claim_id == claim_id).one()
         claim.chomp_claim_lifecycle.done = datetime.now()
         session.commit()
+

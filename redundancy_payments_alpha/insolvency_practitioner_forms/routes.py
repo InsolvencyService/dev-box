@@ -8,9 +8,13 @@ from forms.employee_details_form import EmployeeDetailsForm
 from birmingham_cabinet.api import add_rp14a_form
 from notification_service import api as notification_api
 from claim_service import api as claims_api
+from filters.filters import setup_filters
 
 app = Flask(__name__)
 app.secret_key = 'i_am_a_secret'
+
+setup_filters(app)
+
 
 def get_storage_service():
     """This is a separate method so it can be mocked
@@ -64,7 +68,7 @@ def robots_txt():
 
 @app.route('/ip-dashboard/claims/')
 def claim_dashboard():
-    return render_template('claim_dashboard.html', claim_summary=claims_api.summarise_claims())
+    return render_template('claim_dashboard.html', claim_summaries=claims_api.summarise_claims())
 
 if __name__ == '__main__':
     app.run()

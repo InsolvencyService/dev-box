@@ -120,6 +120,7 @@ class TestClaim(unittest.TestCase):
         assert_that(claims, has_length(1))
         assert_that(claims[0][2], is_(datetime(1990, 1, 1, 1)))
 
+
     def test_should_return_next_unprocessed_claim(self):
         add_claim({}, {})
         claim = get_next_claim_not_processed_by_chomp()
@@ -132,3 +133,4 @@ class TestClaim(unittest.TestCase):
         claim = get_next_claim_not_processed_by_chomp()
 
         assert_that(claim, is_(None))
+
