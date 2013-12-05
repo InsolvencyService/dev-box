@@ -24,7 +24,12 @@ def truncate_all_tables():
         for table in reversed(Base.metadata.sorted_tables):
             conn.execute("truncate table {table_name} cascade;".format(
                 table_name=table.name))
+        for sequence_name, in conn.execute(
+                "select relname from pg_class where relkind='S'"):
+            conn.execute("alter sequence {sequence_name} restart".format(
+                **locals()))
         trans.commit()
+        logger.info("Truncated all tables")
 
 
 def employee_via_nino(nino):
