@@ -1,6 +1,7 @@
 import os
-from jinja2 import Template, Environment, PackageLoader, StrictUndefined
 from random import randint
+
+from jinja2 import Template, Environment, PackageLoader, StrictUndefined
 
 environment = Environment(
     loader=PackageLoader("chomp", "templates"),
