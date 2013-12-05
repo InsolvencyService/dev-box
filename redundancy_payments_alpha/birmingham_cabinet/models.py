@@ -1,11 +1,14 @@
 from base import Base
 
-from sqlalchemy import(
+from sqlalchemy import (
     Column,
+    Date,
+    DateTime,
+    ForeignKey,
     Integer,
     Text,
-    Date,
-    DateTime)
+)
+from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import HSTORE
 
 
@@ -52,5 +55,13 @@ class Claim(Base):
     # FIXME: Migrate employer_id to be non-nullable
     employer_id = Column(Integer, nullable=True)
     submitted_at = Column(DateTime, nullable=True)
+    chomp_claim_lifecycle = relationship("ChompClaimLifecycle", uselist=False, backref="claim")
     claimant_information = Column(HSTORE)
     employee_record = Column(HSTORE)
+
+
+class ChompClaimLifecycle(Base):
+    __tablename__ = "chomp_claims"
+    claim_id = Column(ForeignKey(Claim.claim_id), primary_key=True)
+    in_progress = Column(DateTime, nullable=False)
+    done = Column(DateTime, nullable=True)

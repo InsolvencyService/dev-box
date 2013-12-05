@@ -1,39 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- CHAMP RP14 Payload -->
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:rp14="www.inss.gsi.gov.uk/RP14_Application">
    <soapenv:Header/>
    <soapenv:Body>
    <rp14:RP14>
- 	<rp14:Header/>
-	<rp14:NameOfBusiness>{{ company_name }}</rp14:NameOfBusiness>
-	<rp14:Directors>
-		<rp14:ClaimingRPAsEmployee>yes</rp14:ClaimingRPAsEmployee>
-	</rp14:Directors>
-	<rp14:AssociatedCompanies>
-		<rp14:LegallyAssociatedCompanies>no</rp14:LegallyAssociatedCompanies>
-		<rp14:AssociatedCompany>
-			<rp14:CompanyName/>
-		</rp14:AssociatedCompany>
-	</rp14:AssociatedCompanies>
-	<rp14:Employees>
-		<rp14:NoOfEmployees>1</rp14:NoOfEmployees>
-		<rp14:Strikes>no</rp14:Strikes>
-		<rp14:CarryOverHolidayEntitlement>yes</rp14:CarryOverHolidayEntitlement>
-	</rp14:Employees>		
-	<rp14:InsolvencyDetails>
-		<rp14:InsolvencyDate>{{ date_of_insolvency }}</rp14:InsolvencyDate>
-		<rp14:InsolvencyType>{{ type_of_insolvency }}</rp14:InsolvencyType>
-	</rp14:InsolvencyDetails>
-	<rp14:PayRecordsContact>
-		<rp14:Name>{{ insolvency_practitioner_name }}</rp14:Name>
-		<rp14:Address>
-			<rp14:Line>{{ address_line_1 }}</rp14:Line>
-			<rp14:Line>{{ address_line_2 }}</rp14:Line>
-			<rp14:Town>{{ town_or_city }}</rp14:Town>
-			<rp14:County></rp14:County>
-			<rp14:Postcode>{{ postcode }}</rp14:Postcode>
-		</rp14:Address>
-		<rp14:EmailAddress>{{ email_address }}</rp14:EmailAddress>
-	</rp14:PayRecordsContact>	
+        <rp14:Header/>
+        <rp14:NameOfBusiness>{{ company_name }}</rp14:NameOfBusiness>
+        <rp14:Directors>
+                <rp14:ClaimingRPAsEmployee>yes</rp14:ClaimingRPAsEmployee>
+        </rp14:Directors>
+        <rp14:AssociatedCompanies>
+                <rp14:LegallyAssociatedCompanies>no</rp14:LegallyAssociatedCompanies>
+                <rp14:AssociatedCompany>
+                        <rp14:CompanyName/>
+                </rp14:AssociatedCompany>
+        </rp14:AssociatedCompanies>
+        <rp14:Employees>
+                <rp14:NoOfEmployees>1</rp14:NoOfEmployees>
+                <rp14:Strikes>no</rp14:Strikes>
+                <rp14:CarryOverHolidayEntitlement>yes</rp14:CarryOverHolidayEntitlement>
+        </rp14:Employees>
+        <rp14:InsolvencyDetails>
+                <rp14:InsolvencyDate>{{ date_of_insolvency }}</rp14:InsolvencyDate>
+                <rp14:InsolvencyType>{{ type_of_insolvency }}</rp14:InsolvencyType>
+        </rp14:InsolvencyDetails>
+        <rp14:PayRecordsContact>
+                <rp14:Name>{{ insolvency_practitioner_name }}</rp14:Name>
+                <rp14:Address>
+                        <rp14:Line>{{ address_line_1 }}</rp14:Line>
+                        <rp14:Line>{{ address_line_2 }}</rp14:Line>
+                        <rp14:Town>{{ town_or_city }}</rp14:Town>
+                        <rp14:County></rp14:County>
+                        <rp14:Postcode>{{ postcode }}</rp14:Postcode>
+                </rp14:Address>
+                <rp14:EmailAddress>{{ email_address }}</rp14:EmailAddress>
+        </rp14:PayRecordsContact>
    </rp14:RP14>
    </soapenv:Body>
 </soapenv:Envelope>
