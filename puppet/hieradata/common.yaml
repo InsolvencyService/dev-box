@@ -35,3 +35,5 @@ firewall::allow:
     port: 22
     from: any
     ip: any
+
+nginx::params::nx_names_hash_bucket_size: 256
