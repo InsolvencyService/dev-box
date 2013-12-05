@@ -3,7 +3,7 @@ import unittest
 from mock import patch
 
 from nose.plugins.attrib import attr
-from hamcrest import assert_that, is_, has_length, has_entry
+from hamcrest import assert_that, is_, has_length, has_entry, none, not_none
 
 from birmingham_cabinet.api import (
     add_claim,
@@ -12,7 +12,7 @@ from birmingham_cabinet.api import (
     update_claim,
     get_claims,
     mark_claim_as_submitted,
-    get_claims_submitted_between)
+    get_claims_submitted_between, get_next_claim_not_processed_by_chomp)
 
 
 @attr("integration")
@@ -119,3 +119,16 @@ class TestClaim(unittest.TestCase):
 
         assert_that(claims, has_length(1))
         assert_that(claims[0][2], is_(datetime(1990, 1, 1, 1)))
+
+    def test_should_return_next_unprocessed_claim(self):
+        add_claim({}, {})
+        claim = get_next_claim_not_processed_by_chomp()
+
+        assert_that(claim, is_(not_none()))
+
+    def test_should_return_none_if_no_unprocessed_claims(self):
+        add_claim({}, {})
+        get_next_claim_not_processed_by_chomp()
+        claim = get_next_claim_not_processed_by_chomp()
+
+        assert_that(claim, is_(None))

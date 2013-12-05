@@ -1,131 +1,132 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- CHAMP RP1 Payload -->
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:rp1="www.inss.gsi.gov.uk/RP1_Application" xmlns:div="www.inss.gsi.gov.uk/DiversityData">
    <soapenv:Header/>
    <soapenv:Body>
  <rp1:RP1_Claim_application xmlns:ap="www.inss.gsi.gov.uk/RP1_Application" xmlns:data="www.inss.gsi.gov.uk/DiversityData">
-	<rp1:Header>
-		<rp1:DMSDocumentID>{{ dmsid }}</rp1:DMSDocumentID>
-	</rp1:Header>
-	<rp1:Claimant>
-		<rp1:Name>
-			<rp1:Surname>{{ surname }}</rp1:Surname>
-			<rp1:Forename>{{ forenames }}</rp1:Forename>
-			<rp1:Title>{{ title }}</rp1:Title>
-		</rp1:Name>
-		<rp1:NINO>{{ nino }}</rp1:NINO>
-		<rp1:Gender>{{ gender }}</rp1:Gender>
-		<rp1:DateOfBirth>{{ date_of_birth }}</rp1:DateOfBirth>
-		<rp1:Address>
-			<rp1:Line>{{ building_number}}</rp1:Line>
-			<rp1:Line>{{ street }}</rp1:Line>
-			<rp1:Town>{{ town_or_city }}</rp1:Town>
-			<rp1:Postcode>{{ postcode }}</rp1:Postcode>
-		</rp1:Address>
-		<rp1:PhoneNumber>{{ telephone_number }}</rp1:PhoneNumber>
-		<rp1:BankDetails>
-			<rp1:BankName>{{ bank }}</rp1:BankName>
-			<rp1:Branch>{{ bank_branch }}</rp1:Branch>
-			<rp1:SortCode>{{ bank_sort_code }}</rp1:SortCode>
-			<rp1:AccountNumber>{{ bank_acc_no }}</rp1:AccountNumber>
-			<rp1:AccountName>{{ bank_acc_name }}</rp1:AccountName>
-		</rp1:BankDetails>
-	</rp1:Claimant>
-	<rp1:Employer>
-		<rp1:EmployerName>Comet Group Limited</rp1:EmployerName>
-		<rp1:Address>
-			<rp1:Line>235 HILLSIDE ROAD</rp1:Line>
-			<rp1:Town>BRISTOL</rp1:Town>
-			<rp1:Postcode>BS5 7PX</rp1:Postcode>
-		</rp1:Address>
-		<rp1:PhoneNumber>01179555555</rp1:PhoneNumber>
-		<rp1:WorkAddress>
-			<rp1:Line>235 HILLSIDE ROAD</rp1:Line>
-			<rp1:Town>BRISTOL</rp1:Town>
-			<rp1:Postcode>BS5 7PX</rp1:Postcode>
-		</rp1:WorkAddress>
-		<rp1:TradingStatus>Insolvent</rp1:TradingStatus>
-	</rp1:Employer>
-	<rp1:InsolvencyPractitioner>
-		<rp1:Name>BDO LLP</rp1:Name>
-		<rp1:PhoneNumber>01179555555</rp1:PhoneNumber>
-		<rp1:Address>
-			<rp1:Line>1 VICTORIA STREET</rp1:Line>
-			<rp1:Town>BRISTOL</rp1:Town>
-			<rp1:Postcode>BS1 6AA</rp1:Postcode>
-		</rp1:Address>
-	</rp1:InsolvencyPractitioner>
-	<rp1:EmploymentDetails>
-		<rp1:JobTitle>CLEANER</rp1:JobTitle>
-		<rp1:EmploymentCategory>Employed</rp1:EmploymentCategory>
-		<rp1:StartDate>2008-02-25</rp1:StartDate>
-		<rp1:LastDayWorked>2011-07-29</rp1:LastDayWorked>
-		<rp1:EndDate>2011-07-29</rp1:EndDate>
-		<rp1:NoticeGivenByEmployer>no</rp1:NoticeGivenByEmployer>
-		<rp1:GrossBasicPay>
-			<rp1:Amount>295.00</rp1:Amount>
-			<rp1:Period>week</rp1:Period>
-		</rp1:GrossBasicPay>
-		<rp1:BonusORCommission>no</rp1:BonusORCommission>
-		<rp1:NoOfDaysWorkedPerWeek>5</rp1:NoOfDaysWorkedPerWeek>
-		<rp1:NoOfHoursWorkedPerWeek>39</rp1:NoOfHoursWorkedPerWeek>
-		<rp1:WeeklyPayDay>Friday</rp1:WeeklyPayDay>
-		<rp1:ContractualOvertime>no</rp1:ContractualOvertime>
-		<rp1:NewJob>no</rp1:NewJob>
-	</rp1:EmploymentDetails>
-	<rp1:Claims>
-		<rp1:RedundancyPayment>
-			<rp1:ClaimingRedundancy>yes</rp1:ClaimingRedundancy>
-		</rp1:RedundancyPayment>
-		<rp1:OtherPayments>
-			<rp1:Holiday>
-				<rp1:OwedPay>yes</rp1:OwedPay>
-				<rp1:YearStartDate>2011-01-04</rp1:YearStartDate>
-				<rp1:Entitlement>23.00</rp1:Entitlement>
-				<rp1:DaysTaken>5.00</rp1:DaysTaken>
-				<rp1:DaysOwed>15.00</rp1:DaysOwed>
-			</rp1:Holiday>
-			<rp1:Wages>
-				<rp1:PeriodsOwed/>
-				<rp1:AttachmentOfEarnings>no</rp1:AttachmentOfEarnings>
-			</rp1:Wages>
-			<rp1:LossOfNotice>
-				<rp1:StatutoryNoticeGiven>no</rp1:StatutoryNoticeGiven>
-				<rp1:ClaimingCompensation>yes</rp1:ClaimingCompensation>
-			</rp1:LossOfNotice>
-			<rp1:EmploymentTribunalPayments>no</rp1:EmploymentTribunalPayments>
-		</rp1:OtherPayments>
-		<rp1:MoneyOwedByClaimant>
-			<rp1:MoneyOwedToEmployer>no</rp1:MoneyOwedToEmployer>
-		</rp1:MoneyOwedByClaimant>
-	</rp1:Claims>
-	<rp1:DiversityData>
-		<data:EntityType>CLM</data:EntityType>
-		<data:QuestionAnswers>
-			<data:QuestionAnswer>
-				<data:Question>Sex</data:Question>
-				<data:Answer>Male</data:Answer>
-			</data:QuestionAnswer>
-			<data:QuestionAnswer>
-				<data:Question>Age</data:Question>
-				<data:Answer>20-29</data:Answer>
-			</data:QuestionAnswer>
-			<data:QuestionAnswer>
-				<data:Question>Race</data:Question>
-				<data:Answer>White</data:Answer>
-			</data:QuestionAnswer>
-			<data:QuestionAnswer>
-				<data:Question>Sexual Orientation</data:Question>
-				<data:Answer>Heterosexual</data:Answer>
-			</data:QuestionAnswer>
-			<data:QuestionAnswer>
-				<data:Question>Religion</data:Question>
-				<data:Answer>None</data:Answer>
-			</data:QuestionAnswer>
-			<data:QuestionAnswer>
-				<data:Question>Considers self to be disabled</data:Question>
-				<data:Answer>no</data:Answer>
-			</data:QuestionAnswer>
-		</data:QuestionAnswers>
-	</rp1:DiversityData>
+        <rp1:Header>
+                <rp1:DMSDocumentID>{{ dmsid }}</rp1:DMSDocumentID>
+        </rp1:Header>
+        <rp1:Claimant>
+                <rp1:Name>
+                        <rp1:Surname>{{ surname }}</rp1:Surname>
+                        <rp1:Forename>{{ forenames }}</rp1:Forename>
+                        <rp1:Title>{{ title }}</rp1:Title>
+                </rp1:Name>
+                <rp1:NINO>{{ nino }}</rp1:NINO>
+                <rp1:Gender>{{ gender }}</rp1:Gender>
+                <rp1:DateOfBirth>{{ date_of_birth }}</rp1:DateOfBirth>
+                <rp1:Address>
+                        <rp1:Line>{{ building_number }}</rp1:Line>
+                        <rp1:Line>{{ street }}</rp1:Line>
+                        <rp1:Town>{{ town_or_city }}</rp1:Town>
+                        <rp1:Postcode>{{ postcode }}</rp1:Postcode>
+                </rp1:Address>
+                <rp1:PhoneNumber>{{ telephone_number }}</rp1:PhoneNumber>
+                <rp1:BankDetails>
+                        <rp1:BankName>{{ bank }}</rp1:BankName>
+                        <rp1:Branch>{{ bank_branch }}</rp1:Branch>
+                        <rp1:SortCode>{{ bank_sort_code }}</rp1:SortCode>
+                        <rp1:AccountNumber>{{ bank_acc_no }}</rp1:AccountNumber>
+                        <rp1:AccountName>{{ bank_acc_name }}</rp1:AccountName>
+                </rp1:BankDetails>
+        </rp1:Claimant>
+        <rp1:Employer>
+                <rp1:EmployerName>Comet Group Limited</rp1:EmployerName>
+                <rp1:Address>
+                        <rp1:Line>235 HILLSIDE ROAD</rp1:Line>
+                        <rp1:Town>BRISTOL</rp1:Town>
+                        <rp1:Postcode>BS5 7PX</rp1:Postcode>
+                </rp1:Address>
+                <rp1:PhoneNumber>01179555555</rp1:PhoneNumber>
+                <rp1:WorkAddress>
+                        <rp1:Line>235 HILLSIDE ROAD</rp1:Line>
+                        <rp1:Town>BRISTOL</rp1:Town>
+                        <rp1:Postcode>BS5 7PX</rp1:Postcode>
+                </rp1:WorkAddress>
+                <rp1:TradingStatus>Insolvent</rp1:TradingStatus>
+        </rp1:Employer>
+        <rp1:InsolvencyPractitioner>
+                <rp1:Name>BDO LLP</rp1:Name>
+                <rp1:PhoneNumber>01179555555</rp1:PhoneNumber>
+                <rp1:Address>
+                        <rp1:Line>1 VICTORIA STREET</rp1:Line>
+                        <rp1:Town>BRISTOL</rp1:Town>
+                        <rp1:Postcode>BS1 6AA</rp1:Postcode>
+                </rp1:Address>
+        </rp1:InsolvencyPractitioner>
+        <rp1:EmploymentDetails>
+                <rp1:JobTitle>CLEANER</rp1:JobTitle>
+                <rp1:EmploymentCategory>Employed</rp1:EmploymentCategory>
+                <rp1:StartDate>2008-02-25</rp1:StartDate>
+                <rp1:LastDayWorked>2011-07-29</rp1:LastDayWorked>
+                <rp1:EndDate>2011-07-29</rp1:EndDate>
+                <rp1:NoticeGivenByEmployer>no</rp1:NoticeGivenByEmployer>
+                <rp1:GrossBasicPay>
+                        <rp1:Amount>295.00</rp1:Amount>
+                        <rp1:Period>week</rp1:Period>
+                </rp1:GrossBasicPay>
+                <rp1:BonusORCommission>no</rp1:BonusORCommission>
+                <rp1:NoOfDaysWorkedPerWeek>5</rp1:NoOfDaysWorkedPerWeek>
+                <rp1:NoOfHoursWorkedPerWeek>39</rp1:NoOfHoursWorkedPerWeek>
+                <rp1:WeeklyPayDay>Friday</rp1:WeeklyPayDay>
+                <rp1:ContractualOvertime>no</rp1:ContractualOvertime>
+                <rp1:NewJob>no</rp1:NewJob>
+        </rp1:EmploymentDetails>
+        <rp1:Claims>
+                <rp1:RedundancyPayment>
+                        <rp1:ClaimingRedundancy>yes</rp1:ClaimingRedundancy>
+                </rp1:RedundancyPayment>
+                <rp1:OtherPayments>
+                        <rp1:Holiday>
+                                <rp1:OwedPay>yes</rp1:OwedPay>
+                                <rp1:YearStartDate>2011-01-04</rp1:YearStartDate>
+                                <rp1:Entitlement>23.00</rp1:Entitlement>
+                                <rp1:DaysTaken>5.00</rp1:DaysTaken>
+                                <rp1:DaysOwed>15.00</rp1:DaysOwed>
+                        </rp1:Holiday>
+                        <rp1:Wages>
+                                <rp1:PeriodsOwed/>
+                                <rp1:AttachmentOfEarnings>no</rp1:AttachmentOfEarnings>
+                        </rp1:Wages>
+                        <rp1:LossOfNotice>
+                                <rp1:StatutoryNoticeGiven>no</rp1:StatutoryNoticeGiven>
+                                <rp1:ClaimingCompensation>yes</rp1:ClaimingCompensation>
+                        </rp1:LossOfNotice>
+                        <rp1:EmploymentTribunalPayments>no</rp1:EmploymentTribunalPayments>
+                </rp1:OtherPayments>
+                <rp1:MoneyOwedByClaimant>
+                        <rp1:MoneyOwedToEmployer>no</rp1:MoneyOwedToEmployer>
+                </rp1:MoneyOwedByClaimant>
+        </rp1:Claims>
+        <rp1:DiversityData>
+                <data:EntityType>CLM</data:EntityType>
+                <data:QuestionAnswers>
+                        <data:QuestionAnswer>
+                                <data:Question>Sex</data:Question>
+                                <data:Answer>Male</data:Answer>
+                        </data:QuestionAnswer>
+                        <data:QuestionAnswer>
+                                <data:Question>Age</data:Question>
+                                <data:Answer>20-29</data:Answer>
+                        </data:QuestionAnswer>
+                        <data:QuestionAnswer>
+                                <data:Question>Race</data:Question>
+                                <data:Answer>White</data:Answer>
+                        </data:QuestionAnswer>
+                        <data:QuestionAnswer>
+                                <data:Question>Sexual Orientation</data:Question>
+                                <data:Answer>Heterosexual</data:Answer>
+                        </data:QuestionAnswer>
+                        <data:QuestionAnswer>
+                                <data:Question>Religion</data:Question>
+                                <data:Answer>None</data:Answer>
+                        </data:QuestionAnswer>
+                        <data:QuestionAnswer>
+                                <data:Question>Considers self to be disabled</data:Question>
+                                <data:Answer>no</data:Answer>
+                        </data:QuestionAnswer>
+                </data:QuestionAnswers>
+        </rp1:DiversityData>
 </rp1:RP1_Claim_application>  </soapenv:Body>
 </soapenv:Envelope>
