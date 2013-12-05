@@ -6,11 +6,9 @@ Feature: claimants wage details
          Then the page should have title "Claimant Wage Details"
            And the page should have an input field called "gross_rate_of_pay" labeled "Gross rate of pay (before Tax and NI, excluding overtime)"
            And the page should have an input field called "frequency_of_payment" labeled "every"
-           And the page should have an input field called "number_of_hours_worked" labeled "Number of hours you normally work"
+           And the page should have an input field called "number_of_hours_worked" labeled "Number of hours you normally work per week"
            And the page should have an input field called "bonus_or_commission" labeled "Did your pay include any bonus or commission ?"
            And the page should have an input field called "overtime" labeled "Did you work overtime as a part of your contract ?"
            And the page should have an input field called "normal_days_of_work" labeled "How many days do you normally work each week?"
+           And the page should have an input field called "bonus_details" labeled "Give details of the amount and type of bonus or commission earned, and when it was paid"
            And the page should not have a call to action box at the top of the screen
-
-
-
