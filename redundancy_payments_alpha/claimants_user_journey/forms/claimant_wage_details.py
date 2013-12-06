@@ -1,7 +1,7 @@
 import re
 from flask_wtf import Form
-from wtforms import StringField, SelectField, RadioField, TextAreaField
-from wtforms.validators import DataRequired, AnyOf, Regexp
+from wtforms import StringField, SelectField, RadioField, TextAreaField, ValidationError
+from wtforms.validators import DataRequired, AnyOf, Regexp, Length
 from custom_field_types import CurrencyField
 
 
@@ -55,8 +55,12 @@ class ClaimantWageDetails(Form):
                                           'No'
                                       ])])
 
-    hours_of_overtime = StringField(
-        'How many hours overtime did you normally work?')
+    hours_of_overtime = StringField('How many hours overtime did you normally work?')
+
+    def validate_hours_of_overtime(form, field):
+        overtime_worked = form._fields.get('overtime')
+        if overtime_worked.data == 'Yes' and not field.data:
+           raise ValidationError("Please enter the number of hours overtime you normally work")
 
     frequency_of_overtime = SelectField('every',
                                         choices=[
