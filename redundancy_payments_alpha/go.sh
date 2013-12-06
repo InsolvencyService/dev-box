@@ -77,13 +77,15 @@ function load_environment {
 }
 
 function unit_tests {
+        # FIXME: Turn off code coverage, when a test fails it outputs
+        # loads of crap
+        # --cover-html \
+        # --cover-xml \
+        # --with-coverage \
     JOB_DESC="Running unit tests"
     ./ensure_clean_tables
     nosetests \
         -q \
-        --cover-html \
-        --cover-xml \
-        --with-coverage \
         --with-xunit \
         --exe 1> unit_tests.log 2>&1
     if [[ $? == 0 ]]
