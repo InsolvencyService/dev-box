@@ -56,8 +56,8 @@ Feature: employment details
             | start_date-day     | 1                     |
             | start_date-month   | 4                     |
             | start_date-year    | 2013                  |
-            | end_date-day       | 1                     |
-            | end_date-month     | 13                    |
+            | end_date-day       | 13                    |
+            | end_date-month     | 1                     |
             | end_date-year      | 2012                  |
         When the claimant goes to /claim-redundancy-payment/employment-details/
          And enters the employment details

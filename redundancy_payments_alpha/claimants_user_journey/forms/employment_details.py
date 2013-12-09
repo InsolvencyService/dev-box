@@ -1,8 +1,10 @@
+import re
+from datetime import date
 from flask_wtf import Form
-from wtforms import TextField, RadioField, FormField, Field
-from wtforms.validators import Length
+from wtforms import TextField, RadioField, Field
+from wtforms.validators import Length, ValidationError
 from wtforms.widgets import HTMLString
-from claimants_user_journey.forms.custom_field_types import DateForm
+from claimants_user_journey.forms.validators import convert_string_to_date
 
 
 class CustomDateWidget(object):
@@ -13,9 +15,8 @@ class CustomDateWidget(object):
         if field and field.data:
             kwargs.setdefault('id', field.id)
 
-            html = ['<label>Date Of Birth</label>']
-            html.append("<select id=\"%s-day\" name=\"%s\">" % (field.id, field.name))
             #Day drop down list
+            html = ["<select id=\"%s-day\" name=\"%s\">" % (field.id, field.name)]
             for x in xrange(0, 32):
                 if x == 0:
                     val = ""
@@ -106,3 +107,27 @@ class EmploymentDetails(Form):
     )
     start_date = CustomDateField(label="When did you start working for this employer?")
     end_date = CustomDateField(label="When did your employment end?")
+
+    def validate_start_date(form, field):
+        try:
+            parsed_date = date(int(field.data[2]), int(field.data[1]), int(field.data[0]))
+        except (SyntaxError, ValueError):
+            raise ValidationError('Date must be in the format dd/mm/yyyy.')
+
+        if parsed_date.year < 1900 or parsed_date >= date.today():
+            raise ValidationError('Date must be greater than or equal to 1900 and not in the future.')
+
+    def validate_end_date(form, field):
+        try:
+            parsed_date = date(int(field.data[2]), int(field.data[1]), int(field.data[0]))
+        except (SyntaxError, ValueError):
+            raise ValidationError('Date must be in the format dd/mm/yyyy.')
+
+        if parsed_date.year < 1900 or parsed_date >= date.today():
+            raise ValidationError('Date must be greater than or equal to 1900 and not in the future.')
+
+        if not form.start_date.errors:
+            parsed_start_date = date(int(form.start_date.data[2]), int(form.start_date.data[1]), int(form.start_date.data[0]))
+
+            if parsed_start_date > parsed_date:
+                raise ValidationError('The end date cannot be before the start date')
