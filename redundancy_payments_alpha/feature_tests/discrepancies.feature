@@ -32,7 +32,7 @@ Feature: displaying discrepencies to the claimant
             | frequency_of_work        | Day    |
             | number_of_hours_worked   | 12     |
             | bonus_or_commission      | No     |
-            | overtime                 | Yes    |
+            | overtime                 | No     |
             | normal_days_of_work      | 5      |
          Then the claimant should see a discrepancy on gross rate of pay
           But not see a discrepancy on frequency of work
@@ -48,7 +48,7 @@ Feature: displaying discrepencies to the claimant
             | frequency_of_work        | Day    |
             | number_of_hours_worked   | 12     |
             | bonus_or_commission      | No     |
-            | overtime                 | Yes    |
+            | overtime                 | No     |
             | normal_days_of_work      | 5      |
          Then the claimant should see the next page of the form
 

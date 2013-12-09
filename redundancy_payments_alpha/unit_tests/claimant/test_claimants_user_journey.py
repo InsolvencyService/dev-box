@@ -79,7 +79,7 @@ class TestFindingDiscrepanciesInPersonalDetails(unittest.TestCase):
         'gross_rate_of_pay': '18000.00',
         'number_of_hours_worked': '40',
         'bonus_or_commission': 'No',
-        'overtime': 'Yes',
+        'overtime': 'No',
         'normal_days_of_work': '5'
     }
 
