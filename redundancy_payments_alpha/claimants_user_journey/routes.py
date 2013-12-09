@@ -19,6 +19,9 @@ from forms.claimant_wage_details import ClaimantWageDetails
 from forms.employment_details import EmploymentDetails
 from forms.holiday_pay import HolidayPay
 from forms.wages_owed import WagesOwed
+from forms.wage_amount import WageAmount
+from calculators import yearly_to_weekly_gross_rate_of_pay
+
 
 app = Flask(__name__)
 app.secret_key = 'something_secure_and_secret'
@@ -90,7 +93,7 @@ def employment_details():
 
     if form.validate_on_submit():
         session['employment_details'] = form.data
-        return redirect(url_for('wage_details'))
+        return redirect(url_for('wage_amount'))
 
     return render_template('employment_details.html', form=form, nav_links=nav_links())
 
@@ -142,15 +145,42 @@ def arrears_pay_discrepancies():
         discrepancies = claim_service.find_discrepancies(claim_id)
     return render_template('wages_owed.html', form=form, nav_links=nav_links(), discrepancies=discrepancies)
 
- 
+
+@app.route('/claim-redundancy-payment/wage-amount/', methods=['GET', 'POST'])
+def wage_amount():
+    form = WageAmount()
+    if form.validate_on_submit():
+        session['wage-amount'] = form.data
+        return redirect(url_for('weekly_gross_rate_of_pay'))
+    return render_template('wage_amount.html', form=form, nav_links=nav_links(), discrepancies={})
+
+
+@app.route('/claim-redundancy-payment/weekly-gross-rate-of-pay/')
+def weekly_gross_rate_of_pay():
+    amount = None
+    wage_amount_details = session.get('wage-amount')
+    if wage_amount_details['period'] == 'year':
+        amount = yearly_to_weekly_gross_rate_of_pay(wage_amount_details)
+    if wage_amount_details['period'] == 'week':
+        amount = wage_amount_details['gross_pay']
+
+    session['gross_rate_of_pay'] = amount
+    return render_template(
+        'wage_amount_result.html',
+        amount=amount,
+        nav_links=nav_links()
+    )
+
+
 @app.route('/claim-redundancy-payment/wage-details/', methods=['GET', 'POST'])
 def wage_details():
     existing_form = session.get('wage_details')
 
     if existing_form:
+        existing_form['gross_rate_of_pay'] = session.get('gross_rate_of_pay')
         form = ClaimantWageDetails(**existing_form)
     else:
-        form = ClaimantWageDetails()
+        form = ClaimantWageDetails(gross_rate_of_pay=session.get('gross_rate_of_pay'))
 
     if form.validate_on_submit():
         session['wage_details'] = form.data
@@ -231,3 +261,4 @@ def submit_claim(claim_id):
 @app.route('/robots.txt')
 def robots_txt():
     return send_file('static/robots.txt')
+

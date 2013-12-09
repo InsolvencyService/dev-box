@@ -1,0 +1,24 @@
+{% from "macros/_form_nav.html" import form_nav %}
+{% from "macros/_form_field.html" import form_field %}
+{% from "macros/_call_to_action_box.html" import call_to_action_box %}
+{% extends "base.html" %}
+{% block title %}Claimant Wage Details{% endblock %}
+{% block header %}
+<h1 xmlns="http://www.w3.org/1999/html">Claim Redundancy Payment</h1>
+    <h2 class="subtitle">Please enter your wage details</h2>
+{% endblock %}
+{% block nav %}
+    {{ form_nav(nav_links) }}
+{% endblock %}
+{% block content %}
+    <h1>Your weekly gross income</h1>
+        <div class="form-example-1">
+            <div>
+                <p>
+                Your gross weekly pay is <strong>£{{ amount }}</strong>. This is the figure that will be used
+                to calculate your entitlement for redundancy payment.
+                </p>
+            </div>
+            <p><a class="button" href="/claim-redundancy-payment/wage-details/">Save and continue</a></p>
+        </div>
+{% endblock %}

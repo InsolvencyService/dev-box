@@ -33,8 +33,11 @@
                     {{ form.hidden_tag() }}
                         <fieldset>
                             <legend>How much do you get paid</legend>
-                            {{ form_field(form.gross_rate_of_pay, discrepancies) }}
-                            {{ form_field(form.frequency_of_payment) }}
+                            {% if discrepancies %}
+                                {{ form_field(form.gross_rate_of_pay, discrepancies) }}
+                            {% else %}
+                                {{ form_field(form.gross_rate_of_pay, readonly=True) }}
+                            {% endif %}
                             {{ form_field(form.day_of_payment) }}
                         </fieldset>
                         <fieldset>
