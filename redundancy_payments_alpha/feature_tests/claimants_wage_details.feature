@@ -26,7 +26,6 @@ Feature: claimants wage details
             | hours_of_overtime     |            |
             | normal_days_of_work   | 5          |
             | bonus_details         | 50          |
-    #todo
          When the claimant goes to /claim-redundancy-payment/wage-details/
           And enters the wages details
          Then the claimant should stay on /wage-details/ with title "Claimant Wage Details"
