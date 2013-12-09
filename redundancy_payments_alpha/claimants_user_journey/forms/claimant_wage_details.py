@@ -13,15 +13,6 @@ class ClaimantWageDetails(Form):
                   '^\d{0,8}(\.\d{0,2})?$'),
                   message="Gross rate of pay must be a number e.g 100.25.")])
 
-    #frequency_of_payment = SelectField('every',
-    #     choices=[
-    #         ('Week', 'Week')
-    #     ],
-    #     default='',
-    #     validators=[AnyOf(values=['Week'],
-    #                       message='Please enter how often you get paid your '
-    #                               'gross rate of pay')])
-
     day_of_payment = SelectField('What day of the week do you get paid?',
                                  choices=[
                                      ('Monday', 'Monday'),

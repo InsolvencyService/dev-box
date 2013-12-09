@@ -147,3 +147,8 @@ ul.inline-choice {
     list-style-type: none;
 }
 
+input[readonly] {
+    background-color: #fff !important;
+    border: none !important;
+}
+

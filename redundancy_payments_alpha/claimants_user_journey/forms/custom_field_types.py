@@ -3,6 +3,7 @@ import logging
 import re
 from wtforms import TextField, Form, SelectField, ValidationError
 from wtforms.validators import AnyOf, DataRequired
+from wtforms.widgets.core import HTMLString
 from claimants_user_journey.forms.validators import DateOfBirthValidator, RequiredIfFieldHasValue, convert_string_to_date
 
 
@@ -16,7 +17,8 @@ class CurrencyField(TextField):
         """See the depths of the __call__ method in Field
         to understand what is going on.
         """
-        return "&pound; " + self.widget(self, **kwargs)
+        html = '&pound;' + self.widget(self, **kwargs)
+        return HTMLString(html)
 
 def blank_and_number_range_tuples(min, max_plus_one):
     lst = [('','')]
