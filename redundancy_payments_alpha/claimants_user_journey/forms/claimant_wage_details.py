@@ -7,8 +7,8 @@ from custom_field_types import CurrencyField
 
 class ClaimantWageDetails(Form):
     gross_rate_of_pay = CurrencyField(
-        'Gross rate of pay (before Tax and NI, excluding overtime)',
-         validators=[DataRequired('Please enter your gross rate of pay'),
+        'Gross rate of pay per week (before Tax and NI, excluding overtime)',
+         validators=[DataRequired('Please enter your gross rate of pay per week'),
               Regexp(regex=re.compile(
                   '^\d{0,8}(\.\d{0,2})?$'),
                   message="Gross rate of pay must be a number e.g 100.25.")])
@@ -19,10 +19,10 @@ class ClaimantWageDetails(Form):
          ],
          default='',
          validators=[AnyOf(values=['Week'],
-                           message='Please enter how often you get paid your '
+                           message='Please enter how often you were paid your '
                                    'gross rate of pay')])
 
-    day_of_payment = SelectField('What day of the week do you get paid?',
+    day_of_payment = SelectField('What day of the week did you get paid?',
                                  choices=[
                                      ('Monday', 'Monday'),
                                      ('Tuesday', 'Tuesday'),
@@ -35,11 +35,11 @@ class ClaimantWageDetails(Form):
                                  default='Saturday')
 
     number_of_hours_worked = StringField(
-        'Number of hours you normally work per week',
+        'Number of hours you normally worked per week',
         validators=[DataRequired('Please enter the number of hours you '
-                                 'normally work'),
+                                 'normally worked per week'),
                     Regexp(regex=re.compile('^\d{0,2}(\.\d{0,2})?$'),
-                           message="Number of hours you normally work must be "
+                           message="Number of hours you normally worked per week must be "
                                    "a number "
                                    "e.g 40.25.")])
 
@@ -73,7 +73,7 @@ class ClaimantWageDetails(Form):
                                         ])])
 
     normal_days_of_work = SelectField(
-        'How many days do you normally work each week?',
+        'How many days did you normally work each week?',
         choices=[
             ('1', '1'),
             ('2', '2'),
