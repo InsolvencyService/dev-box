@@ -26,7 +26,7 @@ Feature: summary details
             | number_of_hours_worked   | 12     |
             | bonus_or_commission      | No     |
             | normal_days_of_work      | 5      |
-            | overtime                 | Yes    |
+            | overtime                 | No     |
            And the claimant views the summary page
          Then the page should include "The Insolvency Practitioner has suggested"
 

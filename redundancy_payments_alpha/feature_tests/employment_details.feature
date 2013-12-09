@@ -20,7 +20,7 @@ Feature: employment details
             | end_date-day       | 1                     |
             | end_date-month     | 10                    |
             | end_date-year      | 2013                  |
-          When the claimant goes to /claim-redundancy-payment/employment-details/
+         When the claimant goes to /claim-redundancy-payment/employment-details/
           And enters the employment details
          Then the claimant should be sent to /claim-redundancy-payment/wage-details/
 
