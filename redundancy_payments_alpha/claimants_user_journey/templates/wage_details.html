@@ -37,6 +37,7 @@
                                 {{ form_field(form.gross_rate_of_pay, discrepancies) }}
                             {% else %}
                                 {{ form_field(form.gross_rate_of_pay, readonly=True) }}
+                                <p><a href="/claim-redundancy-payment/wage-amount/">Change this value</a></p>
                             {% endif %}
                             {{ form_field(form.day_of_payment) }}
                         </fieldset>
