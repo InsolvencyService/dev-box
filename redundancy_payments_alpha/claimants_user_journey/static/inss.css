@@ -134,3 +134,16 @@ ul.inline-choice {
     margin-left: 16px;
 }
 
+.question-row p {
+   float: left;
+   margin-right: 16px;
+}
+
+.info-box {
+    background-color: #f8f8f8;
+}
+
+.info-box ul {
+    list-style-type: none;
+}
+
