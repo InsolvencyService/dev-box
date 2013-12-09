@@ -32,7 +32,7 @@
                     <fieldset>
                     {{ form.hidden_tag() }}
                         <fieldset>
-                            <legend>How much do you get paid</legend>
+                            <legend>How much did you get paid</legend>
                             {% if discrepancies %}
                                 {{ form_field(form.gross_rate_of_pay, discrepancies) }}
                             {% else %}
@@ -42,7 +42,6 @@
                             {{ form_field(form.day_of_payment) }}
                         </fieldset>
                         <fieldset>
-                            <legend>How much do you work</legend>
                             {{ form_field(form.number_of_hours_worked) }}
                             {{ form_field(form.normal_days_of_work) }}
                         </fieldset>
