@@ -1,8 +1,82 @@
 from flask_wtf import Form
-from wtforms import TextField, SelectField, RadioField, FormField
-from wtforms.validators import DataRequired, Length, AnyOf, ValidationError
+from wtforms import TextField, RadioField, FormField, Field
+from wtforms.validators import Length
+from wtforms.widgets import HTMLString
 from claimants_user_journey.forms.custom_field_types import DateForm
-from claimants_user_journey.forms.validators import FutureDateValidator
+
+
+class CustomDateWidget(object):
+    def __init__(self, error_class=u'has_errors'):
+        self.error_class = error_class
+
+    def __call__(self, field, **kwargs):
+        if field and field.data:
+            kwargs.setdefault('id', field.id)
+
+            html = ['<label>Date Of Birth</label>']
+            html.append("<select id=\"%s-day\" name=\"%s\">" % (field.id, field.name))
+            #Day drop down list
+            for x in xrange(0, 32):
+                if x == 0:
+                    val = ""
+                else:
+                    val = str(x)
+
+                if val == field.data[0]:
+                    html.append("<option value=\"%s\" selected>%s</option>" % (val, val))
+                else:
+                    html.append("<option value=\"%s\">%s</option>" % (val, val))
+            html.append('</select>')
+
+            #Month drop down list
+            html.append("<select id=\"%s-month\" name=\"%s\">" % (field.id, field.name))
+            for x in xrange(0, 13):
+                if x == 0:
+                    val = ""
+                else:
+                    val = str(x)
+
+                if val == field.data[1]:
+                    html.append("<option value=\"%s\" selected>%s</option>" % (val, val))
+                else:
+                    html.append("<option value=\"%s\">%s</option>" % (val, val))
+            html.append('</select>')
+
+            #Year text field
+            html.append("<input id=\"%s-year\" name=\"%s\" type=\"text\" value=\"%s\">" % (field.id, field.name, field.data[2]))
+        else:
+            html = ['<label>Date Of Birth</label>']
+            html.append("<select id=\"%s-day\" name=\"%s\">" % (field.id, field.name))
+            #Day drop down list
+            for x in xrange(0, 32):
+                html.append("<option value=\"%i\">%i</option>" % (x, x))
+            html.append('</select>')
+
+            #Month drop down list
+            html.append("<select id=\"%s-month\" name=\"%s\">" % (field.id, field.name))
+            for x in xrange(0, 13):
+                html.append("<option value=\"%i\">%i</option>" % (x, x))
+            html.append('</select>')
+
+            html.append("<input id=\"%s-year\" name=\"%s\" type=\"text\" value=\"\">" % (field.id, field.name))
+
+        return HTMLString(''.join(html))
+
+
+class CustomDateField(Field):
+    widget = CustomDateWidget()
+
+    def _value(self):
+        if self.data:
+            return self.data
+        else:
+            return ['','','']
+
+    def process_formdata(self, valuelist):
+        if valuelist:
+            self.data = valuelist
+        else:
+            self.data = ['', '', '']
 
 
 class EmploymentDetails(Form):
@@ -30,18 +104,5 @@ class EmploymentDetails(Form):
             ('home worker', '<strong>Home Worker</strong></br>You work from home but attend an office for meetings')
         ],
     )
-    start_date = FormField(DateForm, label="When did you start working for this employer?")
-    end_date = FormField(DateForm, label="When did your employment end?")
-
-    def validate(self):
-        if not super(EmploymentDetails, self).validate():
-            return False
-
-        if self.start_date > self.end_date:
-            errors = []
-            errors.append("The end date cannot be before the start date")
-
-            self._errors = {'whole_form' : errors}
-            return False
-
-        return True
+    start_date = CustomDateField(label="When did you start working for this employer?")
+    end_date = CustomDateField(label="When did your employment end?")

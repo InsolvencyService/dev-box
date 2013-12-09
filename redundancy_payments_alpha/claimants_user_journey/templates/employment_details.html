@@ -42,8 +42,8 @@
             </fieldset>
             <fieldset>
                 <legend>Dates of employment</legend>
-                {{ date_field(form.start_date, hint="Use the dd/mm/yyyy format, for example 01/01/1975") }}
-                {{ date_field(form.end_date, hint="Use the dd/mm/yyyy format, for example 01/01/1975") }}
+                {{ form.start_date }}
+                {{ form.end_date }}
             </fieldset>
             <input class="button" type="submit" value="Save and Continue" />
         </form>
