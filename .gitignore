@@ -6,6 +6,8 @@ redundancy_payments_alpha/*.log
 redundancy_payments_alpha/sent_emails/*
 redundancy_payments_alpha/reports
 !redundancy_payments_alpha/sent_emails/.gitkeep
+.coverage
+cover/
 .idea/
 bin/
 include/
