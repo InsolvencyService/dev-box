@@ -31,9 +31,8 @@ class ClaimantWageDetails(Form):
                                      ('Friday', 'Friday'),
                                      ('Saturday', 'Saturday'),
                                      ('Sunday', 'Sunday'),
-                                     ('', '')
                                  ],
-                                 default='')
+                                 default='Saturday')
 
     number_of_hours_worked = StringField(
         'Number of hours you normally work per week',
