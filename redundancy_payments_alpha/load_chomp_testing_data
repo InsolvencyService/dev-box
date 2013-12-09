@@ -1,6 +1,13 @@
 #!/usr/bin/env python
 
-from birmingham_cabinet.api import add_rp14a_form, employee_via_nino, add_rp1_form
+from birmingham_cabinet.api import ( 
+                                    add_rp14a_form, 
+                                    employee_via_nino, 
+                                    add_rp1_form, 
+                                    get_rp1_form,
+                                    add_claim,
+                                    mark_claim_as_submitted,
+                                    )
 from json import loads
 import os
 
@@ -30,6 +37,8 @@ def store_data():
     add_rp14a_form(employee)
     _employee = employee_via_nino(employee["employee_national_insurance_number"])
     add_rp1_form(claimant)
+    claimant["claim_id"] = add_claim(_employee, claimant)
+    mark_claim_as_submitted(claimant["claim_id"])
 
 
 
