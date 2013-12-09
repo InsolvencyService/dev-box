@@ -83,7 +83,7 @@ class TestGrossRateOfPay(unittest.TestCase):
         form = complete_form(entered_data)
         form.validate()
         # then
-        assert_that(form.gross_rate_of_pay.errors, has_item('Please enter your gross rate of pay'))
+        assert_that(form.gross_rate_of_pay.errors, has_item('Please enter your gross rate of pay per week'))
 
     def test_gross_rate_of_pay_accepts_number_without_decimals(self):
         #given
@@ -154,7 +154,7 @@ class TestNumberOfHoursWorked(unittest.TestCase):
         form = complete_form(entered_data)
         form.validate()
         # then
-        assert_that(form.number_of_hours_worked.errors, has_item('Please enter the number of hours you normally work'))
+        assert_that(form.number_of_hours_worked.errors, has_item('Please enter the number of hours you normally worked per week'))
 
     def test_number_of_hours_worked_accepts_number_without_decimals(self):
         #given
@@ -184,7 +184,7 @@ class TestNumberOfHoursWorked(unittest.TestCase):
         form = complete_form(entered_data)
         form.validate()
         # then
-        assert_that(form.number_of_hours_worked.errors, has_item('Number of hours you normally work must be a number e.g 40.25.'))
+        assert_that(form.number_of_hours_worked.errors, has_item('Number of hours you normally worked per week must be a number e.g 40.25.'))
 
     def test_number_of_hours_worked_cannot_have_more_than_two_digits(self):
         #given
@@ -194,7 +194,7 @@ class TestNumberOfHoursWorked(unittest.TestCase):
         form = complete_form(entered_data)
         form.validate()
         # then
-        assert_that(form.number_of_hours_worked.errors, has_item('Number of hours you normally work must be a number e.g 40.25.'))
+        assert_that(form.number_of_hours_worked.errors, has_item('Number of hours you normally worked per week must be a number e.g 40.25.'))
 
     def test_number_of_hours_worked_cannot_have_more_than_two_decimal_places(self):
         #given
@@ -204,7 +204,7 @@ class TestNumberOfHoursWorked(unittest.TestCase):
         form = complete_form(entered_data)
         form.validate()
         # then
-        assert_that(form.number_of_hours_worked.errors, has_item('Number of hours you normally work must be a number e.g 40.25.'))
+        assert_that(form.number_of_hours_worked.errors, has_item('Number of hours you normally worked per week must be a number e.g 40.25.'))
 
 class TestBonusOrCommission(unittest.TestCase):
     def test_bonus_or_commission_accepts_valid_data(self):
