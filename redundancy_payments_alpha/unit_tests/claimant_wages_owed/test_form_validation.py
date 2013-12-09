@@ -122,7 +122,7 @@ class TestNumberOfDaysOwed(unittest.TestCase):
         form = complete_form(entered_days_owed)
         form.validate()
         # then
-        assert_that(form.number_of_days_owed.errors, has_item("Number of days owed must be numeric.") )
+        assert_that(form.number_of_days_owed.errors, has_item("Number of days owed must be numeric and a maximum of two digits.") )
 
 class TestGrossAmountOwed(unittest.TestCase):
     def test_gross_amount_owed_field_allows_valid_decimal(self):
