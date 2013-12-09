@@ -11,6 +11,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.define "development", primary: true do |development|
       development.vm.network "forwarded_port", guest: 8000, host: 8000
       development.vm.network "forwarded_port", guest: 8001, host: 8001
+      development.vm.network "forwarded_port", guest: 8002, host: 8002
       development.vm.provision :shell,
                     path: "vagrant-bootstrap.sh",
                     args: "localdev localdev"
