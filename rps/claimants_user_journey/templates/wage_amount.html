@@ -1,0 +1,35 @@
+{% from "macros/_form_nav.html" import form_nav %}
+{% from "macros/_form_field.html" import form_field %}
+{% from "macros/_call_to_action_box.html" import call_to_action_box %}
+{% extends "base.html" %}
+{% block title %}Claimant Wage Details{% endblock %}
+{% block header %}
+<h1 xmlns="http://www.w3.org/1999/html">Claim Redundancy Payment</h1>
+    <h2 class="subtitle">Please enter your wage details</h2>
+{% endblock %}
+{% block nav %}
+    {{ form_nav(nav_links) }}
+{% endblock %}
+{% block content %}
+    <h1>Finding your weekly gross income</h1>
+        <form method="post" action="{{ request.path }}" class="form-example-1">
+            <div>
+                <div>
+                    {{ form.hidden_tag() }}
+                    <fieldset>
+                        {{ form_field(form.period, discrepancies) }}
+                        {{ form_field(form.gross_pay, discrepancies, prepend="£") }}
+                        <div class="info-box">
+                            <h3>Deductions to pay include</h3>
+                            <ul>
+                                <li>Holiday pay</li>
+                                <li>Guarantee pay</li>
+                                <li>Deductions from earnings orders</li>
+                            </ul>
+                        </div>
+                    </fieldset>
+                 </div>
+            </div>
+            <input class="button" type="submit" value="Calculate gross weekly income" />
+        </form>
+{% endblock %}
