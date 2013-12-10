@@ -13,17 +13,21 @@ class ClaimantWageDetails(Form):
                   '^\d{0,8}(\.\d{0,2})?$'),
                   message="Gross rate of pay must be a number e.g 100.25.")])
 
-    day_of_payment = SelectField('What day of the week did you get paid?',
-                                 choices=[
-                                     ('Monday', 'Monday'),
-                                     ('Tuesday', 'Tuesday'),
-                                     ('Wednesday', 'Wednesday'),
-                                     ('Thursday', 'Thursday'),
-                                     ('Friday', 'Friday'),
-                                     ('Saturday', 'Saturday'),
-                                     ('Sunday', 'Sunday'),
-                                 ],
-                                 default='Saturday')
+    day_of_payment = SelectField(
+        'What day of the week did you get paid?',
+        choices=[
+            ('Monday', 'Monday'),
+            ('Tuesday', 'Tuesday'),
+            ('Wednesday', 'Wednesday'),
+            ('Thursday', 'Thursday'),
+            ('Friday', 'Friday'),
+            ('Saturday', 'Saturday'),
+            ('Sunday', 'Sunday'),
+        ],
+        default='Saturday',
+        description=("If you are unsure or unaware of your payday leave please "
+                     "leave this value as Saturday")
+    )
 
     number_of_hours_worked = StringField(
         'Number of hours you normally worked per week',
