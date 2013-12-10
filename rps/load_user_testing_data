@@ -1,13 +1,24 @@
 #!/usr/bin/env python
 
-from birmingham_cabinet.api import add_rp14a_form
-from json import loads
+from datetime import datetime
+import json
 import os
+import re
 
+from birmingham_cabinet.api import add_rp14a_form
+
+def load_and_convert_to_date(filelike):
+    date_regex = re.compile(r"\d{2}/\d{2}/\d{4}")
+    forms = json.load(filelike)
+    for form in forms:
+        for key, value in form.items():
+            if date_regex.match(value):
+                form[key] = datetime.strptime(value, "%m/%d/%Y").date()
+    return forms
 
 def store_data(path_to_file):
     with open(path_to_file) as f:
-        records = loads(f.read())
+        records = load_and_convert_to_date(f)
         for form in records:
             add_rp14a_form(form)
 
