@@ -1,8 +1,9 @@
 from datetime import date
 import logging
 import re
-from wtforms import TextField, Form, SelectField, ValidationError
+from wtforms import TextField, Form, SelectField, ValidationError, Field
 from wtforms.validators import AnyOf, DataRequired
+from wtforms.widgets.core import HTMLString
 from claimants_user_journey.forms.validators import DateOfBirthValidator, RequiredIfFieldHasValue, convert_string_to_date
 
 
@@ -69,3 +70,84 @@ class UnvalidatedDateForm(DateForm):
         # Deliberately don't validate
         pass
 
+
+class CustomDateWidget(object):
+    def __init__(self, error_class=u'has_errors'):
+        self.error_class = error_class
+
+    def __call__(self, field, **kwargs):
+        if field and field.data:
+            kwargs.setdefault('id', field.id)
+
+            #Day drop down list
+            html = ["<select id=\"%s-day\" name=\"%s\">" % (field.id, field.name)]
+            for x in xrange(0, 32):
+                if x == 0:
+                    val = ""
+                else:
+                    val = str(x)
+
+                if val == field.data[0]:
+                    html.append("<option value=\"%s\" selected>%s</option>" % (val, val))
+                else:
+                    html.append("<option value=\"%s\">%s</option>" % (val, val))
+            html.append('</select>')
+
+            #Month drop down list
+            html.append("<select id=\"%s-month\" name=\"%s\">" % (field.id, field.name))
+            for x in xrange(0, 13):
+                if x == 0:
+                    val = ""
+                else:
+                    val = str(x)
+
+                if val == field.data[1]:
+                    html.append("<option value=\"%s\" selected>%s</option>" % (val, val))
+                else:
+                    html.append("<option value=\"%s\">%s</option>" % (val, val))
+            html.append('</select>')
+
+            #Year text field
+            html.append("<input id=\"%s-year\" name=\"%s\" type=\"text\" value=\"%s\">" % (field.id, field.name, field.data[2]))
+        else:
+            html = ["<select id=\"%s-day\" name=\"%s\">" % (field.id, field.name)]
+            #Day drop down list
+            for x in xrange(0, 32):
+                if x == 0:
+                    val = ""
+                else:
+                    val = str(x)
+
+                html.append("<option value=\"%s\">%s</option>" % (val, val))
+            html.append('</select>')
+
+            #Month drop down list
+            html.append("<select id=\"%s-month\" name=\"%s\">" % (field.id, field.name))
+            for x in xrange(0, 13):
+                if x == 0:
+                    val = ""
+                else:
+                    val = str(x)
+
+                html.append("<option value=\"%s\">%s</option>" % (val, val))
+            html.append('</select>')
+
+            html.append("<input id=\"%s-year\" name=\"%s\" type=\"text\" value=\"\">" % (field.id, field.name))
+
+        return HTMLString(''.join(html))
+
+
+class CustomDateField(Field):
+    widget = CustomDateWidget()
+
+    def _value(self):
+        if self.data:
+            return self.data
+        else:
+            return ['','','']
+
+    def process_formdata(self, valuelist):
+        if valuelist:
+            self.data = valuelist
+        else:
+            self.data = ['', '', '']
