@@ -29,11 +29,11 @@ def complete_form_data():
         'telephone_number': '12345 123456',
         'nino': 'AA112233B',
         'date_of_birth':
-            {
-                'day': '1',
-                'month': '2',
-                'year': '1983'
-            }
+            [
+                '1',
+                '2',
+                '1983'
+            ]
 
     }
     return form
@@ -318,56 +318,3 @@ class TestDateOfBirthValidation(unittest.TestCase):
         form.validate()
         # then
         assert_that(form.date_of_birth.errors, has_length(0))
-
-    def test_date_of_birth_day_field_is_required(self):
-        # given
-        entered_date = complete_form_data()
-        entered_date['date_of_birth']['day'] = ''
-        # when
-        form = complete_form(entered_date)
-        form.validate()
-        # then
-        assert_that(form.date_of_birth.day.errors, has_item("Day is a required field"))
-
-    def test_date_of_birth_month_field_is_required(self):
-        # given
-        entered_date = complete_form_data()
-        entered_date['date_of_birth']['month'] = ''
-        # when
-        form = complete_form(entered_date)
-        form.validate()
-        # then
-        assert_that(form.date_of_birth.month.errors, has_item("Month is a required field"))
-
-    #TODO: year validation
-    #def test_date_of_birth_year_field_does_not_allow_incorrectly_formatted_date(self):
-    #    # given
-    #    entered_date = complete_form_data()
-    #    entered_date['date_of_birth']['year'] = 'not a valid year'
-    #    # when
-    #    form = complete_form(entered_date)
-    #    form.validate()
-    #    # then
-    #    assert_that(form.date_of_birth.year.errors, has_item("Year must be a valid number e.g. 1989") )
-
-    #TODO: overall date validator
-    #def test_date_of_birth_field_is_invalid_with_date_less_than_1900(self):
-    #    # given
-    #    entered_date = complete_form_data()
-    #    entered_date['date_of_birth'] = '01/01/1889'
-    #    # when
-    #    form = complete_form(entered_date)
-    #    form.validate()
-    #    # then
-    #    assert_that(form.date_of_birth.errors, has_item("Date Of Birth must be greater than or equal to 1900 and not in the future.") )
-    #
-    #def test_date_of_birth_field_is_invalid_with_date_greater_than_or_equal_to_today(self):
-    #    # given
-    #    entered_date = complete_form_data()
-    #    entered_date['date_of_birth'] = datetime.today().strftime('%d/%m/%Y')
-    #    # when
-    #    form = complete_form(entered_date)
-    #    form.validate()
-    #    # then
-    #    assert_that(form.date_of_birth.errors, has_item("Date Of Birth must be greater than or equal to 1900 and not in the future.") )
-

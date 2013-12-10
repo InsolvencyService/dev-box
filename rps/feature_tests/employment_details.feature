@@ -14,12 +14,8 @@ Feature: employment details
             | DETAILS            | VALUE                 |
             | job_title          | Guardian of the North |
             | type_of_worker     | employed              |
-            | start_date-day     | 1                     |
-            | start_date-month   | 4                     |
-            | start_date-year    | 1999                  |
-            | end_date-day       | 1                     |
-            | end_date-month     | 10                    |
-            | end_date-year      | 2013                  |
+            | start_date         | 1/4/1999              |
+            | end_date           | 1/10/2013             |
          When the claimant goes to /claim-redundancy-payment/employment-details/
           And enters the employment details
          Then the claimant should be sent to /claim-redundancy-payment/wage-amount/
@@ -38,12 +34,8 @@ Feature: employment details
             | DETAILS            | VALUE                 |
             | job_title          | Guardian of the North |
             | type_of_worker     | employed              |
-            | start_date-day     | 1                     |
-            | start_date-month   | 4                     |
-            | start_date-year    | 2013                  |
-            | end_date-day       | 1                     |
-            | end_date-month     | 10                    |
-            | end_date-year      | 2012                  |
+            | start_date         | 1/4/2013              |
+            | end_date           | 1/10/2012             |
         When the claimant goes to /claim-redundancy-payment/employment-details/
          And enters the employment details
         Then the claimant should stay on /employment-details/ with title "Employment Details"
@@ -53,12 +45,8 @@ Feature: employment details
         Given a claimant with the employment details
             | DETAILS            | VALUE                 |
             | job_title          | Guardian of the North |
-            | start_date-day     | 1                     |
-            | start_date-month   | 4                     |
-            | start_date-year    | 2013                  |
-            | end_date-day       | 13                    |
-            | end_date-month     | 1                     |
-            | end_date-year      | 2012                  |
+            | start_date         | 1/4/2013              |
+            | end_date           | 13/1/2012             |
         When the claimant goes to /claim-redundancy-payment/employment-details/
          And enters the employment details
         Then the claimant should stay on /employment-details/ with title "Employment Details"

@@ -32,8 +32,8 @@
                 {{ form.hidden_tag() }}
                 <fieldset>
                 {{ form_field(form.owed, inline=True) }}
-                {{ date_field(form.wage_owed_from, hint="Use the dd/mm/yyyy format, for example 01/01/1975") }}
-                {{ date_field(form.wage_owed_to, hint="Use the dd/mm/yyyy format, for example 01/01/1975") }}
+                {{ form_field(form.wage_owed_from) }}
+                {{ form_field(form.wage_owed_to) }}
                 {{ form_field(form.number_of_days_owed) }}
                 {{ form_field(form.gross_amount_owed, discrepancies) }}
                 </fieldset>

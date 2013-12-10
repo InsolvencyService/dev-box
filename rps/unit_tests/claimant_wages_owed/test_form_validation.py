@@ -16,16 +16,16 @@ def complete_form(data):
 def complete_form_data():
     form = {
         'owed': 'Yes',
-        'wage_owed_from': {
-            'day': '20',
-            'month': '2',
-            'year': '1985'
-        },
-        'wage_owed_to':{
-            'day': '21',
-            'month': '3',
-            'year': '1999'
-        },
+        'wage_owed_from': [
+            '20',
+            '2',
+            '1985'
+        ],
+        'wage_owed_to':[
+            '21',
+            '3',
+            '1999'
+        ],
         'number_of_days_owed': '1',
         'gross_amount_owed': '1.50',
     }
@@ -67,11 +67,11 @@ class TestWageOwedFrom(unittest.TestCase):
     def test_wage_owed_from_field_does_not_allow_incorrectly_formatted_date(self):
         # given
         entered_date = complete_form_data()
-        entered_date['wage_owed_from'] = {
-            'day': '1',
-            'month': '1',
-            'year': 'cccc'
-        }
+        entered_date['wage_owed_from'] = [
+            '1',
+            '1',
+            'cccc'
+        ]
         # when
         form = complete_form(entered_date)
         form.validate()
@@ -93,11 +93,11 @@ class TestWageOwedTo(unittest.TestCase):
 
         # given
         entered_date = complete_form_data()
-        entered_date['wage_owed_to'] = {
-            'day': '1',
-            'month': '1',
-            'year': 'cccc'
-        }
+        entered_date['wage_owed_to'] = [
+            '1',
+            '1',
+            'cccc'
+        ]
         # when
         form = complete_form(entered_date)
         form.validate()

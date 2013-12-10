@@ -93,3 +93,40 @@ class RequiredIfFieldHasValue(DataRequired):
             #If it gets this far then the field is optional
             field.errors[:] = []
             raise StopValidation()
+
+
+class CustomDateFieldValidator(object):
+    """
+    Validates the start date and end date custom date fields.
+
+    """
+    #
+    def __init__(self, message=None, future_message=None, start_date_field_name=None):
+        if message:
+            self.message = message
+        else:
+            self.message = 'Date must be in the format dd/mm/yyyy.'
+
+        if future_message:
+            self.future_message = future_message
+        else:
+            self.future_message = 'Date must be greater than or equal to 1900 and not in the future.'
+
+        self.start_date_field_name = start_date_field_name
+
+    def __call__(self, form, field):
+        try:
+            parsed_date = date(int(field.data[2]), int(field.data[1]), int(field.data[0]))
+        except:
+            raise ValidationError(self.message)
+
+        if parsed_date.year < 1900 or parsed_date >= date.today():
+            raise ValidationError(self.future_message)
+
+        if self.start_date_field_name:
+            start_date_field = form._fields.get(self.start_date_field_name)
+            if not start_date_field.errors:
+                parsed_start_date = date(int(start_date_field.data[2]), int(start_date_field.data[1]), int(start_date_field.data[0]))
+
+                if parsed_start_date > parsed_date:
+                    raise ValidationError('The end date cannot be before the start date')
