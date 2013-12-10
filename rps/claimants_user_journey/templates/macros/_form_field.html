@@ -1,8 +1,9 @@
-{% macro form_field(field, discrepancies={}, hint=None, optional=False, inline=False) %}
+{% macro form_field(field, discrepancies={}, hint=None, optional=False, inline=False, prepend=None, readonly=False) %}
     <p class="group {% if field.errors %}validation{% endif %} {% if field.id in discrepancies.keys() %} discrepancy {% endif %}" id="{{ field.id }}_question">
         {{ field.label }}
         {% if inline %}<div class="inline-choice">{% endif %}
-        {{ field }}
+        {% if prepend %}<span>{{ prepend }}</span>{% endif %}
+        {% if readonly %}{{ field(readonly=True) }}{% else %}{{ field }}{% endif %}
         {% if inline %}</div>{% endif %}
         {% if optional %}<span>&nbsp;(optional)</span>{% endif %}
         {% if field.errors %}

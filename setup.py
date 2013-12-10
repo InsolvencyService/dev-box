@@ -7,18 +7,19 @@ from setuptools import setup, find_packages
 setup(
     author="INSS",
     author_email="cpaterso@thoughtworks.com",
-    name="redundancy_payments_alpha",
-    packages=find_packages("redundancy_payments_alpha"),
-    package_dir = {'':'redundancy_payments_alpha'},
+    name="rps",
+    packages=find_packages("rps"),
+    package_dir = {'':'rps'},
     scripts=[
-        "redundancy_payments_alpha/chomp_app",
-        "redundancy_payments_alpha/ensure_clean_tables",
-        "redundancy_payments_alpha/insolvency_practitioner_app",
-        "redundancy_payments_alpha/load_user_testing_data",
-        "redundancy_payments_alpha/redundancy_payments_service",
+        "rps/chomp_app",
+        "rps/ensure_clean_tables",
+        "rps/insolvency_practitioner_app",
+        "rps/load_user_testing_data",
+        "rps/load_chomp_testing_data",
+        "rps/redundancy_payments_service",
     ],
     version=os.environ.get("BUILD_NUMBER", "dev"),
     install_requires=[str(req.req) for req in
-                      parse_requirements("redundancy_payments_alpha/requirements.dev.txt")],
+                      parse_requirements("rps/requirements.dev.txt")],
     include_package_data=True,
     )

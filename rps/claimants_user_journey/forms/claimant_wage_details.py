@@ -13,15 +13,6 @@ class ClaimantWageDetails(Form):
                   '^\d{0,8}(\.\d{0,2})?$'),
                   message="Gross rate of pay must be a number e.g 100.25.")])
 
-    frequency_of_payment = SelectField('every',
-         choices=[
-             ('Week', 'Week')
-         ],
-         default='',
-         validators=[AnyOf(values=['Week'],
-                           message='Please enter how often you were paid your '
-                                   'gross rate of pay')])
-
     day_of_payment = SelectField('What day of the week did you get paid?',
                                  choices=[
                                      ('Monday', 'Monday'),
@@ -115,3 +106,4 @@ class ClaimantWageDetails(Form):
     bonus_details = TextAreaField(
         'Give details of the amount and type of bonus '
         'or commission earned, and when it was paid')
+

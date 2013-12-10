@@ -1,0 +1,49 @@
+#!/usr/bin/env python
+
+from birmingham_cabinet.api import ( 
+                                    add_rp14a_form, 
+                                    employee_via_nino, 
+                                    add_rp1_form, 
+                                    get_rp1_form,
+                                    add_claim,
+                                    mark_claim_as_submitted,
+                                    )
+from json import loads
+import os
+
+employee = {
+        "employer_name": "Ironcore Mining Ltd.",
+        "employee_title": "Mr",
+        "employee_forenames": "Barry",
+        "employee_surname": "McSteve",
+        "employee_national_insurance_number": "MB999999C",
+        "employee_date_of_birth": "06/21/1969",
+        "employee_basic_weekly_pay": "475",
+        "employee_owed_wages_in_arrears": "950",
+        "employee_holiday_owed": "10"
+    }
+
+
+claimant = {
+    "nino": "MB999999C",
+    "date_of_birth": "06/21/1969",
+    "title": "Mr",
+    "forenames": "Barry",
+    "surname": "McSteve",
+}
+    
+ 
+def store_data():
+    add_rp14a_form(employee)
+    _employee = employee_via_nino(employee["employee_national_insurance_number"])
+    add_rp1_form(claimant)
+    claimant["claim_id"] = add_claim(_employee, claimant)
+    mark_claim_as_submitted(claimant["claim_id"])
+
+
+
+
+
+if __name__ == "__main__":
+    store_data()
+
