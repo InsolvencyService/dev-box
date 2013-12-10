@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- CHAMP Acceptdoc Payload -->
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:rps="http://www.northgate-is.com/rps">
    <soapenv:Header/>
    <soapenv:Body>

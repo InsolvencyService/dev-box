@@ -5,7 +5,7 @@ Feature: employment details
          When we visit /claim-redundancy-payment/employment-details/
          Then the page should have title "Employment Details"
           And the page should have an input field called "job_title" labeled "Job Title"
-          And the page should have an input field called "type_of_worker" labeled "What type of worker are you?"
+          And the page should have an input field called "type_of_worker" labeled "What type of worker were you?"
           And the page should have an input field called "start_date" labeled "When did you start working for this employer?"
           And the page should have an input field called "end_date" labeled "When did your employment end?"
 
@@ -20,7 +20,7 @@ Feature: employment details
             | end_date-day       | 1                     |
             | end_date-month     | 10                    |
             | end_date-year      | 2013                  |
-          When the claimant goes to /claim-redundancy-payment/employment-details/
+         When the claimant goes to /claim-redundancy-payment/employment-details/
           And enters the employment details
          Then the claimant should be sent to /claim-redundancy-payment/wage-details/
 

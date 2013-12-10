@@ -1,6 +1,7 @@
 Flask-WTF==0.9.3
 Flask==0.10.1
 SQLAlchemy==0.8.3
+URLObject==2.3.4
+mandrill
 psycopg2==2.5.1
 simplejson==3.3.1
-mandrill

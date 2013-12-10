@@ -8,3 +8,15 @@ firewall::allow:
     port: 80
     from: any
     ip: any
+  "claimapp from frontend":
+    port: 8000
+    from: 192.168.2.0/24
+    ip: any
+  "ipapp from frontend":
+    port: 8001
+    from: 192.168.2.0/24
+    ip: any
+  "chompapp from frontend":
+    port: 8002
+    from: 192.168.2.0/24
+    ip: any

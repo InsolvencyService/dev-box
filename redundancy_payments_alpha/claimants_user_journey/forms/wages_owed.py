@@ -19,7 +19,7 @@ class WagesOwed(Form):
 
     number_of_days_owed = TextField('Number of days for which pay is owed',
                            validators=[RequiredIfFieldHasValue(other_field_name='owed', other_field_value='Yes', message='Please enter number of days for which pay is owed'),
-                                       Regexp(regex=re.compile('^[0-9]?[0-9]$'), message='Number of days owed must be numeric.')])
+                                       Regexp(regex=re.compile('^[0-9]?[0-9]$'), message='Number of days owed must be numeric and a maximum of two digits.')])
 
     gross_amount_owed = CurrencyField('Gross amount of pay owed',
                            validators=[RequiredIfFieldHasValue(other_field_name='owed', other_field_value='Yes', message='Please enter the Gross amount of pay owed'),

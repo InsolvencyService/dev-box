@@ -103,16 +103,16 @@ class EmploymentDetails(Form):
         'Home worker'
     ]
     type_of_worker = RadioField(
-        'What type of worker are you?',
+        'What type of worker were you?',
         choices = [
-            ('employed', '<strong>Employed</strong></br>You are employed under a contract of employment'),
-            ('labour-only sub-contractor', '<strong>Labour-only Sub-contractor</strong></br>You are self employed and pay tax and national insurance on that basis'),
-            ('agency worker', '<strong>Agency Worker</strong></br>You are working for the client of an agency'),
-            ('fixed term contract', '<strong>Fixed Term Contract</strong></br>Your contract is for a specific period of time i.e. it has an end date'),
-            ('director or shareholder', '<strong>Director or Shareholder</strong></br>You are an office holder of the company'),
-            ('freelance', '<strong>Freelance</strong></br>You work for yourself and the business is a client'),
-            ('casual worker', '<strong>Casual Worker</strong></br>You work for the employer as and when required'),
-            ('home worker', '<strong>Home Worker</strong></br>You work from home but attend an office for meetings')
+            ('employed', '<strong>Employed</strong></br>You were employed under a contract of employment'),
+            ('labour-only sub-contractor', '<strong>Labour-only Sub-contractor</strong></br>You were self employed and paid tax and national insurance on that basis'),
+            ('agency worker', '<strong>Agency Worker</strong></br>You were working for the client of an agency'),
+            ('fixed term contract', '<strong>Fixed Term Contract</strong></br>Your contract was for a specific period of time i.e. it had an end date'),
+            ('director or shareholder', '<strong>Director or Shareholder</strong></br>You were an office holder of the company'),
+            ('freelance', '<strong>Freelance</strong></br>You worked for yourself and the business was a client'),
+            ('casual worker', '<strong>Casual Worker</strong></br>You worked for the employer as and when required'),
+            ('home worker', '<strong>Home Worker</strong></br>You worked from home but attended an office for meetings')
         ],
     )
     start_date = CustomDateField(label="When did you start working for this employer?")

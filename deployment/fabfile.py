@@ -122,14 +122,19 @@ def ensure_upstart():
         sudo("start redundancy-payments-service")
         sudo("stop insolvency-practitioner-app", warn_only=True)
         sudo("start insolvency-practitioner-app")
+        sudo("stop chomp", warn_only=True)
+        sudo("start chomp")
     put("redundancy-payments-service.upstart", "/etc/init/redundancy-payments-service.conf", use_sudo=True, mode=0644)
     sudo("chown root:root /etc/init/redundancy-payments-service.conf")
     put("insolvency-practitioner-app.upstart", "/etc/init/insolvency-practitioner-app.conf", use_sudo=True, mode=0644)
     sudo("chown root:root /etc/init/insolvency-practitioner-app.conf")
+    put("chomp.upstart", "/etc/init/chomp.conf", use_sudo=True, mode=0644)
+    sudo("chown root:root /etc/init/chomp.conf")
     stop_start_to_workaround_upstart_config_loading()
 
 
 def ensure_nginx():
     sudo("rm /etc/nginx/conf.d/*")
     put("redundancy-payments-service.nginx", "/etc/nginx/conf.d/redundancy-payments-service.conf", use_sudo=True)
+    put("redundancy-payments-cd-staging.nginx", "/etc/nginx/conf.d/redundancy-payments-cd-staging.conf", use_sudo=True)
     sudo("/etc/init.d/nginx restart")

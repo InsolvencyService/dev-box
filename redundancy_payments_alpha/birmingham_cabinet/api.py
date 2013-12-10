@@ -1,19 +1,28 @@
 import contextlib
 from datetime import datetime
+import logging
 
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy import func
 
-from models import Claim, Claimant, Employer, Employee
+from models import (
+    ChompClaimLifecycle,
+    Claim,
+    Claimant,
+    Employee,
+    Employer,
+)
 from base import make_session, Base, local_unix_socket_engine
 from customized_json import json_encode, json_decode
+from birmingham_cabinet import chomp_states
 
+logger = logging.getLogger(__name__)
 
 def truncate_all_tables():
     with contextlib.closing(local_unix_socket_engine.connect()) as conn:
         trans = conn.begin()
         for table in reversed(Base.metadata.sorted_tables):
-            conn.execute("truncate table {table_name}".format(
+            conn.execute("truncate table {table_name} cascade;".format(
                 table_name=table.name))
         trans.commit()
 
@@ -156,3 +165,36 @@ def get_claims():
         return [(json_decode(claim.claimant_information),
                  json_decode(claim.employee_record),
                  claim.submitted_at) for claim in claims]
+
+
+def get_next_claim_not_processed_by_chomp():
+    with contextlib.closing(make_session()) as session:
+        try:
+            unprocessed_claim = session.query(Claim).filter(
+                Claim.chomp_claim_lifecycle == None).one()
+            lifecycle = ChompClaimLifecycle()
+            lifecycle.claim_id = unprocessed_claim.claim_id
+            lifecycle.in_progress = datetime.now()
+            session.add(lifecycle)
+            session.commit()
+            logger.info("Claim {claim_id} state changed to In Progress".format(
+                claim_id=unprocessed_claim.claim_id))
+            return unprocessed_claim.claim_id
+        except NoResultFound:
+            pass
+
+
+def chomp_state_of_claim(claim_id):
+    with contextlib.closing(make_session()) as session:
+        claim = session.query(Claim).filter(
+            Claim.claim_id == claim_id).one()
+        return chomp_states.state_of_claim(claim)
+
+
+def chomp_claim_done(claim_id):
+    with contextlib.closing(make_session()) as session:
+        claim = session.query(Claim).filter(
+            Claim.claim_id == claim_id).one()
+        claim.chomp_claim_lifecycle.done = datetime.now()
+        session.commit()
+

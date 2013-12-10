@@ -3,6 +3,7 @@ import unittest
 from BeautifulSoup import BeautifulSoup
 from hamcrest import assert_that, has_entry, contains_string
 from mock import patch
+from claim_service.api import NoEmployeeException
 
 from claimants_user_journey.routes import app
 
@@ -59,7 +60,9 @@ class TestMatchingClaiamantToEmployeeRecords(unittest.TestCase):
 
     @patch('claimants_user_journey.routes.claim_service')
     def test_claimant_is_sent_to_call_your_ip_if_not_matched(self, mock_claim_service):
-        mock_claim_service.create_claim_2.return_value = None
+        def mock_create_claim_2(claimant_information):
+            raise NoEmployeeException("Nope")
+        mock_claim_service.create_claim_2.side_effect = mock_create_claim_2
         response = _fill_out_form(
             self.client,
             '/claim-redundancy-payment/personal-details/',
@@ -76,7 +79,7 @@ class TestFindingDiscrepanciesInPersonalDetails(unittest.TestCase):
         'gross_rate_of_pay': '18000.00',
         'number_of_hours_worked': '40',
         'bonus_or_commission': 'No',
-        'overtime': 'Yes',
+        'overtime': 'No',
         'normal_days_of_work': '5'
     }
 
