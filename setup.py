@@ -15,6 +15,7 @@ setup(
         "rps/ensure_clean_tables",
         "rps/insolvency_practitioner_app",
         "rps/load_user_testing_data",
+        "rps/load_chomp_testing_data",
         "rps/redundancy_payments_service",
     ],
     version=os.environ.get("BUILD_NUMBER", "dev"),
