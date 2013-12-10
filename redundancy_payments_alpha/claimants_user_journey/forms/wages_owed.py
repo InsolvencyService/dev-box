@@ -1,9 +1,9 @@
 import re
 from flask_wtf import Form
-from wtforms import TextField, RadioField, FormField
+from wtforms import TextField, RadioField
 from wtforms.validators import Regexp, DataRequired, AnyOf
-from validators import RequiredIfFieldHasValue
-from custom_field_types import CurrencyField, DateForm, UnvalidatedDateForm
+from validators import RequiredIfFieldHasValue, CustomDateFieldValidator
+from custom_field_types import CurrencyField, CustomDateField
 
 
 class WagesOwed(Form):
@@ -14,8 +14,8 @@ class WagesOwed(Form):
                                          'No'
                                      ], message='Please choose an option')])
 
-    wage_owed_from = FormField(UnvalidatedDateForm, label='From')
-    wage_owed_to = FormField(UnvalidatedDateForm, label='To')
+    wage_owed_from = CustomDateField(label="From", validators=[CustomDateFieldValidator(),RequiredIfFieldHasValue(other_field_name='owed', other_field_value='Yes', message='')])
+    wage_owed_to = CustomDateField(label="To", validators=[CustomDateFieldValidator(start_date_field_name='wage_owed_from'),RequiredIfFieldHasValue(other_field_name='owed', other_field_value='Yes', message='')])
 
     number_of_days_owed = TextField('Number of days for which pay is owed',
                            validators=[RequiredIfFieldHasValue(other_field_name='owed', other_field_value='Yes', message='Please enter number of days for which pay is owed'),

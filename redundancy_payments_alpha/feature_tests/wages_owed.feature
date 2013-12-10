@@ -15,12 +15,8 @@ Feature: wages owed
         Given a claimant with the unpaid wage details
             | DETAILS             | VALUE      |
             | owed                | Yes        |
-            | wage_owed_from-day  | 1          |
-            | wage_owed_from-month| 4          |
-            | wage_owed_from-year | 2013       |
-            | wage_owed_to-day    | 1          |
-            | wage_owed_to-month  | 5          |
-            | wage_owed_to-year   | 2013       |
+            | wage_owed_from      | 1/4/2013   |
+            | wage_owed_to        | 1/5/2013   |
             | number_of_days_owed | 1          |
             | gross_amount_owed   | 200.00     |
          When the claimant goes to /claim-redundancy-payment/wages-owed-details/
@@ -31,12 +27,8 @@ Feature: wages owed
         Given a claimant with the unpaid wage details
             | DETAILS             | VALUE      |
             | owed                | No         |
-            | wage_owed_from-day  |            |
-            | wage_owed_from-month|            |
-            | wage_owed_from-year |            |
-            | wage_owed_to-day    |            |
-            | wage_owed_to-month  |            |
-            | wage_owed_to-year   |            |
+            | wage_owed_from      |            |
+            | wage_owed_to        |            |
          When the claimant goes to /claim-redundancy-payment/wages-owed-details/
           And enters the unpaid wages details
          Then the claimant should be redirected

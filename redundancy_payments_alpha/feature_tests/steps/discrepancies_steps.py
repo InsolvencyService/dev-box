@@ -54,7 +54,13 @@ def step(context):
 def step(context):
     wages_details = {}
     for key, value in context.table:
-        wages_details[key] = value
+        if key == 'wage_owed_from':
+            wages_details[key] = value.split('/')
+        elif key == 'wage_owed_to':
+            wages_details[key] = value.split('/')
+        else:
+            wages_details[key] = value
+
     get_the_page = context.app.get('/claim-redundancy-payment/wage-details/')
     wages_details.update({'csrf_token': parse_csrf_token(get_the_page)})
     response = context.app.post(
@@ -69,7 +75,13 @@ def step(context):
 def step(context):
     arrears_pay_details = {}
     for key, value in context.table:
-        arrears_pay_details[key] = value
+        if key == 'wage_owed_from':
+            arrears_pay_details[key] = value.split('/')
+        elif key == 'wage_owed_to':
+            arrears_pay_details[key] = value.split('/')
+        else:
+            arrears_pay_details[key] = value
+
     get_the_page = context.app.get('/claim-redundancy-payment/wages-owed-details/')
     arrears_pay_details.update({'csrf_token': parse_csrf_token(get_the_page)})
     response = context.app.post(

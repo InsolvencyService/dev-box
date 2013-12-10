@@ -1,11 +1,18 @@
-from claimants_user_journey import routes
+from unit_tests.test_status import test_client
 
 
 @given('a claimant with the unpaid wage details')
 def step(context):
     context.form_data = {}
+
     for row in context.table:
-        context.form_data[row['DETAILS']] = row['VALUE']
+        if row['DETAILS'] == 'wage_owed_from':
+            context.form_data['wage_owed_from'] = row['VALUE'].split('/')
+        elif row['DETAILS'] == 'wage_owed_to':
+            context.form_data['wage_owed_to'] = row['VALUE'].split('/')
+        else:
+            context.form_data[row['DETAILS']] = row['VALUE']
+
 
 @when('enters the unpaid wages details')
 def step(context):

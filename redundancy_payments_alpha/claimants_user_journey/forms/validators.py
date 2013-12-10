@@ -95,7 +95,7 @@ class RequiredIfFieldHasValue(DataRequired):
             raise StopValidation()
 
 
-class CustomDateFieldValidator(Regexp):
+class CustomDateFieldValidator(object):
     """
     Validates the start date and end date custom date fields.
 
@@ -117,7 +117,7 @@ class CustomDateFieldValidator(Regexp):
     def __call__(self, form, field):
         try:
             parsed_date = date(int(field.data[2]), int(field.data[1]), int(field.data[0]))
-        except (SyntaxError, ValueError):
+        except:
             raise ValidationError(self.message)
 
         if parsed_date.year < 1900 or parsed_date >= date.today():

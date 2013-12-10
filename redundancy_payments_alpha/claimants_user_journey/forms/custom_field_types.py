@@ -1,10 +1,9 @@
 from datetime import date
-import logging
 import re
 from wtforms import TextField, Form, SelectField, ValidationError, Field
 from wtforms.validators import AnyOf, DataRequired
 from wtforms.widgets.core import HTMLString
-from claimants_user_journey.forms.validators import DateOfBirthValidator, RequiredIfFieldHasValue, convert_string_to_date
+from claimants_user_journey.forms.validators import convert_string_to_date
 
 
 class CurrencyField(TextField):
@@ -76,7 +75,7 @@ class CustomDateWidget(object):
         self.error_class = error_class
 
     def __call__(self, field, **kwargs):
-        if field and field.data:
+        if field and type(field.data) == list and len(field.data) == 3:
             kwargs.setdefault('id', field.id)
 
             #Day drop down list
