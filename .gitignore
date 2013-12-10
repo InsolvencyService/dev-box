@@ -1,11 +1,11 @@
 .vagrant
 *.swp
 *.pyc
-redundancy_payments_alpha/.idea/*
-redundancy_payments_alpha/*.log
-redundancy_payments_alpha/sent_emails/*
-redundancy_payments_alpha/reports
-!redundancy_payments_alpha/sent_emails/.gitkeep
+rps/.idea/*
+rps/*.log
+rps/sent_emails/*
+rps/reports
+!rps/sent_emails/.gitkeep
 .coverage
 cover/
 .idea/

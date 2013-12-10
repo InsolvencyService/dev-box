@@ -32,3 +32,34 @@ Feature: employment details
          When the claimant goes to /claim-redundancy-payment/personal-details/
           And enters the employment details
          Then the claimant should stay on /employment-details/ with title "Employment Details"
+
+    Scenario: filling employment details with a end date earlier than the start date
+        Given a claimant with the employment details
+            | DETAILS            | VALUE                 |
+            | job_title          | Guardian of the North |
+            | type_of_worker     | employed              |
+            | start_date-day     | 1                     |
+            | start_date-month   | 4                     |
+            | start_date-year    | 2013                  |
+            | end_date-day       | 1                     |
+            | end_date-month     | 10                    |
+            | end_date-year      | 2012                  |
+        When the claimant goes to /claim-redundancy-payment/employment-details/
+         And enters the employment details
+        Then the claimant should stay on /employment-details/ with title "Employment Details"
+         And the page should include "The end date cannot be before the start date"
+
+    Scenario: filling employment details with multiple errors
+        Given a claimant with the employment details
+            | DETAILS            | VALUE                 |
+            | job_title          | Guardian of the North |
+            | start_date-day     | 1                     |
+            | start_date-month   | 4                     |
+            | start_date-year    | 2013                  |
+            | end_date-day       | 13                    |
+            | end_date-month     | 1                     |
+            | end_date-year      | 2012                  |
+        When the claimant goes to /claim-redundancy-payment/employment-details/
+         And enters the employment details
+        Then the claimant should stay on /employment-details/ with title "Employment Details"
+         And the page should include "The end date cannot be before the start date"

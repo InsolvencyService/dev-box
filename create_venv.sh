@@ -12,9 +12,9 @@ if [ -z "$VIRTUAL_ENV" -a -n "$WORKON_HOME" ]; then
 
    source "$venvdir/bin/activate"
 
-   pip install -r redundancy_payments_alpha/requirements.dev.txt
+   pip install -r rps/requirements.dev.txt
 
-   cd redundancy_payments_alpha/
+   cd rps/
    ./ensure_clean_tables
    cd ..
 fi

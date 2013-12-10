@@ -23,7 +23,7 @@ def step(context):
 
 @when('enters their details')
 def step(context):
-    context.response_from_posting_data = test_client.post(
+    context.response = test_client.post(
         '/claim-redundancy-payment/personal-details/',
         data=context.form_data,
         follow_redirects=False
@@ -32,17 +32,17 @@ def step(context):
 
 @then('the claimant should be sent to {url}')
 def step(context, url):
-    assert_that(context.response_from_posting_data.status, is_('302 FOUND'))
-    headers = context.response_from_posting_data.headers
+    assert_that(context.response.status, is_('302 FOUND'))
+    headers = context.response.headers
     redirect_path = headers['Location']
     assert_that(redirect_path, contains_string(url))
 
 @then('they are shown their employee record')
 def step(context):
-    page = BeautifulSoup(context.response_from_posting_data.data)
+    page = BeautifulSoup(context.response.data)
     assert_that(page.find('h1').text, is_('Your Employee Record'))
 
 @then('they are shown a message telling them to contact their IP')
 def step(context):
-    page = BeautifulSoup(context.response_from_posting_data.data)
+    page = BeautifulSoup(context.response.data)
     assert_that(page.find('h1').text, is_('No Employee Record Found'))
