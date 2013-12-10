@@ -20,11 +20,11 @@ def summary_message(discrepancy):
                'lower figure of %s' % (cl_value, cl_value)
 
 
-def date_summary(date_dict):
+def date_summary(date_list):
     return "%s/%s/%s" % (
-        date_dict['day'],
-        date_dict['month'],
-        date_dict['year']
+        date_list[0],
+        date_list[1],
+        date_list[2]
     )
 
 

@@ -18,7 +18,10 @@ def parse_csrf_token(response):
 def step(context):
     context.form_data = {}
     for row in context.table:
-        context.form_data[row['DETAILS']] = row['VALUE']
+        if row['DETAILS'] == 'date_of_birth':
+            context.form_data['date_of_birth'] = row['VALUE'].split('/')
+        else:
+            context.form_data[row['DETAILS']] = row['VALUE']
 
 
 @when('enters their details')

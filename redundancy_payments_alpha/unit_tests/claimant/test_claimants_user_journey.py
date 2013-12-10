@@ -38,9 +38,11 @@ class TestMatchingClaiamantToEmployeeRecords(unittest.TestCase):
         'email':'donald.duck@duckburg.com',
         'telephone_number':'12345 123456',
         'nino':'AA112233B',
-        'date_of_birth-day': '1',
-        'date_of_birth-month': '2',
-        'date_of_birth-year': '1983'
+        'date_of_birth': [
+            '1',
+            '2',
+            '1983'
+        ]
     }
 
     def setUp(self):

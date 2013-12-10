@@ -38,9 +38,7 @@ Feature: claimants contact details
             | forenames           | Bill            |
             | surname             | Bailey          |
             | nino                | ab123456c       |
-            | date_of_birth-day   | 12              |
-            | date_of_birth-month | 7               |
-            | date_of_birth-year  | 1999            |
+            | date_of_birth       | 12/7/1999       |
             | building_number     | 1               |
             | street              | Cannon Street   |
             | district            | Birmingham      |

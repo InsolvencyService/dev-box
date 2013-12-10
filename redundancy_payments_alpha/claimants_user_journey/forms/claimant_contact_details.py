@@ -1,11 +1,11 @@
 import collections
 import re
 from flask_wtf import Form
-from wtforms import TextField, SelectField, StringField, ValidationError, FormField
+from wtforms import TextField, SelectField, StringField, ValidationError
 from wtforms.fields.html5 import TelField, EmailField
-from wtforms.validators import DataRequired, Length, Email, AnyOf, Regexp, Optional
-from claimants_user_journey.forms.custom_field_types import DateForm
-from claimants_user_journey.forms.validators import DateOfBirthValidator
+from wtforms.validators import DataRequired, Length, Email, AnyOf, Regexp
+from claimants_user_journey.forms.custom_field_types import CustomDateField
+from claimants_user_journey.forms.validators import CustomDateFieldValidator
 
 
 class ClaimantContactDetails(Form):
@@ -63,5 +63,5 @@ class ClaimantContactDetails(Form):
                      validators=[DataRequired('Please enter your National Insurance Number'),
                                  Regexp(regex=re.compile('^[a-zA-Z]{2}[0-9]{6}[a-zA-Z]{1}$'),
                                         message="National Insurance Number must be two letters followed by six digits and a further letter (e.g. 'AB123456C').")])
-    date_of_birth = FormField(DateForm)
+    date_of_birth = CustomDateField(label="Date of Birth", validators=[CustomDateFieldValidator()])
 
