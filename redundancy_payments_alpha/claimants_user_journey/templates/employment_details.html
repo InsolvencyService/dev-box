@@ -42,10 +42,8 @@
             </fieldset>
             <fieldset>
                 <legend>Dates of employment</legend>
-                {{ form.start_date.label }}
-                {{ form.start_date }}
-                {{ form.end_date.label }}
-                {{ form.end_date }}
+                {{ form_field(form.start_date) }}
+                {{ form_field(form.end_date) }}
             </fieldset>
             <input class="button" type="submit" value="Save and Continue" />
         </form>

@@ -50,13 +50,23 @@ class CustomDateWidget(object):
             html.append("<select id=\"%s-day\" name=\"%s\">" % (field.id, field.name))
             #Day drop down list
             for x in xrange(0, 32):
-                html.append("<option value=\"%i\">%i</option>" % (x, x))
+                if x == 0:
+                    val = ""
+                else:
+                    val = str(x)
+
+                html.append("<option value=\"%s\">%s</option>" % (val, val))
             html.append('</select>')
 
             #Month drop down list
             html.append("<select id=\"%s-month\" name=\"%s\">" % (field.id, field.name))
             for x in xrange(0, 13):
-                html.append("<option value=\"%i\">%i</option>" % (x, x))
+                if x == 0:
+                    val = ""
+                else:
+                    val = str(x)
+
+                html.append("<option value=\"%s\">%s</option>" % (val, val))
             html.append('</select>')
 
             html.append("<input id=\"%s-year\" name=\"%s\" type=\"text\" value=\"\">" % (field.id, field.name))
