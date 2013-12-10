@@ -107,7 +107,7 @@ def deploy_app_from_git(tag=None):
     git_url = "git+https://git@github.com/InsolvencyService/rps-alpha.git"
     if tag is not None:
         git_url += "@{tag}".format(**locals())
-    git_url += "#egg=redundancy_payments_alpha"
+    git_url += "#egg=rps"
     with virtualenv("rps"):
         run("pip install -e {git_url}".format(**locals()))
         run("ensure_clean_tables")

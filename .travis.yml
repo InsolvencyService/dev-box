@@ -1,6 +1,6 @@
 language: python
 env:
-  - APP=redundancy_payments_alpha
+  - APP=rps
 python:
   - "2.7"
 # command to install dependencies

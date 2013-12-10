@@ -3,4 +3,5 @@
 classes:
   - baseconfig
   - rps_postgres
+  - rps_nginx
   - fabric

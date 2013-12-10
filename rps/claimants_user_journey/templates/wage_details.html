@@ -1,0 +1,58 @@
+{% from "macros/_form_nav.html" import form_nav %}
+{% from "macros/_form_field.html" import form_field %}
+{% from "macros/_call_to_action_box.html" import call_to_action_box %}
+{% extends "base.html" %}
+{% block title %}Claimant Wage Details{% endblock %}
+{% block header %}
+<h1 xmlns="http://www.w3.org/1999/html">Claim Redundancy Payment</h1>
+    <h2 class="subtitle">Please enter your wage details</h2>
+{% endblock %}
+{% block nav %}
+    {{ form_nav(nav_links) }}
+{% endblock %}
+{% block content %}
+    <h1>Your wage details</h1>
+        <form method="post" action="{{ request.path }}" class="form-example-1">
+            {% if form.errors %}
+            <div class="validation-summary">
+                <h1>There was a problem submitting the form</h1>
+                <p>Please try the following:</p>
+                <ol>
+                    {% for error_dict in form.errors.itervalues() %}
+                        {% for error in error_dict %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ol>
+            </div>
+            {% endif %}
+            <div>
+                {{ call_to_action_box(discrepancies)}}
+                <div>
+                    <fieldset>
+                    {{ form.hidden_tag() }}
+                        <fieldset>
+                            <legend>How much did you get paid</legend>
+                            {% if discrepancies %}
+                                {{ form_field(form.gross_rate_of_pay, discrepancies) }}
+                            {% else %}
+                                {{ form_field(form.gross_rate_of_pay, readonly=True) }}
+                                <p><a href="/claim-redundancy-payment/wage-amount/">Change this value</a></p>
+                            {% endif %}
+                            {{ form_field(form.day_of_payment) }}
+                        </fieldset>
+                        <fieldset>
+                            {{ form_field(form.number_of_hours_worked) }}
+                            {{ form_field(form.normal_days_of_work) }}
+                        </fieldset>
+                    {{ form_field(form.overtime, inline=True) }}
+                    {{ form_field(form.hours_of_overtime) }}
+                    {{ form_field(form.frequency_of_overtime) }}
+                    {{ form_field(form.bonus_or_commission, inline=True) }}
+                    {{ form_field(form.bonus_details) }}
+                    </fieldset>
+                 </div>
+            </div>
+            <input class="button" type="submit" value="Save and Continue" />
+        </form>
+{% endblock %}
