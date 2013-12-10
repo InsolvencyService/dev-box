@@ -1,8 +1,93 @@
+import re
+from datetime import date
 from flask_wtf import Form
-from wtforms import TextField, SelectField, RadioField, FormField
-from wtforms.validators import DataRequired, Length, AnyOf
-from claimants_user_journey.forms.custom_field_types import DateForm
-from claimants_user_journey.forms.validators import FutureDateValidator
+from wtforms import TextField, RadioField, Field
+from wtforms.validators import Length, ValidationError
+from wtforms.widgets import HTMLString
+from claimants_user_journey.forms.validators import convert_string_to_date
+
+
+class CustomDateWidget(object):
+    def __init__(self, error_class=u'has_errors'):
+        self.error_class = error_class
+
+    def __call__(self, field, **kwargs):
+        if field and field.data:
+            kwargs.setdefault('id', field.id)
+
+            #Day drop down list
+            html = ["<select id=\"%s-day\" name=\"%s\">" % (field.id, field.name)]
+            for x in xrange(0, 32):
+                if x == 0:
+                    val = ""
+                else:
+                    val = str(x)
+
+                if val == field.data[0]:
+                    html.append("<option value=\"%s\" selected>%s</option>" % (val, val))
+                else:
+                    html.append("<option value=\"%s\">%s</option>" % (val, val))
+            html.append('</select>')
+
+            #Month drop down list
+            html.append("<select id=\"%s-month\" name=\"%s\">" % (field.id, field.name))
+            for x in xrange(0, 13):
+                if x == 0:
+                    val = ""
+                else:
+                    val = str(x)
+
+                if val == field.data[1]:
+                    html.append("<option value=\"%s\" selected>%s</option>" % (val, val))
+                else:
+                    html.append("<option value=\"%s\">%s</option>" % (val, val))
+            html.append('</select>')
+
+            #Year text field
+            html.append("<input id=\"%s-year\" name=\"%s\" type=\"text\" value=\"%s\">" % (field.id, field.name, field.data[2]))
+        else:
+            html = ['<label>Date Of Birth</label>']
+            html.append("<select id=\"%s-day\" name=\"%s\">" % (field.id, field.name))
+            #Day drop down list
+            for x in xrange(0, 32):
+                if x == 0:
+                    val = ""
+                else:
+                    val = str(x)
+
+                html.append("<option value=\"%s\">%s</option>" % (val, val))
+            html.append('</select>')
+
+            #Month drop down list
+            html.append("<select id=\"%s-month\" name=\"%s\">" % (field.id, field.name))
+            for x in xrange(0, 13):
+                if x == 0:
+                    val = ""
+                else:
+                    val = str(x)
+
+                html.append("<option value=\"%s\">%s</option>" % (val, val))
+            html.append('</select>')
+
+            html.append("<input id=\"%s-year\" name=\"%s\" type=\"text\" value=\"\">" % (field.id, field.name))
+
+        return HTMLString(''.join(html))
+
+
+class CustomDateField(Field):
+    widget = CustomDateWidget()
+
+    def _value(self):
+        if self.data:
+            return self.data
+        else:
+            return ['','','']
+
+    def process_formdata(self, valuelist):
+        if valuelist:
+            self.data = valuelist
+        else:
+            self.data = ['', '', '']
 
 
 class EmploymentDetails(Form):
@@ -30,5 +115,29 @@ class EmploymentDetails(Form):
             ('home worker', '<strong>Home Worker</strong></br>You worked from home but attended an office for meetings')
         ],
     )
-    start_date = FormField(DateForm, label="When did you start working for this employer?")
-    end_date = FormField(DateForm, label="When did your employment end?")
+    start_date = CustomDateField(label="When did you start working for this employer?")
+    end_date = CustomDateField(label="When did your employment end?")
+
+    def validate_start_date(form, field):
+        try:
+            parsed_date = date(int(field.data[2]), int(field.data[1]), int(field.data[0]))
+        except (SyntaxError, ValueError):
+            raise ValidationError('Date must be in the format dd/mm/yyyy.')
+
+        if parsed_date.year < 1900 or parsed_date >= date.today():
+            raise ValidationError('Date must be greater than or equal to 1900 and not in the future.')
+
+    def validate_end_date(form, field):
+        try:
+            parsed_date = date(int(field.data[2]), int(field.data[1]), int(field.data[0]))
+        except (SyntaxError, ValueError):
+            raise ValidationError('Date must be in the format dd/mm/yyyy.')
+
+        if parsed_date.year < 1900 or parsed_date >= date.today():
+            raise ValidationError('Date must be greater than or equal to 1900 and not in the future.')
+
+        if not form.start_date.errors:
+            parsed_start_date = date(int(form.start_date.data[2]), int(form.start_date.data[1]), int(form.start_date.data[0]))
+
+            if parsed_start_date > parsed_date:
+                raise ValidationError('The end date cannot be before the start date')

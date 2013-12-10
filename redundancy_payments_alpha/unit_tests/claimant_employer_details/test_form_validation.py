@@ -17,16 +17,16 @@ def complete_form_data():
     form = {
         'job_title': 'Job Title',
         'type_of_worker': 'employed',
-        'start_date': {
-            'day': '20',
-            'month': '2',
-            'year': '1985'
-        },
-        'end_date': {
-            'day': '21',
-            'month': '3',
-            'year': '1999'
-        }
+        'start_date': [
+            '20',
+            '2',
+            '1985'
+        ],
+        'end_date': [
+            '21',
+            '3',
+            '1999'
+        ]
     }
     return form
 
@@ -95,11 +95,11 @@ class TestStartDate(unittest.TestCase):
     def test_start_date_field_does_not_display_the_int_parsing_error_when_letters_are_used_in_place_of_numbers(self):
         # given
         entered_date = complete_form_data()
-        entered_date['start_date'] = {
-            'day': '21',
-            'month': '3',
-            'year': 'cccc'
-        }
+        entered_date['start_date'] = [
+            '21',
+            '3',
+            'cccc'
+        ]
         # when
         form = complete_form(entered_date)
         form.validate()
@@ -110,11 +110,11 @@ class TestStartDate(unittest.TestCase):
     def test_start_date_field_is_invalid_with_date_greater_than_today(self):
         # given
         entered_date = complete_form_data()
-        entered_date['start_date'] = {
-            'day': '30',
-            'month': '1',
-            'year': '3000'
-        }
+        entered_date['start_date'] = [
+            '30',
+            '1',
+            '3000'
+        ]
         # when
         form = complete_form(entered_date)
         form.validate()
@@ -135,11 +135,11 @@ class TestEndDate(unittest.TestCase):
     def test_end_date_field_does_not_display_the_int_parsing_error_when_letters_are_used_in_place_of_numbers(self):
         # given
         entered_date = complete_form_data()
-        entered_date['end_date'] = {
-            'day': '21',
-            'month': '3',
-            'year': 'cccc'
-        }
+        entered_date['end_date'] = [
+            '21',
+            '3',
+            'cccc'
+        ]
         # when
         form = complete_form(entered_date)
         form.validate()
@@ -147,17 +147,16 @@ class TestEndDate(unittest.TestCase):
         assert_that(form.end_date.errors, has_item("Date must be in the format dd/mm/yyyy.") )
         assert_that(form.end_date.errors, has_length(1))
 
-    def test_start_date_field_is_invalid_with_date_greater_than_today(self):
+    def test_end_date_field_is_invalid_with_date_greater_than_today(self):
         # given
         entered_date = complete_form_data()
-        entered_date['end_date'] = {
-            'day': '21',
-            'month': '3',
-            'year': '3000'
-        }
+        entered_date['end_date'] = [
+            '21',
+            '3',
+            '3000'
+        ]
         # when
         form = complete_form(entered_date)
         form.validate()
         # then
         assert_that(form.end_date.errors, has_item("Date must be greater than or equal to 1900 and not in the future.") )
-

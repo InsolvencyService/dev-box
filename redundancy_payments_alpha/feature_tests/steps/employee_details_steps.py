@@ -29,15 +29,15 @@ def step(context, url):
 
 @when('enters the employee details')
 def step(context):
-    context.response_from_posting_data = ip_test_client.post(
+    context.response = ip_test_client.post(
         '/create-employee-record/employee-details/',
         data=context.form_data
     )
 
 @then('the IP should be sent to {url}')
 def step(context, url):
-    assert_that(context.response_from_posting_data.status, is_('302 FOUND'))
-    headers = context.response_from_posting_data.headers
+    assert_that(context.response.status, is_('302 FOUND'))
+    headers = context.response.headers
     redirect_path = headers['Location']
     assert_that(redirect_path, contains_string(url))
 

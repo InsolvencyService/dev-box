@@ -9,7 +9,7 @@ def step(context):
 
 @when('enters the unpaid wages details')
 def step(context):
-    context.response_from_posting_data = test_client.post(
+    context.response = test_client.post(
         '/claim-redundancy-payment/wages-owed-details/',
         data=context.form_data
     )

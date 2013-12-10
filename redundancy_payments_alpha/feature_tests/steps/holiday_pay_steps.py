@@ -10,7 +10,7 @@ def step(context):
 
 @when('enters the holiday pay details')
 def step(context):
-    context.response_from_posting_data = test_client.post(
+    context.response = test_client.post(
         '/claim-redundancy-payment/holiday-pay/',
         data=context.form_data
     )
