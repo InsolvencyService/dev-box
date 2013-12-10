@@ -44,7 +44,7 @@ sudo dpkg -i vagrant.deb
 - To get the project to run, you'll need to do the following
   - `./create_venv.sh`
   - `workon rps`
-  - `cd redundancy_payments_alpha/`
+  - `cd rps/`
 - You should now be able to:
   - run `./run_tests.sh` to run the tests,
   - run`./redundancy_payments_service --debug` to run the claimant journey
