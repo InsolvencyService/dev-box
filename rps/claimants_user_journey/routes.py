@@ -25,6 +25,7 @@ from calculators import yearly_to_weekly_gross_rate_of_pay
 
 app = Flask(__name__)
 app.secret_key = 'something_secure_and_secret'
+
 setup_filters(app)
 
 
@@ -36,6 +37,12 @@ def nav_links():
         ('Summary', url_for('summary')),
     ]
     return links
+
+
+@app.before_request
+def make_session_temporary():
+    # http://flask.pocoo.org/docs/api/#flask.session.permanent
+    session.permanent = False
 
 
 @app.route('/_status', methods=['GET'])
