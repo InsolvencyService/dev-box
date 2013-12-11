@@ -21,7 +21,7 @@ Feature: Employee Information
             | employee_owed_wages_in_arrears      | 1200.50               |
             | employee_owed_wages_in_arrears_type | wages                 |
             | employee_holiday_year_start_date    | 01/01/1990            |
-            | employee_holiday_owed               | 5.5                   |
+            | employee_holiday_owed               | 5                     |
             | employee_unpaid_holiday_from        | 01/01/1990            |
             | employee_unpaid_holiday_to          | 01/01/1990            |
         When the IP goes to /create-employee-record/employee-details/
