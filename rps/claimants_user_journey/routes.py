@@ -25,6 +25,12 @@ from calculators import yearly_to_weekly_gross_rate_of_pay
 
 app = Flask(__name__)
 app.secret_key = 'something_secure_and_secret'
+
+
+# http://flask.pocoo.org/docs/api/#flask.session.permanent
+session.permanent = False
+
+
 setup_filters(app)
 
 
