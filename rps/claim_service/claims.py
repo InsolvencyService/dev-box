@@ -13,13 +13,13 @@ def _initials(claimant_information):
     return initials
 
 
-def _parse_date_of_birth(date_of_birth_dict):
+def _parse_date_of_birth(date_of_birth):
     ''' this is pretty horrible, it should go away
         once we've sorted out our dates '''
-    if date_of_birth_dict:
-        day = int(date_of_birth_dict['day'])
-        month = int(date_of_birth_dict['month'])
-        year = int(date_of_birth_dict['year'])
+    if date_of_birth:
+        day = int(date_of_birth[0])
+        month = int(date_of_birth[1])
+        year = int(date_of_birth[2])
     else:
         return None
     
@@ -42,7 +42,6 @@ def summarise_claim(claim):
     employee_information = claim[1]
 
     date_of_birth_dict = claimant_information.get('date_of_birth')
-    print employee_information, '<--------------'
     employment_start = employee_information.get('employee_start_date')
     employment_end = employee_information.get('employee_end_date')
     

@@ -36,7 +36,7 @@ def employer_details():
 
 @app.route('/create-insolvency-case/case-created/', methods=['GET'])
 def case_created():
-    return 'ok'
+    return render_template('case_submitted_ok.html')
 
 @app.route('/create-employee-record/employee-details/', methods=['GET','POST'])
 def employee_details():
@@ -51,7 +51,7 @@ def employee_details():
 
 @app.route('/create-employee-record/employee-added/')
 def employee_added():
-    return 'ok'
+    return render_template('employee_submitted_ok.html')
 
 @app.route('/_tasks/send-notifications/', methods=['POST'])
 def send_notifications():
