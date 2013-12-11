@@ -262,7 +262,7 @@ def submit_claim(claim_id):
         abort(400)
 
     claim_service.submit(claim_id)
-    return "attempted to submit claim %s" % claim_id
+    return render_template('claim_submitted_ok.html',hide_nav=True)
 
 
 @app.route('/robots.txt')
