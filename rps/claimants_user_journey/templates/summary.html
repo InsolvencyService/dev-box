@@ -44,8 +44,11 @@
         <tr><td>Type of worker</td><td>{{ session['employment_details'].type_of_worker }}</td></tr>
         <tr><td>Dates of employment</td><td>{{ session['employment_details'].start_date|date_summary }} to {{ session['employment_details'].end_date|date_summary }}</td></tr>
         {% endif %}
+
         {% if session['wage_details'] is defined %}
-        <tr><th colspan="2">Wage Details</th></tr>
+        <tr>
+          <th colspan="2">Wage Details</th>
+        </tr>
         {{ summary_row('Gross pay', 'gross_rate_of_pay', session['wage_details'].gross_rate_of_pay, discrepancies) }}
         {{ summary_row('Day of the week paid on', 'day_of_payment', session['wage_details'].day_of_payment, discrepancies) }}
         {{ summary_row('Number of hours normally worked', 'number_of_hours_worked', session['wage_details'].number_of_hours_worked, discrepancies) }}
