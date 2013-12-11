@@ -1,8 +1,9 @@
 import contextlib
 from datetime import datetime
 import logging
+from traceback import format_exc
 
-from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 from sqlalchemy import func
 
 from models import (
@@ -18,6 +19,34 @@ from birmingham_cabinet import chomp_states
 
 logger = logging.getLogger(__name__)
 
+
+facepalm = """............................................________
+....................................,.-'"...................``~.,
+.............................,.-"..................................."-.,
+.........................,/...............................................":,
+.....................,?......................................................,
+.................../...........................................................,}
+................./......................................................,:`^`..}
+.............../...................................................,:"........./
+..............?.....__.........................................:`.........../
+............./__.(....."~-,_..............................,:`........../
+.........../(_...."~,_........"~,_....................,:`........_/
+..........{.._$;_......"=,_......."-,_.......,.-~-,},.~";/....}
+...........((.....*~_......."=-._......";,,./`..../"............../
+...,,,___.`~,......"~.,....................`.....}............../
+............(....`=-,,.......`........................(......;_,,-"
+............/.`~,......`-...................................../
+.............`~.*-,.....................................|,./.....,__
+,,_..........}.>-._...................................|..............`=~-,
+.....`=~-,__......`,.................................
+...................`=~-,,.,...............................
+................................`:,,...........................`..............__
+.....................................`=-,...................,%`>--==``
+........................................_..........._,-%.......`
+...................................,
+"""
+
+
 def truncate_all_tables():
     with contextlib.closing(local_unix_socket_engine.connect()) as conn:
         trans = conn.begin()
@@ -27,12 +56,27 @@ def truncate_all_tables():
         trans.commit()
 
 
+def _multiple_results_hack(query):
+    """In many parts of the code there should be only one
+    """
+    try:
+        return query.one()
+    except MultipleResultsFound as e:
+        logger.warning("_multiple_results_hack caught MultipleResultsFound ")
+        logger.warning(format_exc())
+        logger.warning("query: " + str(query) + "\n")
+        logger.warning("returning .first()")
+        logger.warning(facepalm)
+        return query.first()
+
+
 def employee_via_nino(nino):
     nino = nino.upper()
     with contextlib.closing(make_session()) as session:
         try:
-            employee = session.query(Employee).filter(
-                Employee.nino == nino).one()
+            employee = _multiple_results_hack(
+                session.query(Employee).filter(
+                    Employee.nino == nino))
             return json_decode(employee.hstore)
         except NoResultFound:
             pass
@@ -40,7 +84,8 @@ def employee_via_nino(nino):
 
 def get_rp1_form():
     with contextlib.closing(make_session()) as session:
-        claimant = session.query(Claimant).one()
+        claimant = _multiple_results_hack(
+            session.query(Claimant))
         return json_decode(claimant.hstore)
 
 
@@ -104,14 +149,16 @@ def add_claim(claimant_information, employee_record):
 
 def get_claim(claim_id):
     with contextlib.closing(make_session()) as session:
-        claim = session.query(Claim).filter(Claim.claim_id == claim_id).one()
+        claim = _multiple_results_hack(
+            session.query(Claim).filter(Claim.claim_id == claim_id))
         return (json_decode(claim.claimant_information),
                 json_decode(claim.employee_record), claim.submitted_at)
 
 
 def update_claim(claim_id, claimant_information=None, employee_record=None):
     with contextlib.closing(make_session()) as session:
-        claim = session.query(Claim).filter(Claim.claim_id == claim_id).one()
+        claim = _multiple_results_hack(
+            session.query(Claim).filter(Claim.claim_id == claim_id))
         if claimant_information:
             updated_claimant_info = dict(
                 json_decode(claim.claimant_information),
@@ -142,7 +189,8 @@ def _current_time():
 
 def mark_claim_as_submitted(claim_id):
     with contextlib.closing(make_session()) as session:
-        claim = session.query(Claim).filter(Claim.claim_id == claim_id).one()
+        claim = _multiple_results_hack(
+            session.query(Claim).filter(Claim.claim_id == claim_id))
         claim.submitted_at = _current_time()
         session.commit()
 
@@ -170,8 +218,9 @@ def get_claims():
 def get_next_claim_not_processed_by_chomp():
     with contextlib.closing(make_session()) as session:
         try:
-            unprocessed_claim = session.query(Claim).filter(
-                Claim.chomp_claim_lifecycle == None).one()
+            unprocessed_claim = _multiple_results_hack(
+                session.query(Claim).filter(
+                    Claim.chomp_claim_lifecycle == None))
             lifecycle = ChompClaimLifecycle()
             lifecycle.claim_id = unprocessed_claim.claim_id
             lifecycle.in_progress = datetime.now()
@@ -186,15 +235,17 @@ def get_next_claim_not_processed_by_chomp():
 
 def chomp_state_of_claim(claim_id):
     with contextlib.closing(make_session()) as session:
-        claim = session.query(Claim).filter(
-            Claim.claim_id == claim_id).one()
+        claim = _multiple_results_hack(
+            session.query(Claim).filter(
+                Claim.claim_id == claim_id))
         return chomp_states.state_of_claim(claim)
 
 
 def chomp_claim_done(claim_id):
     with contextlib.closing(make_session()) as session:
-        claim = session.query(Claim).filter(
-            Claim.claim_id == claim_id).one()
+        claim = _multiple_results_hack(
+            session.query(Claim).filter(
+                Claim.claim_id == claim_id))
         claim.chomp_claim_lifecycle.done = datetime.now()
         session.commit()
 
