@@ -2,7 +2,7 @@ import re
 
 from flask_wtf import Form
 from wtforms import TextField, SelectField, DecimalField, DateField
-from wtforms.validators import ValidationError, Length, AnyOf, DataRequired, InputRequired
+from wtforms.validators import ValidationError, Length, AnyOf, DataRequired, InputRequired, Regexp
 
 from validators.validators import parses_to_date
 
@@ -64,7 +64,9 @@ class EmployeeDetailsForm(Form):
     )
     employee_owed_wages_from = DateField('Period 1 From', format='%d/%m/%Y', validators=[InputRequired()])
     employee_owed_wages_to = DateField('Period 1 To', format='%d/%m/%Y', validators=[InputRequired()])
-    employee_owed_wages_in_arrears = TextField('Arrears of pay amount', validators=[DataRequired()])
+    employee_owed_wages_in_arrears = TextField('Arrears of pay amount', validators=[DataRequired(),
+                                         Regexp(regex=re.compile('^\d{0,8}(\.\d{0,2})?$'),
+                                         message='Arrears of pay amount must be numeric.')])
     employee_owed_wages_in_arrears_type = SelectField(
         'Arrears of pay type',
         default = '',
@@ -78,6 +80,7 @@ class EmployeeDetailsForm(Form):
         ]
     )
     employee_holiday_year_start_date = DateField('Holiday Year Start Date', format='%d/%m/%Y', validators=[InputRequired()])
-    employee_holiday_owed = DecimalField('Total number of days holiday owed', validators=[DataRequired()])
+    employee_holiday_owed = TextField('Total number of days holiday owed', validators=[DataRequired(),
+                                       Regexp(regex=re.compile('^[0-9]?[0-9]$'), message='Number of holiday days owed must be numeric and a maximum of two digits.')])
     employee_unpaid_holiday_from = DateField('Unpaid holiday From', format='%d/%m/%Y', validators=[InputRequired()])
     employee_unpaid_holiday_to = DateField('Unpaid holiday To', format='%d/%m/%Y', validators=[InputRequired()])
