@@ -30,73 +30,53 @@ class CustomDateWidget(object):
         self.error_class = error_class
 
     def __call__(self, field, **kwargs):
-        if field and type(field.data) == list and len(field.data) == 3:
-            kwargs.setdefault('id', field.id)
+        kwargs.setdefault('id', field.id)
 
-            #Day drop down list
-            html = ["<select id=\"%s-day\" name=\"%s\">" % (field.id, field.name)]
-            for x in xrange(0, 32):
-                if x == 0:
-                    val = ""
-                else:
-                    val = str(x)
-
-                if val == field.data[0]:
-                    html.append("<option value=\"%s\" selected>%s</option>" % (val, val))
-                else:
-                    html.append("<option value=\"%s\">%s</option>" % (val, val))
-            html.append('</select>')
-
-            #Month drop down list
-            month_options = (
-                '',
-                'January',
-                'February',
-                'March',
-                'April',
-                'May',
-                'June',
-                'July',
-                'August',
-                'September',
-                'October',
-                'November',
-                'December'
-            )
-            html.append("<select id=\"%s-month\" name=\"%s\">" % (field.id, field.name))
-            for form_val, user_val in enumerate(month_options):
-                if form_val == field.data[1]:
-                    html.append("<option value=\"%s\" selected>%s</option>" % (form_val, user_val))
-                else:
-                    html.append("<option value=\"%s\">%s</option>" % (form_val, user_val))
-            html.append('</select>')
-
-            #Year text field
-            html.append("<input id=\"%s-year\" name=\"%s\" type=\"text\" value=\"%s\">" % (field.id, field.name, field.data[2]))
+        if type(field.data) == list and len(field.data) == 3:
+            date_parts = field.data
         else:
-            html = ["<select id=\"%s-day\" name=\"%s\">" % (field.id, field.name)]
-            #Day drop down list
-            for x in xrange(0, 32):
-                if x == 0:
-                    val = ""
-                else:
-                    val = str(x)
+            date_parts = ['','','']
 
+        #Day drop down list
+        html = ["<select id=\"%s-day\" name=\"%s\">" % (field.id, field.name)]
+        for x in xrange(0, 32):
+            if x == 0:
+                val = ""
+            else:
+                val = str(x)
+
+            if val == date_parts[0]:
+                html.append("<option value=\"%s\" selected>%s</option>" % (val, val))
+            else:
                 html.append("<option value=\"%s\">%s</option>" % (val, val))
-            html.append('</select>')
+        html.append('</select>')
 
-            #Month drop down list
-            html.append("<select id=\"%s-month\" name=\"%s\">" % (field.id, field.name))
-            for x in xrange(0, 13):
-                if x == 0:
-                    val = ""
-                else:
-                    val = str(x)
+        #Month drop down list
+        month_options = (
+            '',
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December'
+        )
+        html.append("<select id=\"%s-month\" name=\"%s\">" % (field.id, field.name))
+        for form_val, user_val in enumerate(month_options):
+            if str(form_val) == date_parts[1]:
+                html.append("<option value=\"%s\" selected>%s</option>" % (form_val, user_val))
+            else:
+                html.append("<option value=\"%s\">%s</option>" % (form_val, user_val))
+        html.append('</select>')
 
-                html.append("<option value=\"%s\">%s</option>" % (val, val))
-            html.append('</select>')
-
-            html.append("<input id=\"%s-year\" name=\"%s\" type=\"text\" value=\"\">" % (field.id, field.name))
+        #Year text field
+        html.append("<input id=\"%s-year\" name=\"%s\" type=\"text\" value=\"%s\">" % (field.id, field.name, date_parts[2]))
 
         return HTMLString(''.join(html))
 
