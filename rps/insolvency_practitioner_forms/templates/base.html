@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title%}{% endblock %}</title>
+
+    <link href="/static/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/inss-ip.css" rel="stylesheet" type="text/css"/>
+</head>
+<body class="down_shifted">
+    <!-- global navigation toolbar -->
+    <div class="navbar  navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <ul class="nav">
+                    <li><a class="brand" href="/ip-dashboard/claims/">The Insolvency Service</a></li>
+                    <li class="divider-vertical"></li>
+                    <li></li>
+                </ul>
+                <ul class="nav pull-right">
+                    <li class="divider-vertical"></li>
+                    <li><a href="#">LOGOUT</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    {% block content %}{% endblock %}
+</body>
+</html>
