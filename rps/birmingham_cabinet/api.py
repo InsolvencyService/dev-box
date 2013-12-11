@@ -34,9 +34,10 @@ def _multiple_results_hack(query):
     try:
         return query.one()
     except MultipleResultsFound as e:
-        logger.warning("_multiple_results_hack caught MultipleResultsFound "
-                       "for query: " + str(query) + "\n")
+        logger.warning("_multiple_results_hack caught MultipleResultsFound ")
         logger.warning(format_exc())
+        logger.warning("query: " + str(query) + "\n")
+        logger.warning("returning .first()")
         return query.first()
 
 
@@ -46,7 +47,7 @@ def employee_via_nino(nino):
         try:
             employee = _multiple_results_hack(
                 session.query(Employee).filter(
-                    Employee.nino == nino).one())
+                    Employee.nino == nino))
             return json_decode(employee.hstore)
         except NoResultFound:
             pass
@@ -55,7 +56,7 @@ def employee_via_nino(nino):
 def get_rp1_form():
     with contextlib.closing(make_session()) as session:
         claimant = _multiple_results_hack(
-            session.query(Claimant).one())
+            session.query(Claimant))
         return json_decode(claimant.hstore)
 
 
@@ -120,7 +121,7 @@ def add_claim(claimant_information, employee_record):
 def get_claim(claim_id):
     with contextlib.closing(make_session()) as session:
         claim = _multiple_results_hack(
-            session.query(Claim).filter(Claim.claim_id == claim_id).one())
+            session.query(Claim).filter(Claim.claim_id == claim_id))
         return (json_decode(claim.claimant_information),
                 json_decode(claim.employee_record), claim.submitted_at)
 
@@ -128,7 +129,7 @@ def get_claim(claim_id):
 def update_claim(claim_id, claimant_information=None, employee_record=None):
     with contextlib.closing(make_session()) as session:
         claim = _multiple_results_hack(
-            session.query(Claim).filter(Claim.claim_id == claim_id).one())
+            session.query(Claim).filter(Claim.claim_id == claim_id))
         if claimant_information:
             updated_claimant_info = dict(
                 json_decode(claim.claimant_information),
@@ -160,7 +161,7 @@ def _current_time():
 def mark_claim_as_submitted(claim_id):
     with contextlib.closing(make_session()) as session:
         claim = _multiple_results_hack(
-            session.query(Claim).filter(Claim.claim_id == claim_id).one())
+            session.query(Claim).filter(Claim.claim_id == claim_id))
         claim.submitted_at = _current_time()
         session.commit()
 
@@ -190,7 +191,7 @@ def get_next_claim_not_processed_by_chomp():
         try:
             unprocessed_claim = _multiple_results_hack(
                 session.query(Claim).filter(
-                    Claim.chomp_claim_lifecycle == None).one())
+                    Claim.chomp_claim_lifecycle == None))
             lifecycle = ChompClaimLifecycle()
             lifecycle.claim_id = unprocessed_claim.claim_id
             lifecycle.in_progress = datetime.now()
@@ -207,7 +208,7 @@ def chomp_state_of_claim(claim_id):
     with contextlib.closing(make_session()) as session:
         claim = _multiple_results_hack(
             session.query(Claim).filter(
-                Claim.claim_id == claim_id).one())
+                Claim.claim_id == claim_id))
         return chomp_states.state_of_claim(claim)
 
 
@@ -215,7 +216,7 @@ def chomp_claim_done(claim_id):
     with contextlib.closing(make_session()) as session:
         claim = _multiple_results_hack(
             session.query(Claim).filter(
-                Claim.claim_id == claim_id).one())
+                Claim.claim_id == claim_id))
         claim.chomp_claim_lifecycle.done = datetime.now()
         session.commit()
 
