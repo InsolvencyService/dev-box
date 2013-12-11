@@ -1,13 +1,8 @@
+{% extends "base.html" %}
 {% from 'macros/_form_field.html' import form_field  %}
-<html>
-    <head>
-        <title>Employee Information from Insolvency Practitioner</title>
 
-        <link href="/static/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    </head>
-    <body>
-
-
+{% block title %}Employee Information from Insolvency Practitioner{% endblock %}
+{% block content %}
     <div class="container">
         <form method="post" action="/create-employee-record/employee-details/" class="form-horizontal">
             <h2>Employee Information from Insolvency Practitioner</h2>
@@ -55,7 +50,5 @@
             </fieldset>
             <input type="submit"></input>
         </form>
-     </div>
-    </body>
-</html>
-
+    </div>
+{% endblock %}

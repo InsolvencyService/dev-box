@@ -1,36 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Insolvency Practitioners - Redundancy Payments - The Insolvency Service</title>
-</head>
-<body style="padding-top:60px;">
-<!-- responsive wrapper -->
-<div class="container-fluid" id="top">
-    <!-- global navigation toolbar -->
-    <div class="navbar  navbar-fixed-top">
-        <div class="navbar-inner">
-            <div class="container-fluid">
-                <ul class="nav">
-                    <li><a class="brand" href="/ip-dashboard/claims/">The Insolvency Service</a></li>
-                    <li class="divider-vertical"></li>
-                </ul>
-                <ul class="nav pull-right">
-                    <li class="divider-vertical"></li>
-                    <li><a href="#">LOGOUT</a></li>
-                </ul>
+{% extends "base.html" %}
+{% from 'macros/_form_field.html' import form_field  %}
+
+{% block title %}Insolvency Practitioners - Redundancy Payments - The Insolvency Service{% endblock %}
+{% block header %}
+    <link rel="stylesheet" href="/static/bootstrap-responsive.min.css">
+{% endblock %}
+{% block content %}
+    <!-- responsive wrapper -->
+    <div class="container-fluid" id="top">
+
+        <!-- new row (nr) -->
+        <div class="row-fluid">
+            <div class="hero-unit">
+                Insolvency Case has been created.
             </div>
         </div>
+        <!-- nr -->
     </div>
-    <!-- new row (nr) -->
-    <div class="row-fluid">
-        <div class="hero-unit">
-            Insolvency Case has been created.
-        </div>
-    </div>
-    <!-- nr -->
-</div>
-<link rel="stylesheet" href="/static/bootstrap.min.css">
-<link rel="stylesheet" href="/static/bootstrap-responsive.min.css">
-</body>
-</html>
+{% endblock %}
