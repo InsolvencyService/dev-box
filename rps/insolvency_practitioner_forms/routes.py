@@ -36,7 +36,7 @@ def employer_details():
 
 @app.route('/create-insolvency-case/case-created/', methods=['GET'])
 def case_created():
-    return 'ok'
+    return render_template('case_submitted_ok.html')
 
 @app.route('/create-employee-record/employee-details/', methods=['GET','POST'])
 def employee_details():
