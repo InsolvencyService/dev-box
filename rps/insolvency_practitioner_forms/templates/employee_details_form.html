@@ -13,7 +13,9 @@
             <h2>Employee Information from Insolvency Practitioner</h2>
             <fieldset>
                 <legend>About the employer</legend>
-                {{ form_field(form.employer_name) }}
+                {{ form.employer_name.label }}
+                <input type="hidden" name="employer_name" value="Ironcore" />
+                {{ form.employer_name(readonly='True', value='Ironcore') }}
             </fieldset>
             <fieldset>
                 <legend>About the employee who was made redundant</legend>
