@@ -113,7 +113,7 @@ def wages_owed():
         if claim_id:
             claim_service.add_details_to_claim(claim_id, form.data)
             discrepancies = claim_service.find_discrepancies(claim_id)
-            if len(discrepancies):
+            if 'gross_amount_owed' in discrepancies:
                 return redirect(url_for('arrears_pay_discrepancies'))
         return redirect(url_for('summary'))
 
@@ -188,7 +188,7 @@ def wage_details():
         if claim_id:
             claim_service.add_details_to_claim(claim_id, form.data)
             discrepancies = claim_service.find_discrepancies(claim_id)
-            if len(discrepancies):
+            if 'gross_rate_of_pay' in discrepancies:
                 return redirect(url_for('wage_details_discrepancies'))
         return redirect(url_for('wages_owed'))
 
