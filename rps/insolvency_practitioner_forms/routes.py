@@ -51,7 +51,7 @@ def employee_details():
 
 @app.route('/create-employee-record/employee-added/')
 def employee_added():
-    return 'ok'
+    return render_template('employee_submitted_ok.html')
 
 @app.route('/_tasks/send-notifications/', methods=['POST'])
 def send_notifications():
