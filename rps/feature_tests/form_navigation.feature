@@ -8,7 +8,7 @@ Feature: form navigation
             | /claim-redundancy-payment/wage-details/       |
             | /claim-redundancy-payment/summary/            |
          When visiting each form page
-         Then we should see a navigation bar with these links
-            | LINK                                          |
-            | /claim-redundancy-payment/employment-details/ |
-            | /claim-redundancy-payment/wage-details/       |
+         Then we should see a navigation bar with these titles
+            | TITLE                                         |
+            | Employment Details                            |
+            | Wage Details                                  |

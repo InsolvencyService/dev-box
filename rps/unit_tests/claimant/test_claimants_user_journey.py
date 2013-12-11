@@ -90,7 +90,7 @@ class TestFindingDiscrepanciesInPersonalDetails(unittest.TestCase):
 
     @patch('claimants_user_journey.routes.claim_service')
     def test_claimant_is_sent_to_discrepancies_page_when_discrepancies_found(self, mock_claim_service):
-        mock_claim_service.find_discrepancies.return_value = ['this should be a list of discrepancies']
+        mock_claim_service.find_discrepancies.return_value = {'gross_rate_of_pay': 'wibble'}
         response = _fill_out_form(
             self.client,
             '/claim-redundancy-payment/wage-details/',

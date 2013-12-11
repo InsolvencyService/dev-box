@@ -1,21 +1,19 @@
 {% macro form_field(field, hint=None, optional=False) %}
-    <p class="group {% if field.errors %}validation{% endif %}">
+    <div class="control-group {% if field.errors %}validation error{% endif %} row">
         <div class="form-group">
-            <div class="col-sm-6 control-label">
+            <div class="control-label">
                 {{ field.label }}
             </div>
-            <div class="col-sm-6">
+            <div class="controls">
                 {{ field }}
-            </div>
-            <div class="col-sm-6">
                 {% if optional %}<span>&nbsp;(optional)</span>{% endif %}
                     {% if field.errors %}
                     {% for error in field.errors %}
                         <span class="validation-message">{{ error }}</span>
                     {% endfor %}
                 {% endif %}
-                {% if hint %}<span class="hint">{{ hint }}</span>{% endif %}
+                {% if hint %}<span class="hint help-block">{{ hint }}</span>{% endif %}
             </div>
        </div>
-    </p>
+    </div>
 {% endmacro %}

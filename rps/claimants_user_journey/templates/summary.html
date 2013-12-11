@@ -7,7 +7,7 @@
 <h2 class="subtitle">The real summary page will look nicer than this</h2>
 {% endblock %}
 {% block nav %}
-{{ form_nav(nav_links) }}
+{{ form_nav(nav_links, "Summary") }}
 {% endblock %}
 {% block content %}
 <h1>Review your claim</h1>
@@ -86,14 +86,12 @@
     <div class="discrepancy-summary">
       <p>If you disagree with any of the information provided by the Insolvency Practitioner you can contact them on <strong>0800 100 300</strong>.</p>
 
-    </div>
-    <p>Alternatively, you can choose to submit your claim to receive the minimum payment. You can then contact the Insolvency Practitioner to discuss the claim and you may be entitled to receive a further payment.</p>
-  </div>
-  <input class="button" type="submit" value="Contact IP">
-  <input class="button" type="submit" value="Amend">
-</form>
+     <p>Alternatively, you can choose to submit your claim to receive the minimum payment. You can then contact the Insolvency Practitioner to discuss the claim and you may be entitled to receive a further payment.</p>
+     </div>
 
-<form method="post" action="/claim-redundancy-payment/submit-claim/{{ claim_id }}/">
-  <input class="button" type="submit" value="Process this claim">
-</form>
+    </form>
+
+    <form method="post" action="/claim-redundancy-payment/submit-claim/{{ claim_id }}/">
+        <input class="button" type="submit" value="Submit Claim">
+    </form>
 {% endblock %}

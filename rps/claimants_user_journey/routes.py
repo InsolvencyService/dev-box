@@ -25,6 +25,7 @@ from calculators import yearly_to_weekly_gross_rate_of_pay
 
 app = Flask(__name__)
 app.secret_key = 'something_secure_and_secret'
+
 setup_filters(app)
 
 
@@ -36,6 +37,12 @@ def nav_links():
         ('Summary', url_for('summary')),
     ]
     return links
+
+
+@app.before_request
+def make_session_temporary():
+    # http://flask.pocoo.org/docs/api/#flask.session.permanent
+    session.permanent = False
 
 
 @app.route('/_status', methods=['GET'])
@@ -113,7 +120,7 @@ def wages_owed():
         if claim_id:
             claim_service.add_details_to_claim(claim_id, form.data)
             discrepancies = claim_service.find_discrepancies(claim_id)
-            if len(discrepancies):
+            if 'gross_amount_owed' in discrepancies:
                 return redirect(url_for('arrears_pay_discrepancies'))
         return redirect(url_for('summary'))
 
@@ -188,7 +195,7 @@ def wage_details():
         if claim_id:
             claim_service.add_details_to_claim(claim_id, form.data)
             discrepancies = claim_service.find_discrepancies(claim_id)
-            if len(discrepancies):
+            if 'gross_rate_of_pay' in discrepancies:
                 return redirect(url_for('wage_details_discrepancies'))
         return redirect(url_for('wages_owed'))
 
@@ -255,7 +262,7 @@ def submit_claim(claim_id):
         abort(400)
 
     claim_service.submit(claim_id)
-    return "attempted to submit claim %s" % claim_id
+    return render_template('claim_submitted_ok.html',hide_nav=True)
 
 
 @app.route('/robots.txt')
