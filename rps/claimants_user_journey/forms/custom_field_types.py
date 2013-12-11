@@ -65,7 +65,7 @@ class CustomDateWidget(object):
             )
             html.append("<select id=\"%s-month\" name=\"%s\">" % (field.id, field.name))
             for form_val, user_val in enumerate(month_options):
-                if val == field.data[1]:
+                if form_val == field.data[1]:
                     html.append("<option value=\"%s\" selected>%s</option>" % (form_val, user_val))
                 else:
                     html.append("<option value=\"%s\">%s</option>" % (form_val, user_val))
