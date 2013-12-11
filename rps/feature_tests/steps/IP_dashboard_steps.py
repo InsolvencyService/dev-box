@@ -17,7 +17,7 @@ def step(context):
     claimant_data_1 = {'nino': 'XX223344X',
                        'forenames': 'Ted Rocket Man',
                        'surname': 'Jones',
-                       'date_of_birth': {'day':'23', 'month':'05', 'year':'1982'},
+                       'date_of_birth': ['23','05','1982'],
                        'gross_rate_of_pay': 100}
     employee_record_1 = {'employer_id': 1,
                          'employee_forenames': 'Ted Rocket Man',
@@ -32,7 +32,7 @@ def step(context):
     claimant_data_2 = {'nino': 'XX223355A',
                        'forenames': 'John',
                        'surname': 'Henry',
-                       'date_of_birth': {'day':'24', 'month':'05', 'year':'1981'},
+                       'date_of_birth': ['24', '05', '1981'],
                        'gross_rate_of_pay': 200}
     employee_record_2 = {'employer_id': 1,
                          'employee_forenames': 'John',

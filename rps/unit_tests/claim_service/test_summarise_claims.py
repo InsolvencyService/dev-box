@@ -72,7 +72,7 @@ class TestSummariseClaim(unittest.TestCase):
             'gross_rate_of_pay': '250.5',
             'surname': 'Rogers',
             'forenames': 'Steve James',
-            'date_of_birth': {'day': 1, 'month': 1, 'year': 1990}
+            'date_of_birth': ['1', '1', '1990']
         }
 
         date_submitted = '01/10/2013'
