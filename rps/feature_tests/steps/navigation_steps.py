@@ -22,10 +22,10 @@ def step(context):
         context.pages.append(page)
 
 
-@then('we should see a navigation bar with these links')
+@then('we should see a navigation bar with these titles')
 def step(context):
     for page in context.pages:
         nav_bar = page.find('nav')
         for row in context.table:
-            assert_that(str(nav_bar), contains_string(row['LINK']))
+            assert_that(str(nav_bar), contains_string(row['TITLE']))
 
