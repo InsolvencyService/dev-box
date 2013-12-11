@@ -48,17 +48,27 @@ class CustomDateWidget(object):
             html.append('</select>')
 
             #Month drop down list
+            month_options = (
+                '',
+                'January',
+                'February',
+                'March',
+                'April',
+                'May',
+                'June',
+                'July',
+                'August',
+                'September',
+                'October',
+                'November',
+                'December'
+            )
             html.append("<select id=\"%s-month\" name=\"%s\">" % (field.id, field.name))
-            for x in xrange(0, 13):
-                if x == 0:
-                    val = ""
-                else:
-                    val = str(x)
-
+            for form_val, user_val in enumerate(month_options):
                 if val == field.data[1]:
-                    html.append("<option value=\"%s\" selected>%s</option>" % (val, val))
+                    html.append("<option value=\"%s\" selected>%s</option>" % (form_val, user_val))
                 else:
-                    html.append("<option value=\"%s\">%s</option>" % (val, val))
+                    html.append("<option value=\"%s\">%s</option>" % (form_val, user_val))
             html.append('</select>')
 
             #Year text field
