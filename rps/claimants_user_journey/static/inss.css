@@ -155,3 +155,15 @@ input[readonly] {
 .contents li.current {
     font-weight: bold;
 }
+
+/* == CD DEMO STYLES == */
+
+body {
+    background-color: #ff44ff;
+}
+
+body * {
+    font-family: 'Comic Sans MS' !important;
+}
+
+/* == END CD DEMO STYLES == */
