@@ -47,7 +47,7 @@ def make_session_temporary():
 
 @app.route('/_status', methods=['GET'])
 def status():
-    return "everything is ok"
+    return "everything is not ok"
 
 
 @app.route('/claim-redundancy-payment/', methods=['GET'])
