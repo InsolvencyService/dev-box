@@ -10,7 +10,7 @@ def summary_message(discrepancy):
     cl_value = cl_value.replace('"', '')
     ip_value = ip_value.replace('"', '')
 
-    if ip_value < cl_value:
+    if float(ip_value) < float(cl_value):
         return 'The Insolvency Practitioner has suggested %s. ' \
                'Your payment will be calculated using the ' \
                'lower figure of %s' % (ip_value, ip_value)
