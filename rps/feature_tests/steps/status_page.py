@@ -32,7 +32,7 @@ def step(context, expected_section_title):
     assert_that(context.response.data,
                 contains_string('<legend>%s</legend>' % expected_section_title))
 
-@then('the page should have an input field called "{name}" labeled "{label}"')
+@then('the page should have an input field called "{name}" labelled "{label}"')
 def step(context, name, label):
 
     def is_dictlike_with_item(name, value):
