@@ -1,5 +1,3 @@
-from unit_tests.test_status import test_client
-
 
 @given('a claimant with the unpaid wage details')
 def step(context):
