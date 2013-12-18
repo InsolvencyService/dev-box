@@ -77,7 +77,7 @@ def employee_via_nino(nino):
             employee = _multiple_results_hack(
                 session.query(Employee).filter(
                     Employee.nino == nino))
-            return json_decode(employee.hstore)
+            return json_decode(None)
         except NoResultFound:
             pass
 
